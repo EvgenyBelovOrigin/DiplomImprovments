@@ -17,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildFeatures {
         viewBinding true
@@ -33,6 +34,14 @@ android {
         debug {
             manifestPlaceholders.usesCleartextTraffic = true
             buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080/"'
+            Properties properties = new Properties()
+            if (rootProject.file("api.properties").exists()) {
+                properties.load(rootProject.file("api.properties").newDataInputStream())
+            }
+            def apiKey = properties.getProperty("API_KEY","")
+            buildConfigField "String", "API_KEY", apiKey
+
+
         }
     }
     compileOptions {
