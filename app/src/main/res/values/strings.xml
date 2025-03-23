@@ -11,4 +11,7 @@
     <string name="password_confirm">Confirm password</string>
     <string name="add_avatar">Add avatar</string>
     <string name="wrong_pass_confirm">Wrong password confirmation</string>
+    <string name="posts">Posts</string>
+    <string name="events">Events</string>
+    <string name="users">Users</string>
 </resources>
