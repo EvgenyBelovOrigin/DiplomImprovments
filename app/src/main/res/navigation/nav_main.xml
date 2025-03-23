@@ -7,8 +7,39 @@
     <fragment
         android:id="@+id/postFeedFragment"
         android:name="ru.netology.nework.ui.PostFeedFragment"
-        android:label="fragment_post"
+        android:label="fragment_post_feed"
         tools:layout="@layout/fragment_feed_post">
+
+        <action
+            android:id="@+id/action_postFeedFragment_to_eventFeedFragment"
+            app:destination="@id/eventFeedFragment" />
+        <action
+            android:id="@+id/action_postFeedFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_postFeedFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventFeedFragment"
+        android:name="ru.netology.nework.ui.PostFeedFragment"
+        android:label="fragment_event_feed"
+        tools:layout="@layout/fragment_feed_event">
+
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ru.netology.nework.ui.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ru.netology.nework.ui.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up">
 
     </fragment>
 

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">NeWork</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_out">Sign out</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="wrongSignInData">Wrong sign in data</string>
+    <string name="close">Close</string>
+    <string name="name">Name</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="add_avatar">Add avatar</string>
+    <string name="wrong_pass_confirm">Wrong password confirmation</string>
 </resources>
