@@ -1,4 +1,4 @@
-package ru.netology.nmedia.api
+package ru.netology.nework.api
 
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
     companion object {
-        private const val BASE_URL = BuildConfig.BASE_URL
+        private const val BASE_URL = "${BuildConfig.BASE_URL}api/"
         private const val API_KEY = BuildConfig.API_KEY
 
     }

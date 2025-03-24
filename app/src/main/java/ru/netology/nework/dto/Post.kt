@@ -15,17 +15,17 @@ data class Post(
     val likeOwnerIds: List<Int>? = null,
     val likedByMe: Boolean,
     val attachment: Attachment? = null,
-    val users: List<Users>? = null
+    //val users: List<Users>?
 )
 
 data class Users(
     val id: Int,
-    val userPreview: UserPreview,
+    val userPreview: UserPreview?,
 )
 
 data class UserPreview(
     val name: String,
-    val avatar: String? = null
+    val avatar: String?
 )
 
 
