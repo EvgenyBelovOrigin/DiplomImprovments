@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 
 
@@ -22,8 +25,21 @@ class PostFeedFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
+        binding.bottomNavigation.selectedItemId = R.id.posts
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.posts -> {
+                    true
+                }
 
+                R.id.events -> {
+                    findNavController().navigate(R.id.eventFeedFragment)
+                    true
+                }
 
+                else -> false
+            }
+        }
 
 
 //        binding.fab.setOnClickListener {

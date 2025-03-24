@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/eventFeedFragment"
-        android:name="ru.netology.nework.ui.PostFeedFragment"
+        android:name="ru.netology.nework.ui.EventFeedFragment"
         android:label="fragment_event_feed"
         tools:layout="@layout/fragment_feed_event">
 

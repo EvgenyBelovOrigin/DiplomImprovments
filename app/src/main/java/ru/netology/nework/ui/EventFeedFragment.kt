@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentFeedEventBinding
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 
@@ -23,8 +25,21 @@ class EventFeedFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentFeedEventBinding.inflate(inflater, container, false)
+        binding.bottomNavigation.selectedItemId = R.id.events
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.posts -> {
+                    findNavController().navigate(R.id.postFeedFragment)
+                    true
+                }
 
+                R.id.events -> {
+                    true
+                }
 
+                else -> false
+            }
+        }
 
 
 //        binding.fab.setOnClickListener {
