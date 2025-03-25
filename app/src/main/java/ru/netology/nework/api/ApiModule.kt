@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import ru.netology.nework.BuildConfig
+import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -33,9 +34,19 @@ class ApiModule {
     @Provides
     fun provideOkhttp(
         logging: HttpLoggingInterceptor,
+        appAuth: AppAuth,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             chain.proceed(chain.request().newBuilder().addHeader("Api-Key", API_KEY).build())
+        }
+        .addInterceptor { chain ->
+            appAuth.authState.value?.token?.let { token ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", token)
+                    .build()
+                return@addInterceptor chain.proceed(newRequest)
+            }
+            chain.proceed(chain.request())
         }
         .addInterceptor(logging)
         .build()
