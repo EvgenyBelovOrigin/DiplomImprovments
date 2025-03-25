@@ -14,4 +14,7 @@
     <string name="posts">Posts</string>
     <string name="events">Events</string>
     <string name="users">Users</string>
+    <string name="error">Error</string>
+    <string name="error_loading">Somethinf went wrong. Try again later</string>
+    <string name="ok">OK</string>
 </resources>

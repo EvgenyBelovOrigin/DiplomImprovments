@@ -11,15 +11,18 @@ import androidx.activity.addCallback
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentSignInBinding
+import ru.netology.nework.viewmodel.SignInViewModel
 
 
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
-//    private val viewModel: SignInViewModel by viewModels()
+    private val viewModel: SignInViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,28 +39,28 @@ class SignInFragment : Fragment() {
         }
         binding.signInButton.setOnClickListener {
             binding.progress.isVisible = true
-//            viewModel.signIn(binding.loginEdit.text.toString(), binding.passEdit.text.toString())
+            viewModel.signIn(binding.loginEdit.text.toString(), binding.passEdit.text.toString())
             binding.signInFrame.clearFocus()
         }
-//        viewModel.signedIn.observe(viewLifecycleOwner) {
-//            binding.progress.isVisible = false
-//            findNavController().navigateUp()
-//        }
-//        viewModel.notFoundException.observe(viewLifecycleOwner) {
-//            binding.progress.isVisible = false
-//            binding.error.isVisible = true
-//        }
-//        viewModel.exception.observe(viewLifecycleOwner) {
-//            MaterialAlertDialogBuilder(requireContext())
-//                .setTitle(R.string.error)
-//                .setMessage(R.string.error_loading)
-//                .setPositiveButton(R.string.ok) {
-//                        _, _,
-//                    ->
-//                    findNavController().navigateUp()
-//                }
-//                .show()
-//        }
+        viewModel.signedIn.observe(viewLifecycleOwner) {
+            binding.progress.isVisible = false
+            findNavController().navigateUp()
+        }
+        viewModel.notFoundException.observe(viewLifecycleOwner) {
+            binding.progress.isVisible = false
+            binding.error.isVisible = true
+        }
+        viewModel.exception.observe(viewLifecycleOwner) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.error)
+                .setMessage(R.string.error_loading)
+                .setPositiveButton(R.string.ok) {
+                        _, _,
+                    ->
+                    findNavController().navigateUp()
+                }
+                .show()
+        }
 
         binding.loginEdit.setOnFocusChangeListener { _, _ ->
             binding.error.isVisible = false
