@@ -11,15 +11,18 @@ import androidx.activity.addCallback
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentSignUpBinding
+import ru.netology.nework.viewmodel.SignUpViewModel
 
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-//    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,38 +51,38 @@ class SignUpFragment : Fragment() {
             findNavController().navigateUp()
             binding.loginEdit.requestFocus()
         }
-//        binding.signUpButton.setOnClickListener {
-//            binding.progress.isVisible = true
-//            viewModel.signUp(
-//                binding.loginEdit.text.toString(),
-//                binding.passEdit.text.toString(),
-//                binding.passConfirmEdit.text.toString(),
-//                binding.nameEdit.text.toString()
-//            )
-//
-//
-//        }
-//        viewModel.signedUp.observe(viewLifecycleOwner) {
-//
-//            binding.progress.isVisible = false
-//            findNavController().navigateUp()
-//        }
-//        viewModel.wrongPassConfirm.observe(viewLifecycleOwner) {
-//            binding.signUpFrame.clearFocus()
-//            binding.progress.isVisible = false
-//            binding.error.isVisible = true
-//        }
-//        viewModel.exception.observe(viewLifecycleOwner) {
-//            MaterialAlertDialogBuilder(requireContext())
-//                .setTitle(R.string.error)
-//                .setMessage(R.string.error_loading)
-//                .setPositiveButton(R.string.ok) {
-//                        _, _,
-//                    ->
-//                    findNavController().navigateUp()
-//                }
-//                .show()
-//        }
+        binding.signUpButton.setOnClickListener {
+            binding.progress.isVisible = true
+            viewModel.signUp(
+                binding.loginEdit.text.toString(),
+                binding.passEdit.text.toString(),
+                binding.passConfirmEdit.text.toString(),
+                binding.nameEdit.text.toString()
+            )
+
+
+        }
+        viewModel.signedUp.observe(viewLifecycleOwner) {
+
+            binding.progress.isVisible = false
+            findNavController().navigateUp()
+        }
+        viewModel.wrongPassConfirm.observe(viewLifecycleOwner) {
+            binding.signUpFrame.clearFocus()
+            binding.progress.isVisible = false
+            binding.error.isVisible = true
+        }
+        viewModel.exception.observe(viewLifecycleOwner) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.error)
+                .setMessage(R.string.error_loading)
+                .setPositiveButton(R.string.ok) {
+                        _, _,
+                    ->
+                    findNavController().navigateUp()
+                }
+                .show()
+        }
 
 //        viewModel.avatar.observe(viewLifecycleOwner) { photo ->
 //            if (photo.uri == null) {
