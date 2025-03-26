@@ -13,6 +13,6 @@ class AuthViewModel @Inject constructor(
     val data = appAuth.authState.asLiveData()
 
     val authenticated: Boolean
-        get() = appAuth.authState.value?.id != 0L
+        get() = appAuth.authState.value?.id != 0
 
 }

@@ -1,7 +1,7 @@
 package ru.netology.nework.dto
 
 data class Token(
-    val id: Long,
+    val id: Int,
     val token: String?,
     val avatar: String? = null,
     )

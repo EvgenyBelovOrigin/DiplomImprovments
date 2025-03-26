@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.core.content.edit
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,10 +24,10 @@ class AppAuth @Inject constructor(
 
 
     init {
-        val id = prefs.getLong(ID_KEY, 0)
+        val id = prefs.getInt(ID_KEY, 0)
         val token = prefs.getString(TOKEN_KEY, null)
 
-        if (id == 0L || token == null) {
+        if (id == 0 || token == null) {
             prefs.edit {
                 clear()
                 apply()
@@ -50,7 +49,7 @@ class AppAuth @Inject constructor(
     @Synchronized
     fun setAuth(token: Token) {
         with(prefs.edit()) {
-            putLong(ID_KEY, token.id)
+            putInt(ID_KEY, token.id)
             putString(TOKEN_KEY, token.token)
             apply()
         }
