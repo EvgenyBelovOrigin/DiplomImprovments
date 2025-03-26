@@ -8,7 +8,7 @@ data class Post(
     val authorAvatar: String?,
     val content: String,
     val published: String,
-    val coords: Coordinates? = null,
+//    val coords: Coordinates?,
     val link: String? = null,
     val mentionIds: List<Int>? = null,
     val mentionedMe: Boolean,

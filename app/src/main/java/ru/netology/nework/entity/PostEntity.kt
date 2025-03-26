@@ -29,8 +29,9 @@ data class PostEntity(
 
     @Embedded
     val attachment: Attachment?,
-    @Embedded
-    val coords: Coordinates?,
+
+//    @Embedded(prefix = "loc_")
+//    val coords: Coordinates?,
 
     ) {
     fun toDto() = Post(
@@ -41,7 +42,7 @@ data class PostEntity(
         authorAvatar,
         content,
         published,
-        coords,
+//        coords,
         link,
         null,
         mentionedMe,
@@ -68,7 +69,7 @@ data class PostEntity(
                 //    val likeOwnerIds: List<Int>? = null,
                 dto.likedByMe,
 //    val users: UsersArray? // too many questions, but works
-                coords = dto.coords,
+//                coords = dto.coords,
                 attachment = dto.attachment
             )
 

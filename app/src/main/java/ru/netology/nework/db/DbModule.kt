@@ -1,4 +1,4 @@
-package ru.netology.nmedia.db
+package ru.netology.nework.db
 
 import android.content.Context
 import androidx.room.Room
@@ -7,8 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.netology.nework.db.AppDb
-import ru.netology.nmedia.dao.PostDao
+import ru.netology.nework.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import javax.inject.Singleton
 

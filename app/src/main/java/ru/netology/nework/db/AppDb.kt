@@ -2,10 +2,10 @@ package ru.netology.nework.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.netology.nmedia.dao.PostDao
+import ru.netology.nework.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nework.entity.PostEntity
-import ru.netology.nmedia.entity.PostRemoteKeyEntity
+import ru.netology.nework.entity.PostRemoteKeyEntity
 
 
 @Database(
