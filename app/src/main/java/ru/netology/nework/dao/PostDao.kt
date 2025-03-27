@@ -13,4 +13,7 @@ interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(posts: List<PostEntity>)
+
+    @Query("DELETE FROM PostEntity")
+    suspend fun clear()
 }

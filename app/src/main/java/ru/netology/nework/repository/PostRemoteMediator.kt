@@ -12,6 +12,7 @@ import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nework.entity.PostRemoteKeyEntity
+import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -34,15 +35,12 @@ class PostRemoteMediator @Inject constructor(
                     apiService.getBefore(id, state.config.pageSize)
                 }
 
-                LoadType.PREPEND -> return MediatorResult.Success(true)
-                LoadType.REFRESH -> {
-                    val id = postRemoteKeyDao.max()
-                    if (id != null) {
-                        apiService.getNewer(id)
-                    } else {
-                        apiService.getLatest(state.config.pageSize)
-                    }
+                LoadType.PREPEND -> {
+                    val id = postRemoteKeyDao.max() ?: return MediatorResult.Success(false)
+                    apiService.getAfter(id, state.config.pageSize)
                 }
+
+                LoadType.REFRESH -> apiService.getLatest(state.config.pageSize)
             }
             if (!result.isSuccessful) {
                 throw HttpException(result)
@@ -52,26 +50,30 @@ class PostRemoteMediator @Inject constructor(
             appDb.withTransaction {
                 when (loadType) {
                     LoadType.REFRESH -> {
-
-                        if (dao.isEmpty()) {
-                            postRemoteKeyDao.insert(
+                        dao.clear()
+                        postRemoteKeyDao.insert(
+                            listOf(
+                                PostRemoteKeyEntity(
+                                    PostRemoteKeyEntity.KeyType.AFTER,
+                                    data.first().id
+                                ),
                                 PostRemoteKeyEntity(
                                     PostRemoteKeyEntity.KeyType.BEFORE,
                                     data.last().id
-                                )
-                            )
+                                ),
 
-                        }
+                                )
+                        )
+                    }
+
+                    LoadType.PREPEND -> {
                         postRemoteKeyDao.insert(
                             PostRemoteKeyEntity(
                                 PostRemoteKeyEntity.KeyType.AFTER,
                                 data.first().id
                             )
                         )
-
                     }
-
-                    LoadType.PREPEND -> Unit
 
                     LoadType.APPEND -> {
                         postRemoteKeyDao.insert(
@@ -81,16 +83,16 @@ class PostRemoteMediator @Inject constructor(
                             )
                         )
                     }
-
                 }
 
                 dao.insert(data.map { PostEntity.fromDto(it) })
             }
             return MediatorResult.Success(data.isEmpty())
 
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             return MediatorResult.Error(e)
         }
+
 
     }
 }
