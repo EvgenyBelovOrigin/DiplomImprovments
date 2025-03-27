@@ -1,9 +1,15 @@
 package ru.netology.nework.repository
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import ru.netology.nework.dto.MediaUpload
+import ru.netology.nework.dto.Post
+import ru.netology.nework.entity.PostEntity
 
 
 interface Repository {
+    val posts: Flow<PagingData<Post>>
+
     suspend fun getPosts()
     suspend fun signIn(login: String, password: String)
     suspend fun signUp(login: String, password: String, name: String)

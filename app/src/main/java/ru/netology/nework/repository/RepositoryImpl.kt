@@ -1,8 +1,20 @@
 package ru.netology.nework.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ru.netology.nework.api.ApiService
+import ru.netology.nework.dao.PostDao
+import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.MediaUpload
+import ru.netology.nework.dto.Post
+import ru.netology.nework.entity.PostEntity
 import ru.netology.nmedia.auth.AppAuth
+import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.RunTimeError
@@ -15,7 +27,24 @@ import javax.inject.Singleton
 class RepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val appAuth: AppAuth,
-) : Repository {
+    private val dao: PostDao,
+    postRemoteKeyDao: PostRemoteKeyDao,
+    appDb: AppDb,
+
+    ) : Repository {
+
+    @OptIn(ExperimentalPagingApi::class)
+    override val posts: Flow<PagingData<Post>> = Pager(
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+        pagingSourceFactory = { dao.getPagingSource() },
+        remoteMediator = PostRemoteMediator(
+            apiService = apiService,
+            dao = dao,
+            postRemoteKeyDao = postRemoteKeyDao,
+            appDb = appDb
+        )
+    ).flow
+        .map { it.map(PostEntity::toDto) }
 
     override suspend fun getPosts() {
         try {

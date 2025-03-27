@@ -7,13 +7,13 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import retrofit2.HttpException
 import ru.netology.nework.api.ApiService
+import ru.netology.nework.dao.PostDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.entity.PostEntity
-import ru.netology.nework.dao.PostDao
-import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nework.entity.PostRemoteKeyEntity
-import java.io.IOException
+import ru.netology.nmedia.dao.PostRemoteKeyDao
 import javax.inject.Inject
+
 
 @OptIn(ExperimentalPagingApi::class)
 class PostRemoteMediator @Inject constructor(
@@ -89,7 +89,7 @@ class PostRemoteMediator @Inject constructor(
             }
             return MediatorResult.Success(data.isEmpty())
 
-        } catch (e: IOException) {
+        } catch (e: java.io.IOException) {
             return MediatorResult.Error(e)
         }
 
