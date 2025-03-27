@@ -29,8 +29,8 @@ data class PostEntity(
     @Embedded
     val attachment: Attachment?,
 
-    @Embedded
-    val coords: Coordinates?,
+//    @Embedded
+//    val coords: Coordinates?,
 
 //    @Embedded
 //    val mentionIds: List<Int>?
@@ -44,7 +44,7 @@ data class PostEntity(
         authorAvatar,
         content,
         published,
-        coords,
+        null,
         link,
         null,
         mentionedMe,
@@ -70,7 +70,7 @@ data class PostEntity(
                 //    val likeOwnerIds: List<Int>? = null,
                 dto.likedByMe,
 //    val users: UsersArray? // too many questions, but works
-                coords = dto.coords,
+//                coords = dto.coords,
                 attachment = dto.attachment,
             )
 
