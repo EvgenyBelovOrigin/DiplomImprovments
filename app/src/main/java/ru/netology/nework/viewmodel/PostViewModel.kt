@@ -1,4 +1,4 @@
-package ru.netology.nmedia.viewmodel
+package ru.netology.nework.viewmodel
 
 import android.net.Uri
 import android.os.Build
@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.netology.nework.dto.Post
 import ru.netology.nework.repository.Repository
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.error.NetworkError
 import java.io.File
 import javax.inject.Inject
@@ -29,7 +31,19 @@ import kotlin.random.Random
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val repository: Repository,
+    private val appAuth: AppAuth,
 ) : ViewModel() {
+
+    val data: Flow<PagingData<Post>> = appAuth.authState
+        .flatMapLatest { token ->
+            repository.posts.map { pagingData ->
+                pagingData.map { post ->
+                    post.copy(ownedByMe = post.authorId == token?.id)
+                }
+            }
+        }.flowOn(Dispatchers.Default)
+
+
     fun getPosts() {
         viewModelScope.launch {
             try {

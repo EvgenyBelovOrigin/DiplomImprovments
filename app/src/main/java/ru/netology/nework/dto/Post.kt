@@ -15,11 +15,14 @@ data class Post(
     val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
     val attachment: Attachment?,
-    val users: UsersArray? // too many questions, but works
+    val users: UsersArray?, // too many questions, but works
+    val ownedByMe: Boolean = false,
 )
+
 data class UsersArray(
     val users: List<Users>
 )
+
 data class Users(
     val id: List<Int>,
     val userPreview: UserPreview?,

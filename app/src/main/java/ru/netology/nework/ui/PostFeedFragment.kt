@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentFeedPostBinding
-import ru.netology.nmedia.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.PostViewModel
 
 
 @AndroidEntryPoint
