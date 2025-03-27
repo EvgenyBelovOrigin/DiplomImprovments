@@ -8,13 +8,13 @@ data class Post(
     val authorAvatar: String?,
     val content: String,
     val published: String,
-//    val coords: Coordinates?,
-    val link: String? = null,
-    val mentionIds: List<Int>? = null,
+    val coords: Coordinates?,
+    val link: String?,
+    val mentionIds: List<Int>?,
     val mentionedMe: Boolean,
-    val likeOwnerIds: List<Int>? = null,
+    val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
-    val attachment: Attachment? = null,
+    val attachment: Attachment?,
     val users: UsersArray? // too many questions, but works
 )
 data class UsersArray(
