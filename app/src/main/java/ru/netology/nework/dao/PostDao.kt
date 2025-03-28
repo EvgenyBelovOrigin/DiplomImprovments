@@ -12,7 +12,7 @@ interface PostDao {
     @Query("SELECT COUNT(*) == 0 FROM PostEntity")
     suspend fun isEmpty(): Boolean
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(posts: List<PostEntity>)
 
     @Query("DELETE FROM PostEntity")
@@ -20,4 +20,7 @@ interface PostDao {
 
     @Query("SELECT * FROM PostEntity ORDER BY id DESC")
     fun getPagingSource(): PagingSource<Int, PostEntity>
+
+    @Query("SELECT COUNT(*) FROM PostEntity")
+    suspend fun count(): Int
 }

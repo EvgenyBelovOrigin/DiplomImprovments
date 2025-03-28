@@ -19,6 +19,7 @@ import ru.netology.nework.R
 import ru.netology.nework.adapter.OnInteractionListener
 import ru.netology.nework.adapter.PostsAdapter
 import ru.netology.nework.databinding.FragmentFeedPostBinding
+import ru.netology.nework.dto.Post
 import ru.netology.nework.viewmodel.PostViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -54,7 +55,7 @@ class PostFeedFragment : Fragment() {
             }
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
-//            override fun onEdit(post: Post) {
+            override fun onEdit(post: Post) {}
 //                viewModel.edit(post)
 //                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
 //            }

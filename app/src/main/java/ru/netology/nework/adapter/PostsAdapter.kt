@@ -6,9 +6,12 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.coroutineScope
 import ru.netology.nework.BuildConfig
+import ru.netology.nework.dao.PostDao
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.Post
+import kotlin.math.min
 
 
 interface OnInteractionListener {
@@ -28,7 +31,7 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = getItem(position) ?: return
+        val post = getItem(position.coerceAtMost(itemCount-1,)) ?: return
         holder.bind(post)
     }
 }
@@ -46,37 +49,6 @@ class PostViewHolder(
             author.text = post.id.toString()
             published.text = post.published
 
-//            menu.setOnClickListener {
-//                PopupMenu(it.context, it).apply {
-//                    inflate(R.menu.options_post)
-//                    setOnMenuItemClickListener { item ->
-//                        when (item.itemId) {
-//                            R.id.remove -> {
-//                                onInteractionListener.onRemove(post)
-//                                true
-//                            }
-//
-//                            R.id.edit -> {
-//                                onInteractionListener.onEdit(post)
-//                                true
-//                            }
-//
-//                            else -> false
-//                        }
-//                    }
-//                }.show()
-//            }
-//
-//            like.setOnClickListener {
-//                onInteractionListener.onLike(post)
-//            }
-//
-//            share.setOnClickListener {
-//                onInteractionListener.onShare(post)
-//            }
-//            attachmentImage.setOnClickListener {
-//                onInteractionListener.onShowAttachmentViewFullScreen(post)
-//            }
         }
     }
 }
