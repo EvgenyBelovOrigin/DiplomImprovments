@@ -14,7 +14,7 @@ data class PostEntity(
     val id: Int,
     val authorId: Int,
     val author: String,
-    val authorJob: String,
+    val authorJob: String?,
     val authorAvatar: String?,
     val content: String,
     val published: String,
