@@ -37,11 +37,9 @@ class PostRemoteMediator @Inject constructor(
 
                 LoadType.PREPEND -> return MediatorResult.Success(true)
                 LoadType.REFRESH -> {
-                    postRemoteKeyDao.clear()
-                    dao.clear()
                     val id = postRemoteKeyDao.max()
                     if (id != null) {
-                        apiService.getLatest(state.config.pageSize)
+                        apiService.getLatest(state.config.pageSize)// to think much about it
                     } else {
                         apiService.getLatest(state.config.pageSize)
                     }
