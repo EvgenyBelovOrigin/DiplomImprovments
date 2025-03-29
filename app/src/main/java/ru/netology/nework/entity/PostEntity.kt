@@ -4,9 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nework.dto.Attachment
-import ru.netology.nework.dto.Coordinates
 import ru.netology.nework.dto.Post
-import ru.netology.nework.dto.UsersArray
 
 @Entity
 data class PostEntity(
@@ -19,9 +17,9 @@ data class PostEntity(
     val content: String,
     val published: String,
     val link: String?,
-//    val mentionIds: List<Int>? = null,
+    val mentionIds: List<Int>?,
     val mentionedMe: Boolean,
-//    val likeOwnerIds: List<Int>? = null,
+    val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
 //    val users: UsersArray? // too many questions, but works
 
@@ -32,10 +30,9 @@ data class PostEntity(
 //    @Embedded
 //    val coords: Coordinates?,
 
-//    @Embedded
-//    val mentionIds: List<Int>?
 
-    ) {
+) {
+
     fun toDto() = Post(
         id,
         authorId,
@@ -46,15 +43,16 @@ data class PostEntity(
         published,
         null,
         link,
-        null,
+        mentionIds,
         mentionedMe,
-        null,
+        likeOwnerIds,
         likedByMe,
         attachment,
         null,
     )
 
     companion object {
+
         fun fromDto(dto: Post) =
             PostEntity(
                 dto.id,
@@ -65,9 +63,9 @@ data class PostEntity(
                 dto.content,
                 dto.published,
                 dto.link,
-                //    val mentionIds: List<Int>? = null,
+                dto.mentionIds,
                 dto.mentionedMe,
-                //    val likeOwnerIds: List<Int>? = null,
+                dto.likeOwnerIds,
                 dto.likedByMe,
 //    val users: UsersArray? // too many questions, but works
 //                coords = dto.coords,

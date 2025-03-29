@@ -47,7 +47,7 @@ class PostViewHolder(
         binding.apply {
 
             author.text = post.id.toString()
-            published.text = post.published
+            published.text = post.likeOwnerIds?.firstOrNull().toString()
 
         }
     }
