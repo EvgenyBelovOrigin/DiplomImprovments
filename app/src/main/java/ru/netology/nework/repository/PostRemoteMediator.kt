@@ -39,7 +39,7 @@ class PostRemoteMediator @Inject constructor(
                 LoadType.REFRESH -> {
                     val id = postRemoteKeyDao.max()
                     if (id != null) {
-                        apiService.getLatest(state.config.pageSize)// to think much about it
+                        apiService.getLatest(state.config.pageSize)//todo to change to getnewer
                     } else {
                         apiService.getLatest(state.config.pageSize)
                     }

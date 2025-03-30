@@ -21,14 +21,14 @@ data class PostEntity(
     val mentionedMe: Boolean,
     val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
-//    val users: UsersArray? // too many questions, but works
+//    val users: UsersArray? // too many questions, but works //todo
 
 
     @Embedded
     val attachment: Attachment?,
 
 //    @Embedded
-//    val coords: Coordinates?,
+//    val coords: Coordinates?,// todo
 
 
 ) {
