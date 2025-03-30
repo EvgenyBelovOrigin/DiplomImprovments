@@ -11,7 +11,7 @@ import ru.netology.nework.dao.PostDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.entity.PostRemoteKeyEntity
-import ru.netology.nmedia.dao.PostRemoteKeyDao
+import ru.netology.nework.dao.PostRemoteKeyDao
 import javax.inject.Inject
 
 

@@ -1,4 +1,4 @@
-package ru.netology.nmedia.dao
+package ru.netology.nework.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -14,7 +14,7 @@ import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.dao.PostRemoteKeyDao
+import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.RunTimeError
