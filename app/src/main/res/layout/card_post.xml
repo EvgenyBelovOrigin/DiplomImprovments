@@ -17,7 +17,8 @@
             android:layout_marginBottom="@dimen/common_spacing"
             app:layout_constraintBottom_toBottomOf="@id/header"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:id="@+id/author"
@@ -32,7 +33,7 @@
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Evgeny" />
+            tools:text="author" />
 
         <TextView
             android:id="@+id/published"
@@ -45,16 +46,18 @@
             app:layout_constraintEnd_toStartOf="@id/menu"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toBottomOf="@id/author"
-            tools:text="2025.03.23 15:52" />
+            tools:text="2025.12" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/common_spacing"
             app:icon="@drawable/ic_more_vert_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.AppTheme.IconButton"
+            />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/header"
@@ -74,9 +77,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header"
-            tools:text="too much texttoo much texttoo much texttoo much texttoo much texttoo much texttoo much texttoo much texttoo much texttoo much texttoo much text" />
+            app:layout_constraintBottom_toTopOf="@id/attachmentImage"
+            tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
 
-
+        <ImageView
+            android:id="@+id/attachmentImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:layout_marginBottom="@dimen/common_spacing"
+            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            tools:srcCompat="@drawable/ic_camera_24dp" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
@@ -84,6 +101,17 @@
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/footer"
+            tools:text="100"
+            style="@style/Widget.AppTheme.LikeCheckBox"
+            />
 
 
 

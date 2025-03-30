@@ -11,6 +11,7 @@ import ru.netology.nework.BuildConfig
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.Post
+import ru.netology.nework.utils.loadAvatar
 import kotlin.math.min
 
 
@@ -31,7 +32,7 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = getItem(position.coerceAtMost(itemCount-1,)) ?: return
+        val post = getItem(position.coerceAtMost(itemCount - 1)) ?: return
         holder.bind(post)
     }
 }
@@ -45,9 +46,12 @@ class PostViewHolder(
 
     fun bind(post: Post) {
         binding.apply {
-
-            author.text = post.id.toString()
-            published.text = post.likeOwnerIds?.firstOrNull().toString()
+            avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
+            author.text = post.author
+            published.text = post.published
+            content.text = post.content
+            like.isChecked = post.likedByMe
+            like.text = post.likeOwnerIds?.size.toString()
 
         }
     }
