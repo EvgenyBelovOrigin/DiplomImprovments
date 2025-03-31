@@ -66,7 +66,7 @@ class PostViewHolder(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
-                        start()
+                        pause()
                     }
                     setOnCompletionListener {
                         stopPlayback()
@@ -81,7 +81,7 @@ class PostViewHolder(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
-                        start()
+                        pause()
                     }
                     setOnCompletionListener {
                         stopPlayback()
