@@ -76,7 +76,7 @@
             app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachmentImage"
+            app:layout_constraintTop_toBottomOf="@id/attachDivider"
             tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
 
         <ImageView
@@ -88,10 +88,10 @@
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/attachDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header"
-            app:layout_constraintBottom_toTopOf="@id/content"
             tools:srcCompat="@drawable/videoimage" />
 
         <VideoView
@@ -103,19 +103,39 @@
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/attachDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/content"
-            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            tools:srcCompat="@drawable/videoimage" />
+        <VideoView
+            android:id="@+id/attachmentAudio"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:layout_marginBottom="@dimen/common_spacing"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/attachDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
             tools:srcCompat="@drawable/videoimage" />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/attachDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="attachmentImage,attachmentVideo, attachmentAudio" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="attachmentImage,attachmentVideo" />
+            app:constraint_referenced_ids="content" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/like"

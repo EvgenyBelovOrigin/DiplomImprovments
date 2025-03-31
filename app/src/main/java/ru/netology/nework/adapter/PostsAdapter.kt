@@ -1,7 +1,9 @@
 package ru.netology.nework.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -56,10 +58,41 @@ class PostViewHolder(
             like.text = post.likeOwnerIds?.size.toString()
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
             post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
+            attachmentVideo.isVisible = post.attachment?.type == AttachmentType.VIDEO
+            attachmentVideo.apply {
+                if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
+                    setMediaController(MediaController(context))
+                    setVideoURI(
+                        Uri.parse(post.attachment?.url)
+                    )
+                    setOnPreparedListener {
+                        start()
+                    }
+                    setOnCompletionListener {
+                        stopPlayback()
+                    }
+                }
+            }
+            attachmentAudio.isVisible = post.attachment?.type == AttachmentType.AUDIO
+            attachmentAudio.apply {
+                if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
+                    setMediaController(MediaController(context))
+                    setVideoURI(
+                        Uri.parse(post.attachment?.url)
+                    )
+                    setOnPreparedListener {
+                        start()
+                    }
+                    setOnCompletionListener {
+                        stopPlayback()
+                    }
+                }
+            }
 
 
         }
     }
+
 }
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
