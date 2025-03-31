@@ -61,22 +61,29 @@ class PostViewHolder(
             attachmentVideo.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
-                    setMediaController(MediaController(context))
+                    val mediaController = MediaController(context)
+                    setMediaController(mediaController)
+                    mediaController.show()
+
+
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
+                        seekTo(1)
                         pause()
                     }
                     setOnCompletionListener {
                         stopPlayback()
                     }
                 }
-            }
+            }// todo add play button on video
             attachmentAudio.isVisible = post.attachment?.type == AttachmentType.AUDIO
             attachmentAudio.apply {
                 if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
-                    setMediaController(MediaController(context))
+                    val mediaController = MediaController(context)
+                    setMediaController(mediaController)
+                    mediaController.show()
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
                     )
@@ -87,7 +94,7 @@ class PostViewHolder(
                         stopPlayback()
                     }
                 }
-            }
+            }//todo view like player
 
 
         }
