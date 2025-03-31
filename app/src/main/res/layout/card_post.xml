@@ -50,14 +50,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
+            style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/common_spacing"
             app:icon="@drawable/ic_more_vert_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/Widget.AppTheme.IconButton"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/header"
@@ -74,45 +73,59 @@
             android:lineSpacingMultiplier="1.5"
             android:paddingTop="@dimen/common_spacing"
             android:paddingBottom="@dimen/common_spacing"
+            app:layout_constraintBottom_toTopOf="@id/footer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            app:layout_constraintBottom_toTopOf="@id/attachmentImage"
+            app:layout_constraintTop_toBottomOf="@id/attachmentImage"
             tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
 
         <ImageView
             android:id="@+id/attachmentImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:visibility="gone"
-            android:adjustViewBounds="true"
             android:layout_marginTop="@dimen/common_spacing"
             android:layout_marginBottom="@dimen/common_spacing"
-            app:layout_constraintBottom_toTopOf="@id/footer"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:layout_constraintBottom_toTopOf="@id/content"
+            tools:srcCompat="@drawable/videoimage" />
+
+        <VideoView
+            android:id="@+id/attachmentVideo"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:layout_marginBottom="@dimen/common_spacing"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/content"
-            tools:srcCompat="@drawable/ic_camera_24dp" />
+            app:layout_constraintBottom_toTopOf="@id/footer"
+            tools:srcCompat="@drawable/videoimage" />
+
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="content" />
+            app:constraint_referenced_ids="attachmentImage,attachmentVideo" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/like"
+            style="@style/Widget.AppTheme.LikeCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/footer"
-            tools:text="100"
-            style="@style/Widget.AppTheme.LikeCheckBox"
-            />
-
+            tools:text="100" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

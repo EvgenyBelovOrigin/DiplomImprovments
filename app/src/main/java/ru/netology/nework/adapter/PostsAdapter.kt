@@ -10,7 +10,9 @@ import kotlinx.coroutines.coroutineScope
 import ru.netology.nework.BuildConfig
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.databinding.CardPostBinding
+import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
+import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 import kotlin.math.min
 
@@ -47,11 +49,14 @@ class PostViewHolder(
     fun bind(post: Post) {
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
-            author.text = post.author
-            published.text = post.published
-            content.text = post.content
+            author.text = post.id.toString()
+            published.text = post.attachment?.url
+            content.text = post.attachment?.type.toString()
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
+            attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
+            post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
+
 
         }
     }
