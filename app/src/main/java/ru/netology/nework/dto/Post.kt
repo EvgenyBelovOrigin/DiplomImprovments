@@ -15,7 +15,7 @@ data class Post(
     val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
     val attachment: Attachment?,
-    val users: UsersArray?, // too many questions, but works
+    val users: Map<String, UserPreview?>?, // too many questions, but works
     val ownedByMe: Boolean = false,
 )
 
