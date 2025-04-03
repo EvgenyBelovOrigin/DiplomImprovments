@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.UserPreview
 
 @Entity
 data class PostEntity(
@@ -21,7 +22,7 @@ data class PostEntity(
     val mentionedMe: Boolean,
     val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
-//    val users: UsersArray? // too many questions, but works //todo
+    val users: Map<String,UserPreview?>?, // too many questions, but works //todo
 
 
     @Embedded
@@ -48,7 +49,7 @@ data class PostEntity(
         likeOwnerIds,
         likedByMe,
         attachment,
-        null,
+        users,
     )
 
     companion object {
@@ -67,6 +68,7 @@ data class PostEntity(
                 dto.mentionedMe,
                 dto.likeOwnerIds,
                 dto.likedByMe,
+                dto.users,
 //    val users: UsersArray? // too many questions, but works
 //                coords = dto.coords,
                 attachment = dto.attachment,
