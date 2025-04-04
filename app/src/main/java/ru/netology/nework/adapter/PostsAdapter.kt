@@ -1,9 +1,11 @@
 package ru.netology.nework.adapter
 
+import android.media.MediaPlayer
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.MediaController
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -57,15 +59,12 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
-            post.attachment?.let { attachmentImage.loadAttachmentView(it.url)}
-            attachmentVideo.isVisible = post.attachment?.type == AttachmentType.VIDEO
+            post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
+            attachmentVideoLayout.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
                     val mediaController = MediaController(context)
-                    setMediaController(mediaController)
-                    mediaController.show()
-
-
+                    val mediaPlayer = MediaPlayer()
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
                     )
@@ -73,11 +72,19 @@ class PostViewHolder(
                         seekTo(1)
                         pause()
                     }
-                    setOnCompletionListener {
-                        stopPlayback()
+
+                    playVideoButton.setOnClickListener {
+                        setMediaController(mediaController)
+                        start()
+                        playVideoButton.isVisible = false
+                        setOnCompletionListener {
+                            resume()
+                            playVideoButton.isVisible = true
+                        }
                     }
                 }
-            }// todo add play button on video
+            }
+
             attachmentAudio.isVisible = post.attachment?.type == AttachmentType.AUDIO
             attachmentAudio.apply {
                 if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
