@@ -10,7 +10,7 @@ fun ImageView.loadAvatar(url: String?) {
         this
     )
         .load(url)
-        .error(R.drawable.ic_error_100dp)
+        .error(R.drawable.avatar_default)
         .placeholder(R.drawable.ic_loading_100dp)
         .timeout(15_000)
         .circleCrop()
@@ -20,7 +20,7 @@ fun ImageView.loadAvatar(url: String?) {
 fun ImageView.loadAttachmentView(url: String) {
     Glide.with(this)
         .load(url)
-        .error(R.drawable.ic_error_100dp)
+        .error(R.drawable.image_default)
         .placeholder(R.drawable.ic_loading_100dp)
         .timeout(15_000)
         .into(this)

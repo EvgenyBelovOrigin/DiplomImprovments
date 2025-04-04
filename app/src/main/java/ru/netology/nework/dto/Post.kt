@@ -19,15 +19,6 @@ data class Post(
     val ownedByMe: Boolean = false,
 )
 
-data class UsersArray(
-    val users: List<Users>
-)
-
-data class Users(
-    val id: List<Int>,
-    val userPreview: UserPreview?,
-)
-
 data class UserPreview(
     val name: String?,
     val avatar: String?

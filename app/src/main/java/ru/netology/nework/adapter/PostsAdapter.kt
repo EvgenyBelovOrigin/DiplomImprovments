@@ -57,7 +57,7 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
-            post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
+            post.attachment?.let { attachmentImage.loadAttachmentView(it.url)}
             attachmentVideo.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
