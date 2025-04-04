@@ -64,12 +64,11 @@ class PostViewHolder(
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
                     val mediaController = MediaController(context)
-                    val mediaPlayer = MediaPlayer()
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
-                        seekTo(1)
+                        seekTo(10)
                         pause()
                     }
 
@@ -79,6 +78,7 @@ class PostViewHolder(
                         playVideoButton.isVisible = false
                         setOnCompletionListener {
                             resume()
+                            mediaController.hide()
                             playVideoButton.isVisible = true
                         }
                     }
