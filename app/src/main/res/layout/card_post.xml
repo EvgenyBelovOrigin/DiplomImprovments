@@ -150,6 +150,7 @@
 
             <SeekBar
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:id="@+id/audioSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

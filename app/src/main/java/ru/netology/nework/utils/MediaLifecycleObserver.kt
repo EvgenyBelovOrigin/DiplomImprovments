@@ -1,9 +1,11 @@
 package ru.netology.nework.utils
 
 import android.media.MediaPlayer
+import android.widget.SeekBar
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 
 class MediaLifecycleObserver : LifecycleEventObserver {
     private var mediaPlayer: MediaPlayer? = MediaPlayer()
@@ -51,6 +53,7 @@ class MediaLifecycleObserver : LifecycleEventObserver {
 
     companion object MediaPlayerManager {
         private val mediaLifecycleObserver: MediaLifecycleObserver = MediaLifecycleObserver()
+        val progress = mediaLifecycleObserver.mediaPlayer?.currentPosition
         fun mediaStop() {
             mediaLifecycleObserver.stop()
 

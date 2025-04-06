@@ -60,6 +60,10 @@ class PostFeedFragment : Fragment() {
                 viewModel.playAudio(post)
             }
 
+            override fun onStopAudio() {
+                viewModel.clearPlayAudio()
+            }
+
         })
         viewModel.clearPlayAudio()
         binding.list.adapter = adapter
@@ -68,6 +72,9 @@ class PostFeedFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.data.collectLatest(adapter::submitData)
             }
+        }
+        viewModel.refreshAdapter.observe(viewLifecycleOwner){
+            adapter.notifyDataSetChanged()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

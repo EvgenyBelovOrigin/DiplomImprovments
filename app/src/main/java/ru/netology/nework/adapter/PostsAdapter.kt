@@ -1,35 +1,34 @@
 package ru.netology.nework.adapter
 
-import android.media.MediaPlayer
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.MediaController
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.coroutineScope
 import ru.netology.nework.BuildConfig
-import ru.netology.nework.dao.PostDao
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
+import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
-import kotlin.math.min
 
 
 interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onPlayAudio(post: Post) {}
+    fun onStopAudio() {}
 
 }
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener,
-) : PagingDataAdapter<Post, PostViewHolder>(PostDiffCallback()) {
+
+
+    ) : PagingDataAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onInteractionListener)
@@ -46,9 +45,8 @@ class PostViewHolder(
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val baseUrl = BuildConfig.BASE_URL
-
     fun bind(post: Post) {
+
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.id.toString()
@@ -66,11 +64,12 @@ class PostViewHolder(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
-                        seekTo(10)
+                        seekTo(5)
                         pause()
                     }
 
                     playVideoButton.setOnClickListener {
+                        onInteractionListener.onStopAudio()
                         setMediaController(mediaController)
                         start()
                         playVideoButton.isVisible = false
@@ -85,7 +84,10 @@ class PostViewHolder(
 
             attachmentAudioLayout.isVisible = post.attachment?.type == AttachmentType.AUDIO
             playAudioButton.isChecked = post.isPlayingAudio
-            playAudioButton.setOnClickListener { onInteractionListener.onPlayAudio(post) }
+            playAudioButton.setOnClickListener {
+                onInteractionListener.onPlayAudio(post)
+            }
+
 
 
         }
