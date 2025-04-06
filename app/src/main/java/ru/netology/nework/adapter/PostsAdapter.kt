@@ -85,23 +85,23 @@ class PostViewHolder(
                 }
             }
 
-            attachmentAudio.isVisible = post.attachment?.type == AttachmentType.AUDIO
-            attachmentAudio.apply {
-                if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
-                    val mediaController = MediaController(context)
-                    setMediaController(mediaController)
-                    mediaController.show()
-                    setVideoURI(
-                        Uri.parse(post.attachment?.url)
-                    )
-                    setOnPreparedListener {
-                        pause()
-                    }
-                    setOnCompletionListener {
-                        stopPlayback()
-                    }
-                }
-            }//todo view like player
+            attachmentAudioLayout.isVisible = post.attachment?.type == AttachmentType.AUDIO
+//            attachmentAudio.apply {
+//                if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
+//                    val mediaController = MediaController(context)
+//                    setMediaController(mediaController)
+//                    mediaController.show()
+//                    setVideoURI(
+//                        Uri.parse(post.attachment?.url)
+//                    )
+//                    setOnPreparedListener {
+//                        pause()
+//                    }
+//                    setOnCompletionListener {
+//                        stopPlayback()
+//                    }
+//                }
+//            }//todo view like player
 
 
         }

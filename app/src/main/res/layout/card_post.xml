@@ -100,7 +100,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="@dimen/common_spacing"
             android:layout_marginBottom="@dimen/common_spacing"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/attachDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,33 +123,44 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:visibility="visible"
-                app:srcCompat="@drawable/play_video_icon"
-                />
+                app:srcCompat="@drawable/play_video_icon" />
 
 
         </FrameLayout>
 
-        <VideoView
-            android:id="@+id/attachmentAudio"
+        <LinearLayout
+            android:id="@+id/attachmentAudioLayout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_spacing"
             android:layout_marginBottom="@dimen/common_spacing"
-            android:adjustViewBounds="true"
-            android:importantForAccessibility="no"
+            android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/attachDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            tools:srcCompat="@drawable/videoimage" />
+            app:layout_constraintTop_toBottomOf="@id/header">
+
+            <ImageButton
+                android:id="@+id/playAudioButton"
+                android:layout_width="@dimen/icon_button_min_size"
+                android:layout_height="@dimen/icon_button_min_size"
+                android:background="@drawable/play_audio_button" />
+
+            <SeekBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/attachDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="attachmentImage,attachmentVideo, attachmentAudio" />
+            app:constraint_referenced_ids="attachmentImage,attachmentVideoLayout, attachmentVideoLayout" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
