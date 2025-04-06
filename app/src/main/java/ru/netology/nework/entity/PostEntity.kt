@@ -22,14 +22,13 @@ data class PostEntity(
     val mentionedMe: Boolean,
     val likeOwnerIds: List<Int>?,
     val likedByMe: Boolean,
-    val users: Map<String,UserPreview?>?, // too many questions, but works //todo
+    val users: Map<String,UserPreview?>?,
 
 
     @Embedded
     val attachment: Attachment?,
-
-//    @Embedded
-//    val coords: Coordinates?,// todo
+    val isPlayingAudio:Boolean = false,
+    val isPlayingAudioPaused:Boolean = false,
 
 
 ) {
@@ -50,6 +49,8 @@ data class PostEntity(
         likedByMe,
         attachment,
         users,
+        isPlayingAudio = isPlayingAudio,
+        isPlayingAudioPaused = isPlayingAudioPaused
     )
 
     companion object {
@@ -69,9 +70,9 @@ data class PostEntity(
                 dto.likeOwnerIds,
                 dto.likedByMe,
                 dto.users,
-//    val users: UsersArray? // too many questions, but works
-//                coords = dto.coords,
                 attachment = dto.attachment,
+                isPlayingAudio = dto.isPlayingAudio,
+                isPlayingAudioPaused = dto.isPlayingAudioPaused
             )
 
     }

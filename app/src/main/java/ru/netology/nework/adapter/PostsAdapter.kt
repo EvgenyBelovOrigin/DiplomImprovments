@@ -22,11 +22,9 @@ import kotlin.math.min
 
 
 interface OnInteractionListener {
-    fun onLike(post: Post) {}
     fun onEdit(post: Post) {}
-    fun onRemove(post: Post) {}
-    fun onShare(post: Post) {}
-    fun onShowAttachmentViewFullScreen(post: Post) {}
+    fun onPlayAudio(post: Post) {}
+
 }
 
 class PostsAdapter(
@@ -86,22 +84,8 @@ class PostViewHolder(
             }
 
             attachmentAudioLayout.isVisible = post.attachment?.type == AttachmentType.AUDIO
-//            attachmentAudio.apply {
-//                if (post.attachment?.type == AttachmentType.AUDIO && !post.attachment.url.isNullOrBlank()) {
-//                    val mediaController = MediaController(context)
-//                    setMediaController(mediaController)
-//                    mediaController.show()
-//                    setVideoURI(
-//                        Uri.parse(post.attachment?.url)
-//                    )
-//                    setOnPreparedListener {
-//                        pause()
-//                    }
-//                    setOnCompletionListener {
-//                        stopPlayback()
-//                    }
-//                }
-//            }//todo view like player
+            playAudioButton.isChecked = post.isPlayingAudio
+            playAudioButton.setOnClickListener { onInteractionListener.onPlayAudio(post) }
 
 
         }

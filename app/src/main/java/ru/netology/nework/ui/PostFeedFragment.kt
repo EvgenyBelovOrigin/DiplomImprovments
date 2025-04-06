@@ -56,38 +56,12 @@ class PostFeedFragment : Fragment() {
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {}
-//                viewModel.edit(post)
-//                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-//            }
+            override fun onPlayAudio(post: Post) {
+                viewModel.playAudio(post)
+            }
 
-//            override fun onLike(post: Post) {
-//                viewModel.likeById(post)
-//            }
-
-//            override fun onRemove(post: Post) {
-//                viewModel.removeById(post.id)
-//            }
-
-//            override fun onShare(post: Post) {
-//                val intent = Intent().apply {
-//                    action = Intent.ACTION_SEND
-//                    putExtra(Intent.EXTRA_TEXT, post.content)
-//                    type = "text/plain"
-//                }
-//
-//                val shareIntent =
-//                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
-//                startActivity(shareIntent)
-//            }
-
-//            override fun onShowAttachmentViewFullScreen(post: Post) {
-//                findNavController().navigate(R.id.action_feedFragment_to_attachmentViewFullScreen,
-//                    Bundle().apply {
-//                        textArg = post.attachment?.url
-//
-//                    })
-//            }
         })
+        viewModel.clearPlayAudio()
         binding.list.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -104,7 +78,6 @@ class PostFeedFragment : Fragment() {
             }
         }
 
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collectLatest { state ->
@@ -115,6 +88,7 @@ class PostFeedFragment : Fragment() {
         }
         binding.swiperefresh.setOnRefreshListener {
             adapter.refresh()
+            viewModel.clearPlayAudio()
         }
 
 

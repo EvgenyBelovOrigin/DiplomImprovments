@@ -12,8 +12,17 @@ interface PostDao {
     @Query("SELECT COUNT(*) == 0 FROM PostEntity")
     suspend fun isEmpty(): Boolean
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Query("UPDATE PostEntity SET isPlayingAudio = 0")
+    suspend fun makeAllIsNotPlaying()
+
+    @Query("UPDATE PostEntity SET isPlayingAudioPaused = 0")
+    suspend fun makeAllIsNotPaused()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(posts: List<PostEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(post: PostEntity)
 
     @Query("DELETE FROM PostEntity")
     suspend fun clear()

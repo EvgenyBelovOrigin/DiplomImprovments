@@ -1,14 +1,8 @@
 package ru.netology.nework.viewmodel
 
-import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +12,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dto.Post
+import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.repository.Repository
+import ru.netology.nework.utils.MediaLifecycleObserver
+import ru.netology.nework.utils.SingleLiveEvent
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.error.NetworkError
-import java.io.File
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,7 +27,12 @@ import kotlin.random.Random
 class PostViewModel @Inject constructor(
     private val repository: Repository,
     private val appAuth: AppAuth,
+    private val dao: PostDao
 ) : ViewModel() {
+
+    private val _refreshAdapter = SingleLiveEvent<Unit>()
+    val refreshAdapter: SingleLiveEvent<Unit>
+        get() = _refreshAdapter
 
     val data: Flow<PagingData<Post>> = appAuth.authState
         .flatMapLatest { token ->
@@ -43,14 +43,48 @@ class PostViewModel @Inject constructor(
             }
         }.flowOn(Dispatchers.Default)
 
-
-    fun getPosts() {
-        viewModelScope.launch {
+    fun playAudio(post: Post) {
+        if (!post.isPlayingAudio) {
             try {
-                repository.getPosts()
+                viewModelScope.launch {
+                    dao.makeAllIsNotPlaying()
+                    dao.insert(PostEntity.fromDto(post.copy(isPlayingAudio = true)))
+                    if (post.isPlayingAudioPaused) {
+                        dao.makeAllIsNotPaused()
+                        MediaLifecycleObserver.mediaContinuePlay()
+                    } else {
+                        MediaLifecycleObserver.mediaStop()
+                        post.attachment?.let { MediaLifecycleObserver.mediaPlay(it.url) }
+                    }
+                }
+
             } catch (e: Exception) {
                 throw e
             }
+
+        } else {
+            try {
+                viewModelScope.launch {
+                    dao.makeAllIsNotPlaying()
+                    dao.insert(PostEntity.fromDto(post.copy(isPlayingAudioPaused = true, isPlayingAudio = false)))
+                    MediaLifecycleObserver.mediaPause()
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+
+        }
+
+    }
+    fun clearPlayAudio(){
+        try {
+            viewModelScope.launch {
+                dao.makeAllIsNotPaused()
+                dao.makeAllIsNotPlaying()
+                MediaLifecycleObserver.mediaStop()
+            }
+        }catch (e:Exception){
+            throw e
         }
     }
 

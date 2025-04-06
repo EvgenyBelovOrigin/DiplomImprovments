@@ -17,6 +17,8 @@ data class Post(
     val attachment: Attachment?,
     val users: Map<String, UserPreview?>?, // too many questions, but works
     val ownedByMe: Boolean = false,
+    val isPlayingAudio:Boolean = false,
+    val isPlayingAudioPaused:Boolean = false
 )
 
 data class UserPreview(
