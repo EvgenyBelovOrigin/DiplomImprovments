@@ -49,14 +49,13 @@ class PostViewModel @Inject constructor(
                 viewModelScope.launch {
                     dao.makeAllIsNotPlaying()
                     dao.insert(PostEntity.fromDto(post.copy(isPlayingAudio = true)))
+                    _refreshAdapter.value = Unit
                     if (post.isPlayingAudioPaused) {
                         dao.makeAllIsNotPaused()
                         MediaLifecycleObserver.mediaContinuePlay()
-                        _refreshAdapter.value = Unit
                     } else {
                         MediaLifecycleObserver.mediaStop()
                         post.attachment?.let { MediaLifecycleObserver.mediaPlay(it.url) }
-                        _refreshAdapter.value = Unit
                     }
                 }
 
@@ -77,7 +76,6 @@ class PostViewModel @Inject constructor(
                         )
                     )
                     MediaLifecycleObserver.mediaPause()
-                    _refreshAdapter.value = Unit
                 }
             } catch (e: Exception) {
                 throw e

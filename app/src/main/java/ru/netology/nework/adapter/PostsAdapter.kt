@@ -49,9 +49,9 @@ class PostViewHolder(
 
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
-            author.text = post.id.toString()
-            published.text = post.attachment?.url
-            content.text = post.attachment?.type.toString()
+            author.text = post.author
+            published.text = post.published
+            content.text = post.content.replace("\n"," ")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
@@ -66,6 +66,7 @@ class PostViewHolder(
                     setOnPreparedListener {
                         seekTo(5)
                         pause()
+                        mediaController.hide()
                     }
 
                     playVideoButton.setOnClickListener {
