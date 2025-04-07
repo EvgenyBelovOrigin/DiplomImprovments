@@ -1,5 +1,6 @@
 package ru.netology.nework.adapter
 
+import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,13 +9,19 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nework.BuildConfig
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
-import ru.netology.nework.utils.MediaLifecycleObserver
+import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
+import java.text.DateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 
 interface OnInteractionListener {
@@ -27,8 +34,8 @@ interface OnInteractionListener {
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener,
 
-
     ) : PagingDataAdapter<Post, PostViewHolder>(PostDiffCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onInteractionListener)
@@ -50,7 +57,8 @@ class PostViewHolder(
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.author
-            published.text = post.published
+            published.text = ZonedDateTime.parse(post.published).withZoneSameInstant(ZoneId.systemDefault()).format(
+                DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"))
             content.text = post.content.replace("\n"," ")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
