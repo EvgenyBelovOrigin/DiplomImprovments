@@ -83,6 +83,7 @@ class PostFeedFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 appAuth.authState.collectLatest {
+                    viewModel.daoClearAll()
                     adapter.refresh()
                 }
             }

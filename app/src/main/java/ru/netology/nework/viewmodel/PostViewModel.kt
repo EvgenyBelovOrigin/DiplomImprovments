@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
+import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.repository.Repository
@@ -28,7 +29,8 @@ import javax.inject.Inject
 class PostViewModel @Inject constructor(
     private val repository: Repository,
     private val appAuth: AppAuth,
-    private val dao: PostDao
+    private val dao: PostDao,
+    private val remoteDao: PostRemoteKeyDao,
 ) : ViewModel() {
     //POSTS
 
@@ -119,6 +121,18 @@ class PostViewModel @Inject constructor(
                 }
             }
 
+        }
+    }
+
+    fun daoClearAll() {
+        try {
+            viewModelScope.launch {
+                dao.clear()
+                remoteDao.clear()
+
+            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
