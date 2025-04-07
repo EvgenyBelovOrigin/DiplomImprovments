@@ -32,4 +32,5 @@ interface PostDao {
 
     @Query("SELECT COUNT(*) FROM PostEntity")
     suspend fun count(): Int
+
 }

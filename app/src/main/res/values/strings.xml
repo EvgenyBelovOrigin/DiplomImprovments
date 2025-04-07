@@ -20,4 +20,5 @@
     <string name="requestSignInTitle">You are not signed in yet</string>
     <string name="requestSignInMessage">You should sign in to have much</string>
     <string name="return_to_posts">Return to posts</string>
+    <string name="error_like">Something goes wrong. Your like has not been registered. Try again later</string>
 </resources>

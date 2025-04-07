@@ -1,5 +1,6 @@
 package ru.netology.nework.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -29,10 +30,7 @@ class PostViewModel @Inject constructor(
     private val appAuth: AppAuth,
     private val dao: PostDao
 ) : ViewModel() {
-
-    private val _refreshAdapter = SingleLiveEvent<Unit>()
-    val refreshAdapter: SingleLiveEvent<Unit>
-        get() = _refreshAdapter
+    //POSTS
 
     val data: Flow<PagingData<Post>> = appAuth.authState
         .flatMapLatest { token ->
@@ -42,6 +40,18 @@ class PostViewModel @Inject constructor(
                 }
             }
         }.flowOn(Dispatchers.Default)
+
+    private val _refreshAdapter = SingleLiveEvent<Unit>()
+    val refreshAdapter: SingleLiveEvent<Unit>
+        get() = _refreshAdapter
+
+    private val _onLikeError = SingleLiveEvent<Int>()
+    val onLikeError: LiveData<Int>
+        get() = _onLikeError
+
+    private val _requestSignIn = SingleLiveEvent<Unit>()
+    val requestSignIn: LiveData<Unit>
+        get() = _requestSignIn
 
     fun playAudio(post: Post) {
         if (!post.isPlayingAudio) {
@@ -58,11 +68,9 @@ class PostViewModel @Inject constructor(
                         post.attachment?.let { MediaLifecycleObserver.mediaPlay(it.url) }
                     }
                 }
-
             } catch (e: Exception) {
                 throw e
             }
-
         } else {
             try {
                 viewModelScope.launch {
@@ -80,9 +88,7 @@ class PostViewModel @Inject constructor(
             } catch (e: Exception) {
                 throw e
             }
-
         }
-
     }
 
     fun clearPlayAudio() {
@@ -94,6 +100,25 @@ class PostViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             throw e
+        }
+    }
+
+    fun likeById(post: Post) {
+        if (appAuth.authState.value?.id == 0) {
+            _requestSignIn.value = Unit
+        } else {
+            viewModelScope.launch {
+                try {
+                    if (!post.likedByMe) {
+                        repository.likeById(post.id)
+                    } else {
+                        repository.disLikeById(post.id)
+                    }
+                } catch (e: Exception) {
+                    _onLikeError.value = post.id
+                }
+            }
+
         }
     }
 

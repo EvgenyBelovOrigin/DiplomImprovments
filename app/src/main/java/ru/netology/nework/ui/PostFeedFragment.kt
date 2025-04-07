@@ -47,7 +47,6 @@ class PostFeedFragment : Fragment() {
 
                 R.id.events -> {
                     findNavController().navigate(R.id.eventFeedFragment)
-//                    viewModel.getPosts()
                     true
                 }
 
@@ -62,6 +61,10 @@ class PostFeedFragment : Fragment() {
 
             override fun onStopAudio() {
                 viewModel.clearPlayAudio()
+            }
+
+            override fun onLike(post: Post) {
+                viewModel.likeById(post)
             }
 
         })
@@ -97,12 +100,22 @@ class PostFeedFragment : Fragment() {
             adapter.refresh()
             viewModel.clearPlayAudio()
         }
+        viewModel.onLikeError.observe(viewLifecycleOwner) { id ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.error)
+                .setMessage(R.string.error_like)
+                .setPositiveButton(R.string.ok, null)
+                .show()
+        }
+        viewModel.requestSignIn.observe(viewLifecycleOwner) {
+            requestSignIn()
+        }
 
 
         return binding.root
     }
 
-    fun requestSignIn() {
+    private fun requestSignIn() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.requestSignInTitle)
             .setMessage(R.string.requestSignInMessage)

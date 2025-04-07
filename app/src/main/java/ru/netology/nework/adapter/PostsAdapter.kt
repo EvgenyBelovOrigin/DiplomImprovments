@@ -27,6 +27,7 @@ import java.util.Date
 interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onPlayAudio(post: Post) {}
+    fun onLike(post: Post) {}
     fun onStopAudio() {}
 
 }
@@ -57,11 +58,17 @@ class PostViewHolder(
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.author
-            published.text = ZonedDateTime.parse(post.published).withZoneSameInstant(ZoneId.systemDefault()).format(
-                DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"))
-            content.text = post.content.replace("\n"," ")
+            published.text =
+                ZonedDateTime.parse(post.published).withZoneSameInstant(ZoneId.systemDefault())
+                    .format(
+                        DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
+                    )
+            content.text = post.content.replace("\n", " ")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
+            like.setOnClickListener {
+                onInteractionListener.onLike(post)
+            }
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
             post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
             attachmentVideoLayout.isVisible = post.attachment?.type == AttachmentType.VIDEO
@@ -96,7 +103,6 @@ class PostViewHolder(
             playAudioButton.setOnClickListener {
                 onInteractionListener.onPlayAudio(post)
             }
-
 
 
         }

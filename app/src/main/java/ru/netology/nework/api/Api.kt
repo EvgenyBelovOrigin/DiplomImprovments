@@ -1,6 +1,7 @@
 package ru.netology.nework.api
 
 import retrofit2.Response
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -49,4 +50,10 @@ interface ApiService {
 
 
     suspend fun getNewer(@Path("id") id: Int): Response<List<Post>>
+
+    @POST("posts/{id}/likes")
+    suspend fun likeById(@Path("id") id: Int): Response<Post>
+
+    @DELETE("posts/{id}/likes")
+    suspend fun disLikeById(@Path("id") id: Int): Response<Post>
 }

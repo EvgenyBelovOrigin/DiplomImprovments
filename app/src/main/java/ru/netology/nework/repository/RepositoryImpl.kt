@@ -108,6 +108,40 @@ class RepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun disLikeById(id: Int) {
+        try {
+            val response = apiService.disLikeById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            if (response.body() != null) {
+                dao.insert(PostEntity.fromDto(response.body()!!))
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun likeById(id: Int) {
+        try {
+            val response = apiService.likeById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+
+            }
+            if (response.body() != null) {
+                dao.insert(PostEntity.fromDto(response.body()!!))
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+
+    }
+
 
 }
 
