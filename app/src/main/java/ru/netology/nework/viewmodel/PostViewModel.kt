@@ -112,9 +112,9 @@ class PostViewModel @Inject constructor(
             viewModelScope.launch {
                 try {
                     if (!post.likedByMe) {
-                        repository.likeById(post.id)
+                        repository.likeById(post)
                     } else {
-                        repository.disLikeById(post.id)
+                        repository.disLikeById(post)
                     }
                 } catch (e: Exception) {
                     _onLikeError.value = post.id

@@ -108,14 +108,22 @@ class RepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun disLikeById(id: Int) {
+    override suspend fun disLikeById(post: Post) {
         try {
-            val response = apiService.disLikeById(id)
+            val response = apiService.disLikeById(post.id)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
             if (response.body() != null) {
-                dao.insert(PostEntity.fromDto(response.body()!!))
+                dao.insert(
+                    PostEntity.fromDto(
+                        response.body()!!
+                            .copy(
+                                isPlayingAudioPaused = post.isPlayingAudioPaused,
+                                isPlayingAudio = post.isPlayingAudio
+                            )!!
+                    )
+                )
             }
         } catch (e: IOException) {
             throw NetworkError
@@ -124,15 +132,22 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun likeById(id: Int) {
+    override suspend fun likeById(post: Post) {
         try {
-            val response = apiService.likeById(id)
+            val response = apiService.likeById(post.id)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
 
             }
             if (response.body() != null) {
-                dao.insert(PostEntity.fromDto(response.body()!!))
+                dao.insert(
+                    PostEntity.fromDto(
+                        response.body()!!.copy(
+                            isPlayingAudio = post.isPlayingAudio,
+                            isPlayingAudioPaused = post.isPlayingAudioPaused
+                        )!!
+                    )
+                )
             }
         } catch (e: IOException) {
             throw NetworkError
