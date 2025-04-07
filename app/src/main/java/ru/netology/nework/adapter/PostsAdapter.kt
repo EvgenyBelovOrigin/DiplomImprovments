@@ -1,6 +1,7 @@
 package ru.netology.nework.adapter
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
 import ru.netology.nework.utils.AndroidUtils
+import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 import java.text.DateFormat
@@ -74,26 +76,25 @@ class PostViewHolder(
             attachmentVideoLayout.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
-                    val mediaController = MediaController(context)
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
                     )
                     setOnPreparedListener {
                         seekTo(5)
-                        pause()
-                        mediaController.hide()
                     }
 
                     playVideoButton.setOnClickListener {
                         onInteractionListener.onStopAudio()
-                        setMediaController(mediaController)
                         start()
                         playVideoButton.isVisible = false
                         setOnCompletionListener {
                             resume()
-                            mediaController.hide()
                             playVideoButton.isVisible = true
                         }
+                    }
+                    attachmentVideoLayout.setOnClickListener {
+                        pause()
+                        playVideoButton.isVisible = true
                     }
                 }
             }

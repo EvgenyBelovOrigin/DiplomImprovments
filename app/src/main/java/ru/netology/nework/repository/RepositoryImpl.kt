@@ -121,7 +121,7 @@ class RepositoryImpl @Inject constructor(
                             .copy(
                                 isPlayingAudioPaused = post.isPlayingAudioPaused,
                                 isPlayingAudio = post.isPlayingAudio
-                            )!!
+                            )
                     )
                 )
             }
@@ -145,7 +145,7 @@ class RepositoryImpl @Inject constructor(
                         response.body()!!.copy(
                             isPlayingAudio = post.isPlayingAudio,
                             isPlayingAudioPaused = post.isPlayingAudioPaused
-                        )!!
+                        )
                     )
                 )
             }
