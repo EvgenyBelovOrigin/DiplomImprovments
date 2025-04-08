@@ -6,10 +6,12 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.MediaController
+import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
@@ -28,6 +30,7 @@ import java.util.Date
 
 interface OnInteractionListener {
     fun onEdit(post: Post) {}
+    fun onRemove(post: Post) {}
     fun onPlayAudio(post: Post) {}
     fun onLike(post: Post) {}
     fun onStopAudio() {}
@@ -103,6 +106,28 @@ class PostViewHolder(
             playAudioButton.isChecked = post.isPlayingAudio
             playAudioButton.setOnClickListener {
                 onInteractionListener.onPlayAudio(post)
+            }
+
+            menu.isVisible = post.ownedByMe
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onInteractionListener.onRemove(post)
+                                true
+                            }
+
+                            R.id.edit -> {
+                                onInteractionListener.onEdit(post)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }.show()
             }
 
 

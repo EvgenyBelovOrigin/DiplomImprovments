@@ -55,6 +55,7 @@ class PostFeedFragment : Fragment() {
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {}
+            override fun onRemove(post: Post) {}
             override fun onPlayAudio(post: Post) {
                 viewModel.playAudio(post)
             }
@@ -76,7 +77,7 @@ class PostFeedFragment : Fragment() {
                 viewModel.data.collectLatest(adapter::submitData)
             }
         }
-        viewModel.refreshAdapter.observe(viewLifecycleOwner){
+        viewModel.refreshAdapter.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
 
