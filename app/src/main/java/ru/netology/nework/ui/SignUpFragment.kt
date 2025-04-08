@@ -117,7 +117,8 @@ class SignUpFragment : Fragment() {
                 return@observe
             }
 //            binding.photo.isVisible = true
-            binding.photo.setImageURI(photo.uri)
+            binding.avatar.setImageURI(photo.uri)
+            binding.recycle.isVisible = true
 
         }
 
@@ -135,7 +136,7 @@ class SignUpFragment : Fragment() {
             binding.error.isVisible = false
         }
 
-        binding.photo.setOnClickListener {
+        binding.avatar.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.choose_source)
                 .setMessage(R.string.choose_source_message)
@@ -170,9 +171,11 @@ class SignUpFragment : Fragment() {
                 .show()
         }
 
-//        binding.photo.setOnClickListener {
-//            viewModel.clearAvatar()
-//        }
+        binding.recycle.setOnClickListener {
+            viewModel.clearAvatar()
+            binding.recycle.isVisible = false
+            binding.avatar.setImageResource(R.drawable.monogram)
+        }
 
 
         requireActivity().addMenuProvider(

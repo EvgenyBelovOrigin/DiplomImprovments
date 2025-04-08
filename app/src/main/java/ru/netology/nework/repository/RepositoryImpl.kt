@@ -7,6 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nework.api.ApiService
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.db.AppDb
@@ -16,6 +20,7 @@ import ru.netology.nework.entity.PostEntity
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nmedia.error.ApiError
+import ru.netology.nmedia.error.AppError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.RunTimeError
 import ru.netology.nmedia.error.UnknownError
@@ -105,7 +110,30 @@ class RepositoryImpl @Inject constructor(
         name: String,
         upload: MediaUpload
     ) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.signUpWithAvatar(
+                login.toRequestBody("text/plain".toMediaType()),
+                password.toRequestBody("text/plain".toMediaType()),
+                name.toRequestBody("text/plain".toMediaType()),
+                MultipartBody.Part.createFormData(
+                    "file",
+                    upload.file.name,
+                    upload.file.asRequestBody()
+                ),
+            )
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            appAuth.setAuth(body)
+
+        } catch (e: AppError) {
+            throw e
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
     override suspend fun disLikeById(post: Post) {

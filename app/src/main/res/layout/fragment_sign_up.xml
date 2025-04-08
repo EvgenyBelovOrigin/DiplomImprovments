@@ -6,145 +6,158 @@
     android:layout_height="match_parent"
     tools:context=".ui.SignUpFragment">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/signUpFrame"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/common_spacing"
-        android:background="@color/design_default_color_on_primary"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/common_spacing">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:adjustViewBounds="true"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/transparent"
-            android:src="@drawable/monogram" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginLayout"
+        <LinearLayout
+            android:id="@+id/signUpFrame"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:hint="@string/login"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:boxStrokeWidth="1dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:hint="@string/name"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:boxStrokeWidth="1dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:hint="@string/password"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:boxStrokeWidth="1dp"
-            app:errorEnabled="true"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/pass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passConfirmLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:hint="@string/password_confirm"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:boxStrokeWidth="1dp"
-            app:errorEnabled="true"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passConfirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/common_spacing"
-            android:text="@string/wrong_pass_confirm"
-            android:textColor="@color/colorRed"
-            android:visibility="gone">
+            android:background="@color/design_default_color_on_primary"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/common_spacing">
 
-        </TextView>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/signUp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/sign_up"
-            app:cornerRadius="100dp">
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/monogram" />
 
-        </com.google.android.material.button.MaterialButton>
+                <ImageView
+                    android:id="@+id/recycle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/recycle"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginLayout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:hint="@string/login"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:boxStrokeWidth="1dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:hint="@string/name"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:boxStrokeWidth="1dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:hint="@string/password"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passConfirmLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:hint="@string/password_confirm"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_spacing"
+                android:text="@string/wrong_pass_confirm"
+                android:textColor="@color/colorRed"
+                android:visibility="gone">
+
+            </TextView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signUp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/sign_up"
+                app:cornerRadius="100dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
