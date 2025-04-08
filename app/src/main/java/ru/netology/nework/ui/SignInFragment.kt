@@ -35,11 +35,20 @@ class SignInFragment : Fragment() {
         )
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigateUp()
-            binding.loginEdit.requestFocus()
+            binding.login.requestFocus()
         }
-        binding.signInButton.setOnClickListener {
+
+        binding.signIn.setOnClickListener {
+            if(binding.login.text.toString().isEmpty()){
+                binding.login.error = getString(R.string.login_can_not_be_empty)
+                return@setOnClickListener
+            }
+            if(binding.pass.text.toString().isEmpty()){
+                binding.pass.error = getString(R.string.pass_can_not_be_empty)
+                return@setOnClickListener
+            }
             binding.progress.isVisible = true
-            viewModel.signIn(binding.loginEdit.text.toString(), binding.passEdit.text.toString())
+            viewModel.signIn(binding.login.text.toString(), binding.pass.text.toString())
             binding.signInFrame.clearFocus()
         }
         viewModel.signedIn.observe(viewLifecycleOwner) {
@@ -62,11 +71,14 @@ class SignInFragment : Fragment() {
                 .show()
         }
 
-        binding.loginEdit.setOnFocusChangeListener { _, _ ->
+        binding.login.setOnFocusChangeListener { _, _ ->
             binding.error.isVisible = false
         }
-        binding.passEdit.setOnFocusChangeListener { _, _ ->
+        binding.pass.setOnFocusChangeListener { _, _ ->
             binding.error.isVisible = false
+        }
+        binding.registerButton.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
         }
 
 

@@ -23,4 +23,7 @@
     <string name="error_like">Something goes wrong. Your like has not been registered. Try again later</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_remove">Remove</string>
+    <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
+    <string name="login_can_not_be_empty">Login can\'t be empty</string>
+    <string name="pass_can_not_be_empty">Password can\'t be empty</string>
 </resources>

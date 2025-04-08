@@ -10,83 +10,81 @@
     <LinearLayout
         android:id="@+id/signInFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/common_spacing"
         android:background="@color/design_default_color_on_primary"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/common_spacing"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="@dimen/common_spacing">
 
-        <TextView
-            android:id="@+id/signInText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_spacing"
-            android:text="@string/sign_in"
-            android:textColor="@color/black">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:hint="@string/login"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:boxStrokeWidth="1dp">
 
-        </TextView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textColor="@color/black">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </TextView>
-
-        <EditText
-            android:id="@+id/loginEdit"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
-
-        </EditText>
-
-        <TextView
-            android:id="@+id/passText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
+            android:layout_marginStart="@dimen/common_spacing"
             android:layout_marginTop="@dimen/common_spacing"
-            android:textColor="@color/black">
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:hint="@string/password"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
 
-        </TextView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/passEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:inputType="textPassword">
-
-        </EditText>
-
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common_spacing"
             android:text="@string/wrongSignInData"
-            android:textColor="@color/black"
+            android:textColor="@color/colorRed"
             android:visibility="gone">
 
         </TextView>
 
-        <Button
-            android:id="@+id/signInButton"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signIn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/login"
+            app:cornerRadius="100dp">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_spacing"
-            android:backgroundTint="@color/design_default_color_on_primary"
-            android:text="@string/sign_in"
-            android:textColor="@color/design_default_color_on_secondary">
-
-        </Button>
+            android:text="@string/don_t_have_an_account_register"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <ProgressBar
