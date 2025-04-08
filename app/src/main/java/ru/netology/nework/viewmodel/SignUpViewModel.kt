@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.SingleLiveEvent
-import ru.netology.nmedia.model.PhotoModel
+import ru.netology.nework.model.PhotoModel
 import java.io.File
 import javax.inject.Inject
 

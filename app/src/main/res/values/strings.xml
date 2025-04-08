@@ -15,7 +15,8 @@
     <string name="events">Events</string>
     <string name="users">Users</string>
     <string name="error">Error</string>
-    <string name="error_loading">Somethinf went wrong. Try again later</string>
+    <string name="error_loading">Something went wrong. Try again later</string>
+    <string name="error_user_exist">User already registered</string>
     <string name="ok">OK</string>
     <string name="requestSignInTitle">You are not signed in yet</string>
     <string name="requestSignInMessage">You should sign in to have much</string>
@@ -26,4 +27,11 @@
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="login_can_not_be_empty">Login can\'t be empty</string>
     <string name="pass_can_not_be_empty">Password can\'t be empty</string>
+    <string name="name_can_not_be_empty">Name can\'t be empty</string>
+    <string name="pass_confirm_can_not_be_empty">Password confirm can\'t be empty</string>
+    <string name="choose_source">Choose source</string>
+    <string name="choose_source_message">Would you like to make selfie or attach image</string>
+    <string name="selfie">Selfie</string>
+    <string name="image">Image</string>
+
 </resources>
