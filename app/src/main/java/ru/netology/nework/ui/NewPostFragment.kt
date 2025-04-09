@@ -1,5 +1,6 @@
 package ru.netology.nework.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -117,12 +118,52 @@ class NewPostFragment : Fragment() {
         viewModel.attachment.observe(viewLifecycleOwner) { attachment ->
             if (attachment.uri == null) {
                 binding.photoContainer.isGone = true
+                binding.attachmentAudioLayout.isGone = true
+                binding.attachmentVideoLayout.isGone = true
                 return@observe
             }
-            binding.photoContainer.isVisible = true
-            binding.photo.setImageURI(attachment.uri)
+            when (attachment.attachmentType) {
+                AttachmentType.IMAGE -> {
+                    binding.photoContainer.isVisible = true
+                    binding.photo.setImageURI(attachment.uri)
+                }
+
+                AttachmentType.VIDEO -> {
+                    binding.attachmentVideoLayout.isVisible = true
+                    binding.attachmentVideo.apply {
+                        setVideoURI(
+                            Uri.parse(attachment.uri.toString())
+                        )
+                        setOnPreparedListener {
+                            seekTo(5)
+                            binding.playVideoButton.isVisible=true
+                        }
+                        binding.playVideoButton.setOnClickListener {
+                            start()
+                            binding.playVideoButton.isVisible = false
+                            setOnCompletionListener {
+                                resume()
+                                binding.playVideoButton.isVisible = true
+                            }
+                        }
+                        binding.attachmentVideo.setOnClickListener {
+                            pause()
+                            binding.playVideoButton.isVisible = true
+                        }
+                    }
+                }
+
+                AttachmentType.AUDIO -> TODO()
+                null -> TODO()
+            }
         }
         binding.removePhoto.setOnClickListener {
+            viewModel.clearAttachment()
+        }
+//        binding.removeAudio.setOnClickListener {
+//            viewModel.clearAttachment()
+//        }
+        binding.removeVideo.setOnClickListener {
             viewModel.clearAttachment()
         }
 

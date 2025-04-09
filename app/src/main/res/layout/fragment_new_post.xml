@@ -32,6 +32,7 @@
                 android:background="@android:color/transparent"
                 android:inputType="textMultiLine"
                 android:padding="@dimen/common_spacing"
+                android:visibility="visible"
                 tools:text="@tools:sample/lorem[100]" />
 
             <TextView
@@ -46,11 +47,92 @@
                 android:autoLink="web"
                 android:padding="@dimen/common_spacing"
                 android:textColorLink="@color/colorPrimary"
+                android:visibility="visible"
                 app:cardCornerRadius="@dimen/corner_radius"
                 app:strokeColor="#CAC4D0"
                 app:strokeWidth="1dp"
-                android:visibility="visible"
                 tools:text="www.google.com" />
+
+            <FrameLayout
+                android:id="@+id/attachmentVideoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/attachDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
+
+
+                <VideoView
+                    android:id="@+id/attachmentVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:importantForAccessibility="no"
+                    android:visibility="visible"
+                    tools:srcCompat="@drawable/image_default" />
+
+                <ImageButton
+                    android:id="@+id/playVideoButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/play_video_icon" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/removeVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="@string/menu_remove"
+                    android:visibility="visible" />
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/attachmentAudioLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_spacing"
+                    android:layout_marginTop="@dimen/common_spacing"
+                    android:layout_marginEnd="@dimen/common_spacing"
+                    android:layout_marginBottom="@dimen/common_spacing"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/attachDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/playAudioButton"
+                        android:layout_width="@dimen/icon_button_min_size"
+                        android:layout_height="@dimen/icon_button_min_size"
+                        android:background="@drawable/play_icon_selector"
+                        android:checkable="true" />
+
+                    <SeekBar
+                        android:id="@+id/audioSeekBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
 
             <FrameLayout
                 android:id="@+id/photoContainer"
@@ -121,14 +203,7 @@
             app:icon="@drawable/attach_file"
             app:iconTint="?colorOnPrimary" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mentionedUsers"
-            style="@style/Widget.AppTheme.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/common_spacing"
-            app:icon="@drawable/people_outline"
-            app:iconTint="?colorOnPrimary" />
+
     </LinearLayout>
 
 
