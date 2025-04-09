@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
@@ -26,6 +27,7 @@ import ru.netology.nework.databinding.FragmentNewPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.AndroidUtils.getFile
+import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.PostViewModel
 import java.io.FileNotFoundException
@@ -118,8 +120,8 @@ class NewPostFragment : Fragment() {
         viewModel.attachment.observe(viewLifecycleOwner) { attachment ->
             if (attachment.uri == null) {
                 binding.photoContainer.isGone = true
-                binding.attachmentAudioLayout.isGone = true
-                binding.attachmentVideoLayout.isGone = true
+                binding.audioContainer.isGone = true
+                binding.videoContainer.isGone = true
                 return@observe
             }
             when (attachment.attachmentType) {
@@ -129,14 +131,14 @@ class NewPostFragment : Fragment() {
                 }
 
                 AttachmentType.VIDEO -> {
-                    binding.attachmentVideoLayout.isVisible = true
+                    binding.videoContainer.isVisible = true
                     binding.attachmentVideo.apply {
                         setVideoURI(
                             Uri.parse(attachment.uri.toString())
                         )
                         setOnPreparedListener {
                             seekTo(5)
-                            binding.playVideoButton.isVisible=true
+                            binding.playVideoButton.isVisible = true
                         }
                         binding.playVideoButton.setOnClickListener {
                             start()
@@ -153,16 +155,29 @@ class NewPostFragment : Fragment() {
                     }
                 }
 
-                AttachmentType.AUDIO -> TODO()
-                null -> TODO()
+                AttachmentType.AUDIO -> {
+                    binding.audioContainer.isVisible = true
+                    binding.playAudioButton.setOnClickListener {
+                        if (binding.playAudioButton.isChecked) {
+                            attachment.file?.let { file ->
+                                MediaLifecycleObserver.mediaPlay(file.path) }
+                        } else {
+                            MediaLifecycleObserver.mediaStop()
+                        }
+                    }
+                }
+
+                null -> error("Unknown attachment type")
             }
+
         }
+
         binding.removePhoto.setOnClickListener {
             viewModel.clearAttachment()
         }
-//        binding.removeAudio.setOnClickListener {
-//            viewModel.clearAttachment()
-//        }
+        binding.removeAudio.setOnClickListener {
+            viewModel.clearAttachment()
+        }
         binding.removeVideo.setOnClickListener {
             viewModel.clearAttachment()
         }

@@ -54,7 +54,7 @@
                 tools:text="www.google.com" />
 
             <FrameLayout
-                android:id="@+id/attachmentVideoLayout"
+                android:id="@+id/videoContainer"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="@dimen/common_spacing"
@@ -92,43 +92,29 @@
                     android:text="@string/menu_remove"
                     android:visibility="visible" />
 
-
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/audioContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/attachmentAudioLayout"
-                    android:layout_width="match_parent"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/playAudioButton"
+                    android:layout_width="@dimen/icon_button_min_size"
+                    android:layout_height="@dimen/icon_button_min_size"
+                    android:layout_marginStart="64dp"
+                    android:background="@drawable/play_icon_selector"
+                    android:checkable="true"
+                    android:gravity="center_horizontal" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/removeAudio"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/common_spacing"
-                    android:layout_marginTop="@dimen/common_spacing"
-                    android:layout_marginEnd="@dimen/common_spacing"
-                    android:layout_marginBottom="@dimen/common_spacing"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@id/attachDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/header">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/playAudioButton"
-                        android:layout_width="@dimen/icon_button_min_size"
-                        android:layout_height="@dimen/icon_button_min_size"
-                        android:background="@drawable/play_icon_selector"
-                        android:checkable="true" />
-
-                    <SeekBar
-                        android:id="@+id/audioSeekBar"
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:text="@string/menu_remove"
+                    android:visibility="visible" />
 
 
             </FrameLayout>

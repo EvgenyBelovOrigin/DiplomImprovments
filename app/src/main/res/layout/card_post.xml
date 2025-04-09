@@ -114,7 +114,7 @@
             tools:srcCompat="@drawable/videoimage" />
 
         <FrameLayout
-            android:id="@+id/attachmentVideoLayout"
+            android:id="@+id/videoContainer"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="@dimen/common_spacing"
@@ -181,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="attachmentImage,attachmentVideoLayout, attachmentVideoLayout" />
+            app:constraint_referenced_ids="attachmentImage,videoContainer, videoContainer" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"

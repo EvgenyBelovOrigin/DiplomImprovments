@@ -67,7 +67,7 @@ class PostViewHolder(
             }
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
             post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
-            attachmentVideoLayout.isVisible = post.attachment?.type == AttachmentType.VIDEO
+            videoContainer.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
                     setVideoURI(
@@ -86,7 +86,7 @@ class PostViewHolder(
                             playVideoButton.isVisible = true
                         }
                     }
-                    attachmentVideoLayout.setOnClickListener {
+                    videoContainer.setOnClickListener {
                         pause()
                         playVideoButton.isVisible = true
                     }
