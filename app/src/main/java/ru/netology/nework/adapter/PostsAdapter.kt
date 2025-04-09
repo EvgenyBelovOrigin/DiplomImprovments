@@ -68,7 +68,7 @@ class PostViewHolder(
                     .format(
                         DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
                     )
-            content.text = post.content.replace("\n", " ")
+            content.text = post.content
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             like.setOnClickListener {
@@ -107,6 +107,8 @@ class PostViewHolder(
             playAudioButton.setOnClickListener {
                 onInteractionListener.onPlayAudio(post)
             }
+            link.isVisible = post.link?.isEmpty() == false
+            link.text = post.link
 
             menu.isVisible = post.ownedByMe
             menu.setOnClickListener {
