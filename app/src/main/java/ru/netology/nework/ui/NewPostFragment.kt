@@ -12,6 +12,7 @@ import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -137,9 +138,11 @@ class NewPostFragment : Fragment() {
                     binding.audioContainer.isGone = true
                     binding.photoContainer.isGone = true
                     binding.attachmentVideo.apply {
+
                         setVideoURI(
                             Uri.parse(attachment.uri.toString())
                         )
+
                         setOnPreparedListener {
                             seekTo(5)
                             binding.playVideoButton.isVisible = true
