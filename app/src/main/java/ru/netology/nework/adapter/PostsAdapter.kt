@@ -1,11 +1,8 @@
 package ru.netology.nework.adapter
 
-import android.content.Context
-import android.media.MediaPlayer
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.MediaController
 import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
@@ -15,17 +12,11 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
-import ru.netology.nework.utils.AndroidUtils
-import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
-import java.text.DateFormat
-import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 
 interface OnInteractionListener {
@@ -121,7 +112,7 @@ class PostViewHolder(
                                 true
                             }
 
-                            R.id.edit -> {
+                            R.id.editContent -> {
                                 onInteractionListener.onEdit(post)
                                 true
                             }

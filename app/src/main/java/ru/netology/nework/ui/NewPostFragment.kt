@@ -52,11 +52,11 @@ class NewPostFragment : Fragment() {
         )
 
 
-        binding.edit.setText(viewModel.edited.value?.content)
+        binding.editContent.setText(viewModel.edited.value?.content)
         arguments?.textArg
-            ?.let(binding.edit::setText)
+            ?.let(binding.editContent::setText)
 
-        binding.edit.requestFocus()
+        binding.editContent.requestFocus()
 
         val imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -114,13 +114,13 @@ class NewPostFragment : Fragment() {
                 }
             }
 
-        viewModel.attachment.observe(viewLifecycleOwner) { photo ->
-            if (photo.uri == null) {
+        viewModel.attachment.observe(viewLifecycleOwner) { attachment ->
+            if (attachment.uri == null) {
                 binding.photoContainer.isGone = true
                 return@observe
             }
             binding.photoContainer.isVisible = true
-            binding.photo.setImageURI(photo.uri)
+            binding.photo.setImageURI(attachment.uri)
         }
         binding.removePhoto.setOnClickListener {
             viewModel.clearAttachment()
@@ -174,7 +174,7 @@ class NewPostFragment : Fragment() {
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (menuItem.itemId == R.id.save) {
-                        viewModel.changeContent(binding.edit.text.toString())
+                        viewModel.changeContent(binding.editContent.text.toString())
                         viewModel.save()
                         AndroidUtils.hideKeyboard(requireView())
                         return true
