@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -55,7 +56,9 @@ class PostFeedFragment : Fragment() {
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {}
-            override fun onRemove(post: Post) {}
+            override fun onRemove(post: Post) {
+                viewModel.removePostById(post.id)
+            }
             override fun onPlayAudio(post: Post) {
                 viewModel.playAudio(post)
             }
@@ -102,16 +105,25 @@ class PostFeedFragment : Fragment() {
             adapter.refresh()
             viewModel.clearPlayAudio()
         }
-        viewModel.onLikeError.observe(viewLifecycleOwner) { id ->
+        viewModel.onLikeError.observe(viewLifecycleOwner) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.error)
                 .setMessage(R.string.error_like)
                 .setPositiveButton(R.string.ok, null)
                 .show()
         }
+
+        viewModel.onDeleteError.observe(viewLifecycleOwner){
+            Toast.makeText(
+                activity,
+                R.string.error_delete,
+                Toast.LENGTH_LONG
+            ).show()
+        }
         viewModel.requestSignIn.observe(viewLifecycleOwner) {
             requestSignIn()
         }
+
         binding.fab.setOnClickListener {
             if (appAuth.authState.value?.id == 0) {
                 requestSignIn()

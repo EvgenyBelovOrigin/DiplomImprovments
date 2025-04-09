@@ -33,4 +33,7 @@ interface PostDao {
     @Query("SELECT COUNT(*) FROM PostEntity")
     suspend fun count(): Int
 
+    @Query("DELETE FROM PostEntity WHERE id = :id")
+    suspend fun removePostById(id: Int)
+
 }

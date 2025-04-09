@@ -243,6 +243,21 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun removePostById(id: Int) {
+
+        try {
+            dao.removePostById(id)
+            val response = apiService.removePostById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
 
 }
 

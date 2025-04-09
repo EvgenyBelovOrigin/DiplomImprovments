@@ -78,4 +78,7 @@ interface ApiService {
     @Multipart
     @POST("media")
     suspend fun upload(@Part media: MultipartBody.Part): Response<Media>
+
+    @DELETE("posts/{id}")
+    suspend fun removePostById(@Path("id") id: Int): Response<Unit>
 }

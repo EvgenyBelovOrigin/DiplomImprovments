@@ -21,5 +21,6 @@ interface Repository {
     suspend fun save(post: Post)
     suspend fun saveWithAttachment(post: Post, upload: MediaUpload, attachmentType: AttachmentType)
     suspend fun upload(upload: MediaUpload): Media
+    suspend fun removePostById(id: Int)
 
 }

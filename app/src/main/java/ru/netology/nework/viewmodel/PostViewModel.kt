@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
-import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -78,6 +77,10 @@ class PostViewModel @Inject constructor(
     private val _onLikeError = SingleLiveEvent<Int>()
     val onLikeError: LiveData<Int>
         get() = _onLikeError
+
+    private val _onDeleteError = SingleLiveEvent<Unit>()
+    val onDeleteError: LiveData<Unit>
+        get() = _onDeleteError
 
     private val _requestSignIn = SingleLiveEvent<Unit>()
     val requestSignIn: LiveData<Unit>
@@ -206,7 +209,7 @@ class PostViewModel @Inject constructor(
                                 it1
                             )
                         }
-                        } ?: repository.save(it)
+                    } ?: repository.save(it)
                     edited.value = empty
                     _attachment.value = noAttachment
                     _postCreated.value = Unit
@@ -214,6 +217,17 @@ class PostViewModel @Inject constructor(
                 } catch (e: Exception) {
                     throw e
                 }
+            }
+        }
+    }
+
+    fun removePostById(id: Int) {
+
+        viewModelScope.launch {
+            try {
+                repository.removePostById(id)
+            } catch (e: Exception) {
+                _onDeleteError.value = Unit
             }
         }
     }
