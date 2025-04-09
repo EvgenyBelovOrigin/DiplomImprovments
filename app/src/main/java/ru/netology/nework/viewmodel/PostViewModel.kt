@@ -187,10 +187,18 @@ class PostViewModel @Inject constructor(
         _attachment.value = noAttachment
     }
 
+    fun clearEdited() {
+        edited.value = empty
+    }
+
     fun changeContent(content: String, link: String) {
         val text = content.trim()
         val web = link.trim()
-
+        if (_attachment.value == noAttachment) {
+            edited.value = edited.value?.copy(
+                content = text, link = web, attachment = null //todo to think about it
+            )
+        }
         if (edited.value?.content == text && edited.value?.link == web) {
             return
         }
@@ -232,6 +240,10 @@ class PostViewModel @Inject constructor(
                 _onDeleteError.value = Unit
             }
         }
+    }
+
+    fun edit(post: Post) {
+        edited.value = post
     }
 
 }

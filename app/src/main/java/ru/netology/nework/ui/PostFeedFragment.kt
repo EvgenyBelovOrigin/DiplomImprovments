@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -55,10 +56,21 @@ class PostFeedFragment : Fragment() {
             }
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
-            override fun onEdit(post: Post) {}
+            override fun onEdit(post: Post) {
+                viewModel.updateAttachment(
+                    url = post.attachment?.url,
+                    attachmentType = post.attachment?.type,
+                    uri = post.attachment?.url?.toUri(),
+                    file = null
+                )
+                viewModel.edit(post)
+                findNavController().navigate(R.id.newPostFragment)
+            }
+
             override fun onRemove(post: Post) {
                 viewModel.removePostById(post.id)
             }
+
             override fun onPlayAudio(post: Post) {
                 viewModel.playAudio(post)
             }
@@ -113,7 +125,7 @@ class PostFeedFragment : Fragment() {
                 .show()
         }
 
-        viewModel.onDeleteError.observe(viewLifecycleOwner){
+        viewModel.onDeleteError.observe(viewLifecycleOwner) {
             Toast.makeText(
                 activity,
                 R.string.error_delete,
@@ -128,6 +140,8 @@ class PostFeedFragment : Fragment() {
             if (appAuth.authState.value?.id == 0) {
                 requestSignIn()
             } else {
+                viewModel.clearAttachment()
+                viewModel.clearEdited()
                 findNavController().navigate(R.id.newPostFragment)
             }
         }

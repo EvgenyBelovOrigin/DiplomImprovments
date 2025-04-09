@@ -118,7 +118,7 @@ class NewPostFragment : Fragment() {
             }
 
         viewModel.attachment.observe(viewLifecycleOwner) { attachment ->
-            if (attachment.uri == null) {
+            if (attachment.attachmentType == null) {
                 binding.photoContainer.isGone = true
                 binding.audioContainer.isGone = true
                 binding.videoContainer.isGone = true
@@ -127,11 +127,15 @@ class NewPostFragment : Fragment() {
             when (attachment.attachmentType) {
                 AttachmentType.IMAGE -> {
                     binding.photoContainer.isVisible = true
+                    binding.videoContainer.isGone = true
+                    binding.audioContainer.isGone = true
                     binding.photo.setImageURI(attachment.uri)
                 }
 
                 AttachmentType.VIDEO -> {
                     binding.videoContainer.isVisible = true
+                    binding.audioContainer.isGone = true
+                    binding.photoContainer.isGone = true
                     binding.attachmentVideo.apply {
                         setVideoURI(
                             Uri.parse(attachment.uri.toString())
@@ -157,10 +161,13 @@ class NewPostFragment : Fragment() {
 
                 AttachmentType.AUDIO -> {
                     binding.audioContainer.isVisible = true
+                    binding.photoContainer.isGone = true
+                    binding.videoContainer.isGone = true
                     binding.playAudioButton.setOnClickListener {
                         if (binding.playAudioButton.isChecked) {
                             attachment.file?.let { file ->
-                                MediaLifecycleObserver.mediaPlay(file.path) }
+                                MediaLifecycleObserver.mediaPlay(file.path)
+                            }
                         } else {
                             MediaLifecycleObserver.mediaStop()
                         }
