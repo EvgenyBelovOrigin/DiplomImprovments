@@ -20,6 +20,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/content" />
+
             <EditText
                 android:id="@+id/editContent"
                 android:layout_width="match_parent"
@@ -29,10 +34,29 @@
                 android:padding="@dimen/common_spacing"
                 tools:text="@tools:sample/lorem[100]" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/link" />
+
+            <EditText
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:padding="@dimen/common_spacing"
+                android:textColorLink="@color/colorPrimary"
+                app:cardCornerRadius="@dimen/corner_radius"
+                app:strokeColor="#CAC4D0"
+                app:strokeWidth="1dp"
+                android:visibility="visible"
+                tools:text="www.google.com" />
+
             <FrameLayout
                 android:id="@+id/photoContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
 
                 <ImageView
@@ -53,6 +77,8 @@
                     android:text="@string/menu_remove"
                     android:visibility="visible" />
             </FrameLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

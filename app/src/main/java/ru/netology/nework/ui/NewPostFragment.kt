@@ -174,7 +174,10 @@ class NewPostFragment : Fragment() {
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (menuItem.itemId == R.id.save) {
-                        viewModel.changeContent(binding.editContent.text.toString())
+                        viewModel.changeContent(
+                            binding.editContent.text.toString(),
+                            binding.link.text.toString()
+                        )
                         viewModel.save()
                         AndroidUtils.hideKeyboard(requireView())
                         return true

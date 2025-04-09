@@ -38,5 +38,7 @@
     <string name="save">Save</string>
     <string name="attachment_too_large">Attachment have to be less than 15 Mb</string>
     <string name="error_delete">Something goes wrong. Deleting was cancelled. Try again later</string>
+    <string name="content">Content:</string>
+    <string name="link">Link:</string>
 
 </resources>
