@@ -112,6 +112,13 @@ class PostFeedFragment : Fragment() {
         viewModel.requestSignIn.observe(viewLifecycleOwner) {
             requestSignIn()
         }
+        binding.fab.setOnClickListener {
+            if (appAuth.authState.value?.id == 0) {
+                requestSignIn()
+            } else {
+                findNavController().navigate(R.id.newPostFragment)
+            }
+        }
 
 
         return binding.root

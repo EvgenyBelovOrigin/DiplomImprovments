@@ -33,5 +33,6 @@
     <string name="choose_source_message">Would you like to make selfie or attach image</string>
     <string name="selfie">Selfie</string>
     <string name="image">Image</string>
+    <string name="save">Save</string>
 
 </resources>

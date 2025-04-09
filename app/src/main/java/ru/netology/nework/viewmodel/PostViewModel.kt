@@ -1,6 +1,8 @@
 package ru.netology.nework.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -15,14 +17,46 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
+import ru.netology.nework.dto.Attachment
+import ru.netology.nework.dto.Coordinates
+import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.UserPreview
 import ru.netology.nework.entity.PostEntity
+import ru.netology.nework.model.PhotoModel
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.SingleLiveEvent
 import ru.netology.nmedia.auth.AppAuth
+import java.io.File
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.util.Calendar
+import java.util.TimeZone
 import javax.inject.Inject
 
+private val empty = Post(
+    id = 0,
+    authorId = 0,
+    author = "",
+    authorJob = null,
+    authorAvatar = null,
+    content = "",
+    published = "2024-07-02T21:34:44.562Z",
+    coords = null,
+    link = null,
+    mentionIds = emptyList(),
+    mentionedMe = false,
+    likeOwnerIds = emptyList(),
+    likedByMe = false,
+    attachment = null,
+    users = emptyMap(),
+    ownedByMe = false,
+    isPlayingAudio = false,
+    isPlayingAudioPaused = false
+
+)
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -54,6 +88,17 @@ class PostViewModel @Inject constructor(
     private val _requestSignIn = SingleLiveEvent<Unit>()
     val requestSignIn: LiveData<Unit>
         get() = _requestSignIn
+
+    val edited = MutableLiveData(empty)
+    val noPhoto = PhotoModel()
+
+    private val _photo = MutableLiveData<PhotoModel>(noPhoto)
+    val photo: LiveData<PhotoModel>
+        get() = _photo
+
+    private val _postCreated = SingleLiveEvent<Unit>()
+    val postCreated: LiveData<Unit>
+        get() = _postCreated
 
     fun playAudio(post: Post) {
         if (!post.isPlayingAudio) {
@@ -133,6 +178,42 @@ class PostViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             throw e
+        }
+    }
+
+    fun updatePhoto(uri: Uri, file: File) {
+        _photo.value = PhotoModel(uri, file)
+    }
+
+    fun clearPhoto() {
+        _photo.value = noPhoto
+    }
+
+    fun changeContent(content: String) {
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
+        }
+        edited.value = edited.value?.copy(
+            content = text,
+        )
+    }
+
+    fun save() {
+        edited.value?.let {
+            viewModelScope.launch {
+                try {
+                    _photo.value?.file?.let { file ->
+                        repository.saveWithAttachment(it, MediaUpload(file))
+                    } ?: repository.save(it)
+                    edited.value = empty
+                    _photo.value = noPhoto
+                    _postCreated.value = Unit
+
+                } catch (e: Exception) {
+                    throw e
+                }
+            }
         }
     }
 
