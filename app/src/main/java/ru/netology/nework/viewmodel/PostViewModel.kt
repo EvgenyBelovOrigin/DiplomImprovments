@@ -18,22 +18,16 @@ import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dto.Attachment
-import ru.netology.nework.dto.Coordinates
+import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
-import ru.netology.nework.dto.UserPreview
 import ru.netology.nework.entity.PostEntity
-import ru.netology.nework.model.PhotoModel
+import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.SingleLiveEvent
 import ru.netology.nmedia.auth.AppAuth
 import java.io.File
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.util.Calendar
-import java.util.TimeZone
 import javax.inject.Inject
 
 private val empty = Post(
@@ -90,11 +84,11 @@ class PostViewModel @Inject constructor(
         get() = _requestSignIn
 
     val edited = MutableLiveData(empty)
-    val noPhoto = PhotoModel()
+    private val noAttachment = AttachmentModel()
 
-    private val _photo = MutableLiveData<PhotoModel>(noPhoto)
-    val photo: LiveData<PhotoModel>
-        get() = _photo
+    private val _attachment = MutableLiveData<AttachmentModel>(noAttachment)
+    val attachment: LiveData<AttachmentModel>
+        get() = _attachment
 
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
@@ -181,12 +175,13 @@ class PostViewModel @Inject constructor(
         }
     }
 
-    fun updatePhoto(uri: Uri, file: File) {
-        _photo.value = PhotoModel(uri, file)
+    fun updateAttachment(url: String?, uri: Uri?, file: File?, attachmentType: AttachmentType?) {
+        _attachment.value =
+            AttachmentModel(url = null, uri = uri, file = file, attachmentType = attachmentType)
     }
 
-    fun clearPhoto() {
-        _photo.value = noPhoto
+    fun clearAttachment() {
+        _attachment.value = noAttachment
     }
 
     fun changeContent(content: String) {
@@ -203,11 +198,17 @@ class PostViewModel @Inject constructor(
         edited.value?.let {
             viewModelScope.launch {
                 try {
-                    _photo.value?.file?.let { file ->
-                        repository.saveWithAttachment(it, MediaUpload(file))
-                    } ?: repository.save(it)
+                    _attachment.value?.file?.let { file ->
+                        _attachment.value!!.attachmentType?.let { it1 ->
+                            repository.saveWithAttachment(
+                                it,
+                                MediaUpload(file),
+                                it1
+                            )
+                        }
+                        } ?: repository.save(it)
                     edited.value = empty
-                    _photo.value = noPhoto
+                    _attachment.value = noAttachment
                     _postCreated.value = Unit
 
                 } catch (e: Exception) {

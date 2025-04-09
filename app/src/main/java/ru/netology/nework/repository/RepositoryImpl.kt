@@ -204,11 +204,15 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
+    override suspend fun saveWithAttachment(
+        post: Post,
+        upload: MediaUpload,
+        attachmentType: AttachmentType
+    ) {
         try {
             val media = upload(upload)
             val postWithAttachment =
-                post.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
+                post.copy(attachment = Attachment(media.url, attachmentType))
             save(postWithAttachment)
         } catch (e: AppError) {
             throw e
@@ -236,7 +240,8 @@ class RepositoryImpl @Inject constructor(
             throw NetworkError
         } catch (e: Exception) {
             throw UnknownError
-        }    }
+        }
+    }
 
 
 }

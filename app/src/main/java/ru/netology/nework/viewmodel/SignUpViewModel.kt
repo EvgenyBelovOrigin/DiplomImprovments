@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.SingleLiveEvent
-import ru.netology.nework.model.PhotoModel
+import ru.netology.nework.model.AttachmentModel
 import java.io.File
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-    val noAvatar = PhotoModel()
+    val noAvatar = AttachmentModel()
     val _signedUp = SingleLiveEvent<Unit>()
     val signedUp: LiveData<Unit>
         get() = _signedUp
@@ -29,8 +29,8 @@ class SignUpViewModel @Inject constructor(
     val exception: LiveData<Unit>
         get() = _exception
 
-    private val _avatar = MutableLiveData<PhotoModel>(noAvatar)
-    val avatar: LiveData<PhotoModel>
+    private val _avatar = MutableLiveData<AttachmentModel>(noAvatar)
+    val avatar: LiveData<AttachmentModel>
         get() = _avatar
 
 
@@ -58,7 +58,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun updateAvatar(uri: Uri, file: File) {
-        _avatar.value = PhotoModel(uri, file)
+        _avatar.value = AttachmentModel(uri = uri, file = file)
     }
 
     fun clearAvatar() {

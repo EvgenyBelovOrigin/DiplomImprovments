@@ -35,7 +35,7 @@ data class Coordinates(
 
 data class Attachment(
     val url: String,
-    val type: AttachmentType,
+    var type: AttachmentType,
 )
 
 enum class AttachmentType {

@@ -2,6 +2,7 @@ package ru.netology.nework.repository
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -18,7 +19,7 @@ interface Repository {
     suspend fun disLikeById(post: Post)
     suspend fun likeById(post: Post)
     suspend fun save(post: Post)
-    suspend fun saveWithAttachment(post: Post, upload: MediaUpload)
+    suspend fun saveWithAttachment(post: Post, upload: MediaUpload, attachmentType: AttachmentType)
     suspend fun upload(upload: MediaUpload): Media
 
 }

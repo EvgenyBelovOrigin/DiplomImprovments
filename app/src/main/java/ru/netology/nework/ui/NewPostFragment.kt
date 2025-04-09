@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentNewPostBinding
+import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.PostViewModel
@@ -61,10 +62,10 @@ class NewPostFragment : Fragment() {
                     ).show()
                 } else {
                     val uri = it.data?.data ?: return@registerForActivityResult
-                    viewModel.updatePhoto(uri, uri.toFile())
+                    viewModel.updateAttachment(null,uri, uri.toFile(), AttachmentType.IMAGE)
                 }
             }
-        viewModel.photo.observe(viewLifecycleOwner) { photo ->
+        viewModel.attachment.observe(viewLifecycleOwner) { photo ->
             if (photo.uri == null) {
                 binding.photoContainer.isGone = true
                 return@observe
@@ -73,7 +74,7 @@ class NewPostFragment : Fragment() {
             binding.photo.setImageURI(photo.uri)
         }
         binding.removePhoto.setOnClickListener {
-            viewModel.clearPhoto()
+            viewModel.clearAttachment()
         }
         binding.takePhoto.setOnClickListener {
             ImagePicker.with(this)
