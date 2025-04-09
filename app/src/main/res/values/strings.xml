@@ -36,5 +36,6 @@
     <string name="photo">Photo</string>
     <string name="image">Image</string>
     <string name="save">Save</string>
+    <string name="attachment_too_large">Attachment have to be less than 15 Mb</string>
 
 </resources>

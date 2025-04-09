@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.core.view.MenuProvider
@@ -23,14 +24,18 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentNewPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
+import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.PostViewModel
+import java.io.FileNotFoundException
+import java.io.IOException
 
 @AndroidEntryPoint
 class NewPostFragment : Fragment() {
 
     companion object {
         var Bundle.textArg: String? by StringArg
+        const val MAX_SIZE = 15728640
     }
 
     private val viewModel: PostViewModel by activityViewModels()
@@ -66,6 +71,49 @@ class NewPostFragment : Fragment() {
                     viewModel.updateAttachment(null, uri, uri.toFile(), AttachmentType.IMAGE)
                 }
             }
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                try {
+                    val fileDescriptor =
+                        uri?.let {
+                            requireContext().contentResolver.openAssetFileDescriptor(
+                                it,
+                                "r"
+                            )
+                        }
+                    val fileSize = fileDescriptor?.length ?: 0
+                    if (fileSize > MAX_SIZE) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.attachment_too_large),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@registerForActivityResult
+                    }
+                    fileDescriptor?.close()
+                    val file = uri?.getFile(requireContext())
+                    if (uri?.let {
+                            requireContext().contentResolver.getType(it)
+                                ?.startsWith("audio/")
+                        } == true
+                    ) {
+                        viewModel.updateAttachment(null, uri, file, AttachmentType.AUDIO)
+                    } else {
+                        if (uri?.let {
+                                requireContext().contentResolver.getType(it)
+                                    ?.startsWith("video/")
+                            } == true
+                        ) {
+                            viewModel.updateAttachment(null, uri, file, AttachmentType.VIDEO)
+                        }
+                    }
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+
         viewModel.attachment.observe(viewLifecycleOwner) { photo ->
             if (photo.uri == null) {
                 binding.photoContainer.isGone = true
@@ -111,6 +159,10 @@ class NewPostFragment : Fragment() {
 
                 }
                 .show()
+        }
+        binding.takeFile.setOnClickListener {
+            val choose = arrayOf("audio/*", "video/*")
+            resultLauncher.launch(choose)
         }
 
 
