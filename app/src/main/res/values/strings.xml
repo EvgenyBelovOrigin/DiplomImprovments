@@ -31,7 +31,9 @@
     <string name="pass_confirm_can_not_be_empty">Password confirm can\'t be empty</string>
     <string name="choose_source">Choose source</string>
     <string name="choose_source_message">Would you like to make selfie or attach image</string>
+    <string name="choose_source_message_attachment">Would you like to make photo or attach image</string>
     <string name="selfie">Selfie</string>
+    <string name="photo">Photo</string>
     <string name="image">Image</string>
     <string name="save">Save</string>
 

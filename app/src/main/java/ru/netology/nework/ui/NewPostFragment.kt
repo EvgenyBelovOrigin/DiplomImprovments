@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
@@ -62,7 +63,7 @@ class NewPostFragment : Fragment() {
                     ).show()
                 } else {
                     val uri = it.data?.data ?: return@registerForActivityResult
-                    viewModel.updateAttachment(null,uri, uri.toFile(), AttachmentType.IMAGE)
+                    viewModel.updateAttachment(null, uri, uri.toFile(), AttachmentType.IMAGE)
                 }
             }
         viewModel.attachment.observe(viewLifecycleOwner) { photo ->
@@ -76,31 +77,42 @@ class NewPostFragment : Fragment() {
         binding.removePhoto.setOnClickListener {
             viewModel.clearAttachment()
         }
+
         binding.takePhoto.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()
-                .compress(2048)
-                .cameraOnly()
-                .createIntent {
-                    imagePickerLauncher.launch(it)
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.choose_source)
+                .setMessage(R.string.choose_source_message_attachment)
+                .setPositiveButton(R.string.photo) {
+                        _, _,
+                    ->
+                    ImagePicker.with(this)
+                        .crop()
+                        .compress(2048)
+                        .cameraOnly()
+                        .createIntent {
+                            imagePickerLauncher.launch(it)
+                        }
+
                 }
+                .setNegativeButton(R.string.image) {
+                        _, _,
+                    ->
+                    ImagePicker.with(this)
+                        .cropSquare()
+                        .compress(2048)
+                        .galleryOnly()
+                        .galleryMimeTypes(
+                            arrayOf(
+                                "image/png",
+                                "image/jpeg"
+                            )
+                        )
+                        .createIntent(imagePickerLauncher::launch)
+
+                }
+                .show()
         }
 
-//        binding.pickPhoto.setOnClickListener {
-//            ImagePicker.with(this)
-//                .crop()
-//                .compress(2048)
-//                .galleryOnly()
-//                .galleryMimeTypes(
-//                    arrayOf(
-//                        "image/png",
-//                        "image/jpg",
-//                        "image/jpeg"
-//                    )
-//                )
-//                .createIntent(imagePickerLauncher::launch)
-//
-//        }
 
         requireActivity().addMenuProvider(
             object : MenuProvider {
