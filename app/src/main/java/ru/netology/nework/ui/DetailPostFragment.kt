@@ -132,7 +132,10 @@ class DetailPostFragment : Fragment() {
                 mentioned.isVisible = true
                 scrollMentioned.isVisible = true
                 mentionedCount.isVisible = true
-                mentionedCount.text = post.mentionIds?.size.toString()
+                mentionedCount.text = post.users?.size.toString()
+                job.isVisible=true
+                jobCompany.isVisible=true
+                jobCompany.text = post.authorJob?:getString(R.string.looking_for_best_company)
 
                 if (post.users !== null) {
                     post.users.map {

@@ -233,27 +233,27 @@
                 app:layout_goneMarginTop="@dimen/common_spacing" />
 
             <TextView
-                android:layout_width="wrap_content"
                 android:id="@+id/mentionedCount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0"
                 android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/iconMentioned"
                 app:layout_constraintStart_toEndOf="@id/iconMentioned"
                 app:layout_constraintTop_toTopOf="@id/iconMentioned"
-                app:layout_constraintBottom_toBottomOf="@id/iconMentioned"
-                android:text="0"
-                tools:text="100"/>
+                tools:text="100" />
 
 
             <HorizontalScrollView
-                android:layout_width="0dp"
                 android:id="@+id/scrollMentioned"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:layout_marginStart="@dimen/common_spacing"
-                app:layout_constraintStart_toEndOf="@id/mentionedCount"
-                app:layout_constraintTop_toTopOf="@id/mentionedCount"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/mentionedCount"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/mentionedCount">
+                app:layout_constraintStart_toEndOf="@id/mentionedCount"
+                app:layout_constraintTop_toTopOf="@id/mentionedCount">
 
 
                 <LinearLayout
@@ -261,13 +261,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_spacing"
-                    android:orientation="horizontal"
                     android:animateLayoutChanges="true"
+                    android:orientation="horizontal"
                     android:visibility="gone">
 
 
                 </LinearLayout>
             </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:text="@string/job"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scrollMentioned" />
+
+            <TextView
+                android:id="@+id/jobCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/job"
+                tools:text="Very good company"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

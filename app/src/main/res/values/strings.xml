@@ -40,5 +40,7 @@
     <string name="error_delete">Something goes wrong. Deleting was cancelled. Try again later</string>
     <string name="content">Content:</string>
     <string name="link">Link:</string>
+    <string name="job">Job</string>
+    <string name="looking_for_best_company">Looking for best company</string>
 
 </resources>
