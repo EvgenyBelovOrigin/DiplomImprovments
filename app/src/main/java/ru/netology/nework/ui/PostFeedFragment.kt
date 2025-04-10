@@ -83,7 +83,8 @@ class PostFeedFragment : Fragment() {
                 viewModel.removePostById(post.id)
             }
 
-            override fun onPlayAudio(post: Post) {
+            override fun onPlayAudio(post: Post, position:Int) {
+                viewModel.saveAdapterPosition(position)
                 viewModel.playAudio(post)
             }
 
@@ -100,6 +101,10 @@ class PostFeedFragment : Fragment() {
                 viewModel.clearPlayAudio()
                 viewModel.saveAdapterPosition(position)
                 findNavController().navigate(R.id.detailPostFragment)
+            }
+
+            override fun onVideoPlay(position: Int) {
+                viewModel.saveAdapterPosition(position)
             }
 
         })

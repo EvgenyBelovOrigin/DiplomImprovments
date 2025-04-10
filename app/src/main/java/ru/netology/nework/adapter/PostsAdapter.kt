@@ -22,10 +22,11 @@ import java.time.format.DateTimeFormatter
 interface OnInteractionListener {
     fun onEdit(post: Post, position: Int) {}
     fun onRemove(post: Post, position: Int) {}
-    fun onPlayAudio(post: Post) {}
+    fun onPlayAudio(post: Post, position: Int) {}
     fun onLike(post: Post) {}
     fun onStopAudio() {}
     fun onItemClick(post: Post, position: Int) {}
+    fun onVideoPlay( position: Int) {}
 
 }
 
@@ -70,6 +71,7 @@ class PostViewHolder(
             post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
             videoContainer.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
+
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
                     setVideoURI(
                         Uri.parse(post.attachment?.url)
@@ -79,6 +81,7 @@ class PostViewHolder(
                     }
 
                     playVideoButton.setOnClickListener {
+                        onInteractionListener.onVideoPlay(position)
                         onInteractionListener.onStopAudio()
                         start()
                         playVideoButton.isVisible = false
@@ -97,7 +100,7 @@ class PostViewHolder(
             attachmentAudioLayout.isVisible = post.attachment?.type == AttachmentType.AUDIO
             playAudioButton.isChecked = post.isPlayingAudio
             playAudioButton.setOnClickListener {
-                onInteractionListener.onPlayAudio(post)
+                onInteractionListener.onPlayAudio(post, position)
             }
             link.isVisible = post.link?.isEmpty() == false
             link.text = post.link
