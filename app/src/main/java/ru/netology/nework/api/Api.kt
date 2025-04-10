@@ -61,10 +61,8 @@ interface ApiService {
         @Path("id") id: Int,
         @Query("count") count: Int,
     ): Response<List<Post>>
+
     @GET("posts/{id}/newer")
-
-
-    suspend fun getNewer(@Path("id") id: Int): Response<List<Post>>
 
     @POST("posts/{id}/likes")
     suspend fun likeById(@Path("id") id: Int): Response<Post>
@@ -81,4 +79,5 @@ interface ApiService {
 
     @DELETE("posts/{id}")
     suspend fun removePostById(@Path("id") id: Int): Response<Unit>
+
 }

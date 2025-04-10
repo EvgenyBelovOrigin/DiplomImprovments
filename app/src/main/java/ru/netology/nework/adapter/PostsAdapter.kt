@@ -61,7 +61,7 @@ class PostViewHolder(
                     .format(
                         DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
                     )
-            content.text = post.content
+            content.text = post.content.replace("\n","")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             like.setOnClickListener {
@@ -74,7 +74,7 @@ class PostViewHolder(
 
                 if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
                     setVideoURI(
-                        Uri.parse(post.attachment?.url)
+                        Uri.parse(post.attachment.url)
                     )
                     setOnPreparedListener {
                         seekTo(5)
