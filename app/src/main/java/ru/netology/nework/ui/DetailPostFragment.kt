@@ -127,7 +127,12 @@ class DetailPostFragment : Fragment() {
                 }
                 link.isVisible = post.link?.isEmpty() == false
                 link.text = post.link
+                mentionedTitle.isVisible = true
+                iconMentioned.isVisible = true
                 mentioned.isVisible = true
+                scrollMentioned.isVisible = true
+                mentionedCount.isVisible = true
+                mentionedCount.text = post.mentionIds?.size.toString()
 
                 if (post.users !== null) {
                     post.users.map {
@@ -135,7 +140,7 @@ class DetailPostFragment : Fragment() {
                             layoutInflater.inflate(R.layout.card_mentioned, mentioned, false)
                         mentionedPeople.findViewById<ImageView>(R.id.avatarView)
                             .loadAvatar(it.value?.avatar)
-                        mentionedPeople.findViewById<TextView>(R.id.userName).text = it.value?.name
+                        mentionedPeople.findViewById<TextView>(R.id.userName).text = it.value?.name.toString()
                         mentioned.addView(mentionedPeople)
                     }
                 }
