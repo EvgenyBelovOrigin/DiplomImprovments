@@ -86,12 +86,6 @@ class PostFeedFragment : Fragment() {
             }
 
             override fun onItemClick(post: Post) {
-                viewModel.updateAttachment(
-                    url = post.attachment?.url,
-                    attachmentType = post.attachment?.type,
-                    uri = post.attachment?.url?.toUri(),
-                    file = null
-                )
                 viewModel.edit(post)
                 findNavController().navigate(R.id.detailPostFragment)
             }
