@@ -123,7 +123,7 @@ class PostViewHolder(
                     }
                 }.show()
             }
-            itemView.setOnClickListener {
+            cardPostConstraint.setOnClickListener {
                 onInteractionListener.onItemClick(post, position)
             }
 

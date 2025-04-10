@@ -10,223 +10,234 @@
     app:strokeColor="#CAC4D0"
     app:strokeWidth="1dp">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/cardPostScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/common_spacing">
+        android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/posts_avatar_size"
-            android:layout_height="@dimen/posts_avatar_size"
-            android:layout_marginBottom="@dimen/common_spacing"
-            app:layout_constraintBottom_toBottomOf="@id/header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/avatar_default" />
-
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:ellipsize="end"
-            android:singleLine="true"
-            app:layout_constraintBottom_toTopOf="@+id/published"
-            app:layout_constraintEnd_toStartOf="@id/menu"
-            app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="author" />
-
-        <TextView
-            android:id="@+id/published"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            app:layout_constraintBottom_toBottomOf="@id/header"
-            app:layout_constraintEnd_toStartOf="@id/menu"
-            app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toBottomOf="@id/author"
-            tools:text="2025.12" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/menu"
-            style="@style/Widget.AppTheme.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common_spacing"
-            app:icon="@drawable/ic_more_vert_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar,published,menu" />
-
-        <TextView
-            android:id="@+id/content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardPostConstraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:lineSpacingMultiplier="1.5"
-            android:paddingTop="@dimen/common_spacing"
-            android:paddingBottom="@dimen/common_spacing"
-            app:layout_constraintBottom_toTopOf="@id/link"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachDivider"
-            tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
-
-        <TextView
-            android:id="@+id/link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            android:autoLink="web"
-            android:textColorLink="@color/colorPrimary"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/footer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/content"
-            tools:text="www.google.com" />
-
-        <ImageView
-            android:id="@+id/attachmentImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            android:adjustViewBounds="true"
-            android:importantForAccessibility="no"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/attachDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            tools:srcCompat="@drawable/videoimage" />
-
-        <FrameLayout
-            android:id="@+id/videoContainer"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/attachDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header">
+            android:padding="@dimen/common_spacing">
 
 
-            <VideoView
-                android:id="@+id/attachmentVideo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:visibility="visible"
-                tools:srcCompat="@drawable/image_default" />
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/posts_avatar_size"
+                android:layout_height="@dimen/posts_avatar_size"
+                android:layout_marginBottom="@dimen/common_spacing"
+                app:layout_constraintBottom_toBottomOf="@id/header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/avatar_default" />
 
-            <ImageButton
-                android:id="@+id/playVideoButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_gravity="center"
-                android:visibility="visible"
-                app:srcCompat="@drawable/play_video_icon" />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:ellipsize="end"
+                android:singleLine="true"
+                app:layout_constraintBottom_toTopOf="@+id/published"
+                app:layout_constraintEnd_toStartOf="@id/menu"
+                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="author" />
 
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/attachmentAudioLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/attachDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header">
+            <TextView
+                android:id="@+id/published"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:layout_marginEnd="@dimen/common_spacing"
+                android:layout_marginBottom="@dimen/common_spacing"
+                app:layout_constraintBottom_toBottomOf="@id/header"
+                app:layout_constraintEnd_toStartOf="@id/menu"
+                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintTop_toBottomOf="@id/author"
+                tools:text="2025.12" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/playAudioButton"
-                android:layout_width="@dimen/icon_button_min_size"
-                android:layout_height="@dimen/icon_button_min_size"
-                android:background="@drawable/play_icon_selector"
-                android:checkable="true" />
+                android:id="@+id/menu"
+                style="@style/Widget.AppTheme.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_spacing"
+                app:icon="@drawable/ic_more_vert_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <SeekBar
-                android:id="@+id/audioSeekBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="avatar,published,menu" />
+
+
+            <TextView
+                android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:lineSpacingMultiplier="1.5"
+                android:paddingTop="@dimen/common_spacing"
+                android:paddingBottom="@dimen/common_spacing"
+                app:layout_constraintBottom_toTopOf="@id/link"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/attachDivider"
+                tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
 
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/attachDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="attachmentImage,videoContainer, videoContainer" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/footer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="content,link" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/like"
-            style="@style/Widget.AppTheme.LikeCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/footer"
-            tools:text="100" />
-
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/like">
-
-
-            <LinearLayout
-                android:id="@+id/mentioned"
+            <TextView
+                android:id="@+id/link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_spacing"
-                android:animateLayoutChanges="true">
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:autoLink="web"
+                android:textColorLink="@color/colorPrimary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/footer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content"
+                tools:text="www.google.com" />
 
-                <ImageView
-                    android:layout_width="@dimen/posts_avatar_size"
-                    android:layout_height="@dimen/posts_avatar_size"
-                    android:src="@drawable/people_outline">
+            <ImageView
+                android:id="@+id/attachmentImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:adjustViewBounds="true"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/attachDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                tools:srcCompat="@drawable/videoimage" />
 
-                </ImageView>
+            <FrameLayout
+                android:id="@+id/videoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/attachDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
+
+
+                <VideoView
+                    android:id="@+id/attachmentVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:importantForAccessibility="no"
+                    android:visibility="visible"
+                    tools:srcCompat="@drawable/image_default" />
+
+                <ImageButton
+                    android:id="@+id/playVideoButton"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/play_video_icon" />
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/attachmentAudioLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/attachDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/playAudioButton"
+                    android:layout_width="@dimen/icon_button_min_size"
+                    android:layout_height="@dimen/icon_button_min_size"
+                    android:background="@drawable/play_icon_selector"
+                    android:checkable="true" />
+
+                <SeekBar
+                    android:id="@+id/audioSeekBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
 
             </LinearLayout>
-        </HorizontalScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/attachDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="attachmentImage,videoContainer, videoContainer" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="content,link" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/like"
+                style="@style/Widget.AppTheme.LikeCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/footer"
+                tools:text="100" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/like">
+
+
+                <LinearLayout
+                    android:id="@+id/mentioned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_spacing"
+                    android:animateLayoutChanges="true"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/posts_avatar_size"
+                        android:layout_height="@dimen/posts_avatar_size"
+                        android:src="@drawable/people_outline">
+
+                    </ImageView>
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </com.google.android.material.card.MaterialCardView>
