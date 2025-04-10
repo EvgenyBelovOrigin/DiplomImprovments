@@ -118,7 +118,12 @@ class DetailPostFragment : Fragment() {
                 attachmentAudioLayout.isVisible = post.attachment?.type == AttachmentType.AUDIO
                 playAudioButton.isChecked = post.isPlayingAudio
                 playAudioButton.setOnClickListener {
-                    viewModel.playAudio(post)
+                    if (playAudioButton.isChecked) {
+                        post.attachment?.url?.let { url -> MediaLifecycleObserver.mediaPlay(url) }
+                    } else {
+                        post.attachment?.url?.let { MediaLifecycleObserver.mediaStop() }
+                    }
+
                 }
                 link.isVisible = post.link?.isEmpty() == false
                 link.text = post.link
