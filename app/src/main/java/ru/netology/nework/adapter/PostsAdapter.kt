@@ -20,8 +20,8 @@ import java.time.format.DateTimeFormatter
 
 
 interface OnInteractionListener {
-    fun onEdit(post: Post) {}
-    fun onRemove(post: Post) {}
+    fun onEdit(post: Post, position: Int) {}
+    fun onRemove(post: Post, position: Int) {}
     fun onPlayAudio(post: Post) {}
     fun onLike(post: Post) {}
     fun onStopAudio() {}
@@ -109,12 +109,12 @@ class PostViewHolder(
                     setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
-                                onInteractionListener.onRemove(post)
+                                onInteractionListener.onRemove(post, position)
                                 true
                             }
 
                             R.id.editContent -> {
-                                onInteractionListener.onEdit(post)
+                                onInteractionListener.onEdit(post, position)
                                 true
                             }
 

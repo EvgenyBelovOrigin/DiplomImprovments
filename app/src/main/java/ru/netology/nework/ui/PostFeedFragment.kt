@@ -1,10 +1,12 @@
 package ru.netology.nework.ui
 
 import android.annotation.SuppressLint
+import android.media.RouteListingPreference.Item
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -14,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,7 +45,10 @@ class PostFeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
+
+
         binding.bottomNavigation.selectedItemId = R.id.posts
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -58,7 +65,7 @@ class PostFeedFragment : Fragment() {
             }
         }
         val adapter = PostsAdapter(object : OnInteractionListener {
-            override fun onEdit(post: Post) {
+            override fun onEdit(post: Post, position: Int) {
                 viewModel.updateAttachment(
                     url = post.attachment?.url,
                     attachmentType = post.attachment?.type,
@@ -66,10 +73,13 @@ class PostFeedFragment : Fragment() {
                     file = null
                 )
                 viewModel.edit(post)
+                viewModel.clearPlayAudio()
+                viewModel.saveAdapterPosition(position)
                 findNavController().navigate(R.id.newPostFragment)
             }
 
-            override fun onRemove(post: Post) {
+            override fun onRemove(post: Post, position: Int) {
+                viewModel.saveAdapterPosition(position)
                 viewModel.removePostById(post.id)
             }
 
@@ -87,6 +97,8 @@ class PostFeedFragment : Fragment() {
 
             override fun onItemClick(post: Post, position: Int) {
                 viewModel.edit(post)
+                viewModel.clearPlayAudio()
+                viewModel.saveAdapterPosition(position)
                 findNavController().navigate(R.id.detailPostFragment)
             }
 
@@ -94,11 +106,21 @@ class PostFeedFragment : Fragment() {
         viewModel.clearPlayAudio()
         binding.list.adapter = adapter
 
+        adapter.addLoadStateListener {
+            viewModel.postAdapterPosition.observe(viewLifecycleOwner) {
+                binding.list.scrollToPosition(it)
+            }
+        }
+
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.data.collectLatest(adapter::submitData)
+
+
             }
         }
+
         viewModel.refreshAdapter.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
@@ -121,8 +143,11 @@ class PostFeedFragment : Fragment() {
             }
         }
         binding.swiperefresh.setOnRefreshListener {
-            adapter.refresh()
+
+            viewModel.clearAdapterPosition()
             viewModel.clearPlayAudio()
+            adapter.refresh()
+
         }
         viewModel.onLikeError.observe(viewLifecycleOwner) {
             MaterialAlertDialogBuilder(requireContext())
@@ -148,6 +173,7 @@ class PostFeedFragment : Fragment() {
                 requestSignIn()
             } else {
                 viewModel.clearAttachment()
+                viewModel.clearAdapterPosition()
                 viewModel.clearEdited()
                 findNavController().navigate(R.id.newPostFragment)
             }
@@ -169,4 +195,5 @@ class PostFeedFragment : Fragment() {
             .setNegativeButton(R.string.return_to_posts, null)
             .show()
     }
+
 }
