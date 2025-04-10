@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_postFeedFragment_to_newPostFragment"
             app:destination="@id/newPostFragment" />
+        <action
+            android:id="@+id/action_postFeedFragment_to_detailPostFragment"
+            app:destination="@id/detailPostFragment" />
     </fragment>
 
     <fragment
@@ -32,10 +35,19 @@
 
     </fragment>
     <fragment
+        android:id="@+id/detailPostFragment"
+        android:name="ru.netology.nework.ui.DetailPostFragment"
+        android:label="fragment_detail_post"
+        tools:layout="@layout/card_post">
+
+    </fragment>
+    <fragment
         android:id="@+id/newPostFragment"
         android:name="ru.netology.nework.ui.NewPostFragment"
         android:label="fragment_new_post"
-        tools:layout="@layout/fragment_new_post" />
+        tools:layout="@layout/fragment_new_post">
+
+    </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="ru.netology.nework.ui.SignInFragment"

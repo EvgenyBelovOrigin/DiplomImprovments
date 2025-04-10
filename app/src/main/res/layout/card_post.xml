@@ -200,6 +200,26 @@
             app:layout_constraintTop_toBottomOf="@id/footer"
             tools:text="100" />
 
+        <LinearLayout
+            android:id="@+id/mentioned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/like">
+
+            <ImageView
+                android:layout_width="@dimen/posts_avatar_size"
+                android:layout_height="@dimen/posts_avatar_size"
+                android:src="@drawable/people_outline">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

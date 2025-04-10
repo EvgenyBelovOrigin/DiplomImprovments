@@ -25,6 +25,7 @@ interface OnInteractionListener {
     fun onPlayAudio(post: Post) {}
     fun onLike(post: Post) {}
     fun onStopAudio() {}
+    fun onItemClick(post: Post){}
 
 }
 
@@ -121,6 +122,9 @@ class PostViewHolder(
                         }
                     }
                 }.show()
+            }
+            itemView.setOnClickListener {
+                onInteractionListener.onItemClick(post)
             }
 
 

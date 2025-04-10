@@ -85,6 +85,17 @@ class PostFeedFragment : Fragment() {
                 viewModel.likeById(post)
             }
 
+            override fun onItemClick(post: Post) {
+                viewModel.updateAttachment(
+                    url = post.attachment?.url,
+                    attachmentType = post.attachment?.type,
+                    uri = post.attachment?.url?.toUri(),
+                    file = null
+                )
+                viewModel.edit(post)
+                findNavController().navigate(R.id.detailPostFragment)
+            }
+
         })
         viewModel.clearPlayAudio()
         binding.list.adapter = adapter
