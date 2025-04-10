@@ -23,10 +23,10 @@ interface OnInteractionListener {
     fun onEdit(post: Post, position: Int) {}
     fun onRemove(post: Post, position: Int) {}
     fun onPlayAudio(post: Post, position: Int) {}
-    fun onLike(post: Post) {}
+    fun onLike(post: Post, position: Int) {}
     fun onStopAudio() {}
     fun onItemClick(post: Post, position: Int) {}
-    fun onVideoPlay( position: Int) {}
+    fun onVideoPlay(position: Int) {}
 
 }
 
@@ -65,7 +65,7 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             like.setOnClickListener {
-                onInteractionListener.onLike(post)
+                onInteractionListener.onLike(post, position)
             }
             attachmentImage.isVisible = post.attachment?.type == AttachmentType.IMAGE
             post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }

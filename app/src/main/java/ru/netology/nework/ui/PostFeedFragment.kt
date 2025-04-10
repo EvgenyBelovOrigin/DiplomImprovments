@@ -92,7 +92,8 @@ class PostFeedFragment : Fragment() {
                 viewModel.clearPlayAudio()
             }
 
-            override fun onLike(post: Post) {
+            override fun onLike(post: Post, position:Int) {
+                viewModel.saveAdapterPosition(position)
                 viewModel.likeById(post)
             }
 
@@ -116,6 +117,7 @@ class PostFeedFragment : Fragment() {
                 binding.list.scrollToPosition(it)
             }
         }
+        viewModel.clearEdited()
 
 
         viewLifecycleOwner.lifecycleScope.launch {
