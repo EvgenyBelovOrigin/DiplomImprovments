@@ -25,7 +25,7 @@ interface OnInteractionListener {
     fun onPlayAudio(post: Post) {}
     fun onLike(post: Post) {}
     fun onStopAudio() {}
-    fun onItemClick(post: Post){}
+    fun onItemClick(post: Post, position: Int) {}
 
 }
 
@@ -41,7 +41,7 @@ class PostsAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = getItem(position.coerceAtMost(itemCount - 1)) ?: return
-        holder.bind(post)
+        holder.bind(post, position)
     }
 }
 
@@ -50,7 +50,7 @@ class PostViewHolder(
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(post: Post) {
+    fun bind(post: Post, position: Int) {
 
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
@@ -124,7 +124,7 @@ class PostViewHolder(
                 }.show()
             }
             itemView.setOnClickListener {
-                onInteractionListener.onItemClick(post)
+                onInteractionListener.onItemClick(post, position)
             }
 
 

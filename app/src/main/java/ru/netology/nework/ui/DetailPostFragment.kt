@@ -8,10 +8,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
@@ -75,10 +78,10 @@ class DetailPostFragment : Fragment() {
                 like.setOnClickListener {
                     viewModel.likeById(post)
                     if (like.isChecked) {
-                        like.text = (like.text.toString().toInt()+1).toString()
+                        like.text = (like.text.toString().toInt() + 1).toString()
                         return@setOnClickListener
-                    }else{
-                        like.text = (like.text.toString().toInt()-1).toString()
+                    } else {
+                        like.text = (like.text.toString().toInt() - 1).toString()
                         return@setOnClickListener
                     }
 
@@ -119,6 +122,18 @@ class DetailPostFragment : Fragment() {
                 }
                 link.isVisible = post.link?.isEmpty() == false
                 link.text = post.link
+                mentioned.isVisible = true
+
+                if (post.users !== null) {
+                    post.users.map {
+                        val mentionedPeople =
+                            layoutInflater.inflate(R.layout.card_mentioned, mentioned, false)
+                        mentionedPeople.findViewById<ImageView>(R.id.avatarView)
+                            .loadAvatar(it.value?.avatar)
+                        mentionedPeople.findViewById<TextView>(R.id.userName).text = it.value?.name
+                        mentioned.addView(mentionedPeople)
+                    }
+                }
 
                 menu.isVisible = post.ownedByMe
                 menu.setOnClickListener {

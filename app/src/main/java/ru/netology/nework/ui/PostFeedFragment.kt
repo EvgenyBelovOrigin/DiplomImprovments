@@ -85,7 +85,7 @@ class PostFeedFragment : Fragment() {
                 viewModel.likeById(post)
             }
 
-            override fun onItemClick(post: Post) {
+            override fun onItemClick(post: Post, position: Int) {
                 viewModel.edit(post)
                 findNavController().navigate(R.id.detailPostFragment)
             }
