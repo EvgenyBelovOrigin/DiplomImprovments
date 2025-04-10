@@ -30,6 +30,7 @@ import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
+import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.viewmodel.PostViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -130,7 +131,12 @@ class NewPostFragment : Fragment() {
                     binding.photoContainer.isVisible = true
                     binding.videoContainer.isGone = true
                     binding.audioContainer.isGone = true
-                    binding.photo.setImageURI(attachment.uri)
+                    if (attachment.file !== null) {
+                        binding.photo.setImageURI(attachment.uri)
+                    }else{
+                        binding.photo.loadAttachmentView(attachment.uri.toString())//todo why?
+                    }
+
                 }
 
                 AttachmentType.VIDEO -> {
@@ -168,8 +174,15 @@ class NewPostFragment : Fragment() {
                     binding.videoContainer.isGone = true
                     binding.playAudioButton.setOnClickListener {
                         if (binding.playAudioButton.isChecked) {
-                            attachment.file?.let { file ->
-                                MediaLifecycleObserver.mediaPlay(file.path)
+                            if (attachment.file != null) {
+                                attachment.file.let { file ->
+                                    MediaLifecycleObserver.mediaPlay(file.path)
+                                }
+
+                            } else {
+                                attachment.uri?.let { uri ->
+                                    MediaLifecycleObserver.mediaPlay(uri.toString())
+                                }//todo WHY???
                             }
                         } else {
                             MediaLifecycleObserver.mediaStop()
