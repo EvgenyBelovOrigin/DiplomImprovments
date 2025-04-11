@@ -12,6 +12,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nework.api.ApiService
+import ru.netology.nework.dao.EventDao
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.MediaUpload
@@ -19,9 +20,13 @@ import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nework.dao.PostRemoteKeyDao
+import ru.netology.nework.dao.UserDao
+import ru.netology.nework.dao.EventRemoteKeyDao
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Media
+import ru.netology.nework.entity.EventEntity
+import ru.netology.nework.entity.UserEntity
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.AppError
 import ru.netology.nmedia.error.NetworkError
@@ -36,7 +41,10 @@ class RepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val appAuth: AppAuth,
     private val dao: PostDao,
+    private val usersDao: UserDao,
+    private val eventDao: EventDao,
     postRemoteKeyDao: PostRemoteKeyDao,
+    eventRemoteKeyDao: EventRemoteKeyDao,
     appDb: AppDb,
 
     ) : Repository {
@@ -258,7 +266,20 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    // EVENTS
 
+    @OptIn(ExperimentalPagingApi::class)
+    override val events = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        pagingSourceFactory = { eventDao.getPagingSource() },
+        remoteMediator = EventRemoteMediator(
+            apiService = apiService,
+            dao = eventDao,
+            eventRemoteKeyDao = eventRemoteKeyDao,
+            appDb = appDb
+        )
+    ).flow
+        .map { it.map(EventEntity::toDto) }
 }
 
 

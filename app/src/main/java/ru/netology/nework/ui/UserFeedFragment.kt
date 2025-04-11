@@ -18,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
-import ru.netology.nework.adapter.OnInteractionListener
 import ru.netology.nework.adapter.UsersAdapter
 import ru.netology.nework.adapter.UsersOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedUserBinding
@@ -70,32 +69,20 @@ class UserFeedFragment : Fragment() {
 
 
         })
-        viewModel.clearPlayAudio()
         binding.list.adapter = adapter
 
-        viewModel.clearEdited()
 
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.data.collectLatest(adapter::submitData)
+
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.data.collectLatest(adapter::submitData)
+//
+//
+//            }
+//        }
 
 
-            }
-        }
-
-        viewModel.refreshAdapter.observe(viewLifecycleOwner) {
-            adapter.notifyDataSetChanged()
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                appAuth.authState.collectLatest {
-                    viewModel.daoClearAll()
-                    adapter.refresh()
-                }
-            }
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -107,31 +94,9 @@ class UserFeedFragment : Fragment() {
         }
         binding.swipeRefresh.setOnRefreshListener {
 
-//            viewModel.clearAdapterPosition()
-            viewModel.clearPlayAudio()
             adapter.refresh()
 
         }
-        viewModel.onLikeError.observe(viewLifecycleOwner) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.error)
-                .setMessage(R.string.error_like)
-                .setPositiveButton(R.string.ok, null)
-                .show()
-        }
-
-        viewModel.onDeleteError.observe(viewLifecycleOwner) {
-            Toast.makeText(
-                activity,
-                R.string.error_delete,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-        viewModel.requestSignIn.observe(viewLifecycleOwner) {
-            requestSignIn()
-        }
-
-
 
         return binding.root
     }

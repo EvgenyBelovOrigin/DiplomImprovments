@@ -13,13 +13,14 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.Token
 
 
 interface ApiService {
-
+//POSTS
     @GET("posts")
     suspend fun getPosts(): Response<List<Post>>
 
@@ -77,5 +78,23 @@ interface ApiService {
 
     @DELETE("posts/{id}")
     suspend fun removePostById(@Path("id") id: Int): Response<Unit>
+
+    //EVENTS
+
+    @GET("events/{id}/after")
+    suspend fun getEventsAfter(
+        @Path("id") id: Int,
+        @Query("count") count: Int
+    ): Response<List<Event>>
+
+
+    @GET("events/{id}/before")
+    suspend fun getEventsBefore(
+        @Path("id") id: Int,
+        @Query("count") count: Int
+    ): Response<List<Event>>
+
+    @GET("events/latest")
+    suspend fun getEventsLatest(@Query("count") count: Int): Response<List<Event>>
 
 }
