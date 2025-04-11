@@ -1,12 +1,8 @@
 package ru.netology.nework.entity
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.netology.nework.dto.Attachment
-import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.User
-import ru.netology.nework.dto.UserPreview
 
 @Entity
 data class UserEntity(
