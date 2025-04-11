@@ -2,11 +2,12 @@ package ru.netology.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.databinding.CardUserBinding
 import ru.netology.nework.dto.User
+import ru.netology.nework.utils.loadAvatar
 
 
 interface UsersOnInteractionListener {
@@ -17,7 +18,7 @@ interface UsersOnInteractionListener {
 class UsersAdapter(
     private val usersOnInteractionListener: UsersOnInteractionListener,
 
-    ) : PagingDataAdapter<User, UserViewHolder>(UserDiffCallback()) {
+    ) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = CardUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -38,6 +39,9 @@ class UserViewHolder(
     fun bind(user: User, position: Int) {
 
         binding.apply {
+            avatar.loadAvatar(user.avatar)
+            author.text = user.name
+            login.text = user.login
 
         }
     }

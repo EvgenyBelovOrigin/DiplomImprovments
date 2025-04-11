@@ -56,7 +56,8 @@ class UserFeedFragment : Fragment() {
                     findNavController().navigate(R.id.eventFeedFragment)
                     true
                 }
-                R.id.users ->{
+
+                R.id.users -> {
                     true
                 }
 
@@ -71,31 +72,27 @@ class UserFeedFragment : Fragment() {
         })
         binding.list.adapter = adapter
 
-
-
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.data.collectLatest(adapter::submitData)
-//
-//
-//            }
-//        }
-
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                adapter.loadStateFlow.collectLatest { state ->
-                    binding.swipeRefresh.isRefreshing =
-                        state.refresh is LoadState.Loading
-                }
-            }
+        viewModel.data.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
+
+
         binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getAllUsers()
 
-            adapter.refresh()
-
+        }
+        viewModel.onError.observe(viewLifecycleOwner){
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.error)
+                .setMessage(R.string.error_loading)
+                .setPositiveButton(R.string.ok, null)
+                .show()
+        }
+        viewModel.onStartLoading.observe(viewLifecycleOwner){
+            binding.swipeRefresh.isRefreshing = true
+        }
+        viewModel.onStopLoading.observe(viewLifecycleOwner){
+            binding.swipeRefresh.isRefreshing = false
         }
 
         return binding.root
