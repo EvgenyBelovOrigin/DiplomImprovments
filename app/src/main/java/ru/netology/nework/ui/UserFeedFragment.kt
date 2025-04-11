@@ -22,6 +22,7 @@ import ru.netology.nework.R
 import ru.netology.nework.adapter.OnInteractionListener
 import ru.netology.nework.adapter.PostsAdapter
 import ru.netology.nework.databinding.FragmentFeedPostBinding
+import ru.netology.nework.databinding.FragmentFeedUserBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.viewmodel.PostViewModel
 import ru.netology.nmedia.auth.AppAuth
@@ -29,7 +30,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PostFeedFragment : Fragment() {
+class UserFeedFragment : Fragment() {
 
     @Inject
     lateinit var appAuth: AppAuth
@@ -42,13 +43,14 @@ class PostFeedFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
+        val binding = FragmentFeedUserBinding.inflate(inflater, container, false)
 
 
-        binding.bottomNavigation.selectedItemId = R.id.posts
+        binding.bottomNavigation.selectedItemId = R.id.users
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.posts -> {
+                    findNavController().navigate(R.id.postFeedFragment)
                     true
                 }
 
@@ -57,7 +59,6 @@ class PostFeedFragment : Fragment() {
                     true
                 }
                 R.id.users ->{
-                    findNavController().navigate(R.id.userFeedFragment)
                     true
                 }
 

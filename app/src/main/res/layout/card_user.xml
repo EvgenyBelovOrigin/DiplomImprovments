@@ -21,7 +21,8 @@
             android:layout_marginBottom="@dimen/common_spacing"
             android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/avatar_default"/>
 
         <TextView
             android:id="@+id/author"
@@ -33,7 +34,7 @@
             app:layout_constraintBottom_toTopOf="@+id/login"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="@id/avatar"
-            tools:text="Evgeny" />
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/login"
