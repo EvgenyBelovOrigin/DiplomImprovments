@@ -1,12 +1,10 @@
 package ru.netology.nework.ui
 
 import android.annotation.SuppressLint
-import android.media.RouteListingPreference.Item
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -16,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -74,17 +70,14 @@ class PostFeedFragment : Fragment() {
                 )
                 viewModel.edit(post)
                 viewModel.clearPlayAudio()
-                viewModel.saveAdapterPosition(position)
                 findNavController().navigate(R.id.newPostFragment)
             }
 
             override fun onRemove(post: Post, position: Int) {
-                viewModel.saveAdapterPosition(position)
                 viewModel.removePostById(post.id)
             }
 
-            override fun onPlayAudio(post: Post, position:Int) {
-                viewModel.saveAdapterPosition(position)
+            override fun onPlayAudio(post: Post, position: Int) {
                 viewModel.playAudio(post)
             }
 
@@ -92,31 +85,23 @@ class PostFeedFragment : Fragment() {
                 viewModel.clearPlayAudio()
             }
 
-            override fun onLike(post: Post, position:Int) {
-                viewModel.saveAdapterPosition(position)
+            override fun onLike(post: Post, position: Int) {
                 viewModel.likeById(post)
             }
 
             override fun onItemClick(post: Post, position: Int) {
                 viewModel.edit(post)
                 viewModel.clearPlayAudio()
-                viewModel.saveAdapterPosition(position)
                 findNavController().navigate(R.id.detailPostFragment)
             }
 
             override fun onVideoPlay(position: Int) {
-                viewModel.saveAdapterPosition(position)
             }
 
         })
         viewModel.clearPlayAudio()
         binding.list.adapter = adapter
 
-        adapter.addLoadStateListener {
-            viewModel.postAdapterPosition.observe(viewLifecycleOwner) {
-                binding.list.scrollToPosition(it)
-            }
-        }
         viewModel.clearEdited()
 
 
@@ -151,7 +136,7 @@ class PostFeedFragment : Fragment() {
         }
         binding.swiperefresh.setOnRefreshListener {
 
-            viewModel.clearAdapterPosition()
+//            viewModel.clearAdapterPosition()
             viewModel.clearPlayAudio()
             adapter.refresh()
 
@@ -180,7 +165,7 @@ class PostFeedFragment : Fragment() {
                 requestSignIn()
             } else {
                 viewModel.clearAttachment()
-                viewModel.clearAdapterPosition()
+//                viewModel.clearAdapterPosition()
                 viewModel.clearEdited()
                 findNavController().navigate(R.id.newPostFragment)
             }

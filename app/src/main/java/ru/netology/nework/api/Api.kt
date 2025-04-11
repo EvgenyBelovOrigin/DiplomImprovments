@@ -62,8 +62,6 @@ interface ApiService {
         @Query("count") count: Int,
     ): Response<List<Post>>
 
-    @GET("posts/{id}/newer")
-
     @POST("posts/{id}/likes")
     suspend fun likeById(@Path("id") id: Int): Response<Post>
 

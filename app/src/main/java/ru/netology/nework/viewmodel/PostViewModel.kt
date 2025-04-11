@@ -87,7 +87,6 @@ class PostViewModel @Inject constructor(
         get() = _requestSignIn
 
     val edited = MutableLiveData(empty)
-    val postAdapterPosition = MutableLiveData(0)
     private val noAttachment = AttachmentModel()
 
     private val _attachment = MutableLiveData<AttachmentModel>(noAttachment)
@@ -161,7 +160,9 @@ class PostViewModel @Inject constructor(
                     }
                 } catch (e: Exception) {
                     _onLikeError.value = post.id
+                    throw e
                 }
+
             }
 
         }
@@ -247,12 +248,5 @@ class PostViewModel @Inject constructor(
         edited.value = post
     }
 
-    fun saveAdapterPosition(position: Int) {
-        postAdapterPosition.value = position
-    }
-
-    fun clearAdapterPosition() {
-        postAdapterPosition.value = 0
-    }
 
 }
