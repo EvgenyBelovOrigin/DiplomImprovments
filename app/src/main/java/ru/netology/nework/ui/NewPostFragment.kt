@@ -241,6 +241,9 @@ class NewPostFragment : Fragment() {
             val choose = arrayOf("audio/*", "video/*")
             resultLauncher.launch(choose)
         }
+        binding.addMentioned.setOnClickListener {
+            findNavController().navigate(R.id.detailPostFragment)// sample
+        }
 
 
         requireActivity().addMenuProvider(

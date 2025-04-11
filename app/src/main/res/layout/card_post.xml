@@ -249,7 +249,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_spacing"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/mentionedCount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/mentionedCount"
@@ -269,6 +269,18 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addMentioned"
+                style="@style/Widget.AppTheme.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/common_spacing"
+                app:icon="@drawable/add_mentioned"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scrollMentioned"
+                tools:text="100" />
+
             <TextView
                 android:id="@+id/job"
                 android:layout_width="wrap_content"
@@ -279,7 +291,7 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scrollMentioned" />
+                app:layout_constraintTop_toBottomOf="@id/addMentioned" />
 
             <TextView
                 android:id="@+id/jobCompany"
@@ -291,7 +303,7 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/job"
-                tools:text="Very good company"/>
+                tools:text="Very good company" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
