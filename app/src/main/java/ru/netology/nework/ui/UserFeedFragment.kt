@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -20,11 +19,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
 import ru.netology.nework.adapter.OnInteractionListener
-import ru.netology.nework.adapter.PostsAdapter
-import ru.netology.nework.databinding.FragmentFeedPostBinding
+import ru.netology.nework.adapter.UsersAdapter
+import ru.netology.nework.adapter.UsersOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedUserBinding
-import ru.netology.nework.dto.Post
-import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.dto.User
+import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
@@ -34,7 +33,7 @@ class UserFeedFragment : Fragment() {
 
     @Inject
     lateinit var appAuth: AppAuth
-    private val viewModel: PostViewModel by activityViewModels()
+    private val viewModel: UserViewModel by activityViewModels()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -65,43 +64,10 @@ class UserFeedFragment : Fragment() {
                 else -> false
             }
         }
-        val adapter = PostsAdapter(object : OnInteractionListener {
-            override fun onEdit(post: Post, position: Int) {
-                viewModel.updateAttachment(
-                    url = post.attachment?.url,
-                    attachmentType = post.attachment?.type,
-                    uri = post.attachment?.url?.toUri(),
-                    file = null
-                )
-                viewModel.edit(post)
-                viewModel.clearPlayAudio()
-                findNavController().navigate(R.id.newPostFragment)
+        val adapter = UsersAdapter(object : UsersOnInteractionListener {
+            override fun onEdit(user: User, position: Int) {
             }
 
-            override fun onRemove(post: Post, position: Int) {
-                viewModel.removePostById(post.id)
-            }
-
-            override fun onPlayAudio(post: Post, position: Int) {
-                viewModel.playAudio(post)
-            }
-
-            override fun onStopAudio() {
-                viewModel.clearPlayAudio()
-            }
-
-            override fun onLike(post: Post, position: Int) {
-                viewModel.likeById(post)
-            }
-
-            override fun onItemClick(post: Post, position: Int) {
-                viewModel.edit(post)
-                viewModel.clearPlayAudio()
-                findNavController().navigate(R.id.detailPostFragment)
-            }
-
-            override fun onVideoPlay(position: Int) {
-            }
 
         })
         viewModel.clearPlayAudio()
@@ -134,12 +100,12 @@ class UserFeedFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collectLatest { state ->
-                    binding.swiperefresh.isRefreshing =
+                    binding.swipeRefresh.isRefreshing =
                         state.refresh is LoadState.Loading
                 }
             }
         }
-        binding.swiperefresh.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
 
 //            viewModel.clearAdapterPosition()
             viewModel.clearPlayAudio()
@@ -165,16 +131,6 @@ class UserFeedFragment : Fragment() {
             requestSignIn()
         }
 
-        binding.fab.setOnClickListener {
-            if (appAuth.authState.value?.id == 0) {
-                requestSignIn()
-            } else {
-                viewModel.clearAttachment()
-//                viewModel.clearAdapterPosition()
-                viewModel.clearEdited()
-                findNavController().navigate(R.id.newPostFragment)
-            }
-        }
 
 
         return binding.root
