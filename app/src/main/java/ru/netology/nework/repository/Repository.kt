@@ -27,4 +27,10 @@ interface Repository {
 
     // EVENTS
     val events: Flow<PagingData<Event>>
+
+    //USERS
+
+    val users: Flow<List<User>>
+
+    suspend fun getAllUsers()
 }

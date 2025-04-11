@@ -17,6 +17,7 @@ import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.Token
+import ru.netology.nework.dto.User
 
 
 interface ApiService {
@@ -96,5 +97,11 @@ interface ApiService {
 
     @GET("events/latest")
     suspend fun getEventsLatest(@Query("count") count: Int): Response<List<Event>>
+
+
+    //USERS
+
+    @GET("users")
+    suspend fun getAllUsers(): Response<List<User>>
 
 }

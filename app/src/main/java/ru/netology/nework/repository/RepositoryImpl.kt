@@ -5,7 +5,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -13,20 +15,22 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nework.api.ApiService
 import ru.netology.nework.dao.EventDao
+import ru.netology.nework.dao.EventRemoteKeyDao
 import ru.netology.nework.dao.PostDao
-import ru.netology.nework.db.AppDb
-import ru.netology.nework.dto.MediaUpload
-import ru.netology.nework.dto.Post
-import ru.netology.nework.entity.PostEntity
-import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dao.UserDao
-import ru.netology.nework.dao.EventRemoteKeyDao
+import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Media
+import ru.netology.nework.dto.MediaUpload
+import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.EventEntity
+import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.toDto
+import ru.netology.nework.entity.toEntity
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.AppError
 import ru.netology.nmedia.error.NetworkError
@@ -280,6 +284,28 @@ class RepositoryImpl @Inject constructor(
         )
     ).flow
         .map { it.map(EventEntity::toDto) }
+
+
+    //USERS
+
+    override val users = usersDao.getAll()
+        .map(List<UserEntity>::toDto)
+        .flowOn(Dispatchers.Default)
+
+    override suspend fun getAllUsers() {
+        try {
+            val response = apiService.getAllUsers()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            usersDao.insert(body.toEntity())
+        } catch (e: IOException) {
+            throw NetworkError
+        }
+    }
 }
+
+
 
 
