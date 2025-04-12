@@ -37,6 +37,11 @@ class EventFeedFragment : Fragment() {
                     true
                 }
 
+                R.id.users -> {
+                    findNavController().navigate(R.id.userFeedFragment)
+                    true
+                }
+
                 else -> false
             }
         }
