@@ -86,11 +86,13 @@ class PostViewModel @Inject constructor(
     val requestSignIn: LiveData<Unit>
         get() = _requestSignIn
 
-    val edited = MutableLiveData(empty)
+    private val _edited = MutableLiveData<Post>(empty)
+    val edited: LiveData<Post>
+        get() = _edited
 
     private val noAttachment = AttachmentModel()
 
-    private val _attachment = MutableLiveData<AttachmentModel>(noAttachment)
+    private val _attachment = MutableLiveData(noAttachment)
     val attachment: LiveData<AttachmentModel>
         get() = _attachment
 
@@ -191,21 +193,21 @@ class PostViewModel @Inject constructor(
     }
 
     fun clearEdited() {
-        edited.value = empty
+        _edited.value = empty
     }
 
     fun changeContent(content: String, link: String) {
         val text = content.trim()
         val web = link.trim()
         if (_attachment.value == noAttachment) {
-            edited.value = edited.value?.copy(
+            _edited.value = edited.value?.copy(
                 content = text, link = web, attachment = null //todo to think about it
             )
         }
         if (edited.value?.content == text && edited.value?.link == web) {
             return
         }
-        edited.value = edited.value?.copy(
+        _edited.value = edited.value?.copy(
             content = text, link = web
         )
     }
@@ -223,7 +225,7 @@ class PostViewModel @Inject constructor(
                             )
                         }
                     } ?: repository.save(it)
-                    edited.value = empty
+                    _edited.value = empty
                     _attachment.value = noAttachment
                     _postCreated.value = Unit
 
@@ -246,7 +248,7 @@ class PostViewModel @Inject constructor(
     }
 
     fun edit(post: Post) {
-        edited.value = post
+        _edited.value = post
     }
 
 

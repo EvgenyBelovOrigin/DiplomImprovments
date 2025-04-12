@@ -17,14 +17,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.EventDao
 import ru.netology.nework.dao.EventRemoteKeyDao
-import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.EventType
 import ru.netology.nework.dto.MediaUpload
-import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.EventEntity
-import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.MediaLifecycleObserver
@@ -91,7 +88,10 @@ class EventViewModel @Inject constructor(
     val requestSignIn: LiveData<Unit>
         get() = _requestSignIn
 
-    val edited = MutableLiveData(empty)
+    private val _edited = MutableLiveData(empty)
+    val edited: LiveData<Event>
+        get() = _edited
+
     private val noAttachment = AttachmentModel()
 
     private val _attachment = MutableLiveData(noAttachment)
@@ -195,21 +195,21 @@ class EventViewModel @Inject constructor(
     }
 
     fun clearEdited() {
-        edited.value = empty
+        _edited.value = empty
     }
 
     fun changeContent(content: String, link: String) {
         val text = content.trim()
         val web = link.trim()
         if (_attachment.value == noAttachment) {
-            edited.value = edited.value?.copy(
+            _edited.value = edited.value?.copy(
                 content = text, link = web, attachment = null //todo to think about it
             )
         }
         if (edited.value?.content == text && edited.value?.link == web) {
             return
         }
-        edited.value = edited.value?.copy(
+        _edited.value = edited.value?.copy(
             content = text, link = web
         )
     }
@@ -227,7 +227,7 @@ class EventViewModel @Inject constructor(
                             )
                         }
                     } ?: repository.saveEvent(it)
-                    edited.value = empty
+                    _edited.value = empty
                     _attachment.value = noAttachment
                     _eventCreated.value = Unit
 
@@ -250,7 +250,7 @@ class EventViewModel @Inject constructor(
     }
 
     fun edit(event: Event) {
-        edited.value = event
+        _edited.value = event
     }
 
 
