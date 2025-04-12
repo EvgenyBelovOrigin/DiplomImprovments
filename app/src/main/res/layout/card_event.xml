@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/dateOfEvent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/attachDivider"
                 tools:text="ONLINE" />
@@ -96,6 +97,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/typeOfEvent"
                 tools:text="2025" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/playAudioButton"
+                android:layout_width="@dimen/icon_button_min_size"
+                android:layout_height="@dimen/icon_button_min_size"
+                android:background="@drawable/play_icon_selector"
+                android:checkable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/dateOfEvent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/typeOfEvent" />
 
             <TextView
                 android:id="@+id/content"
@@ -173,35 +185,6 @@
 
 
             </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/attachmentAudioLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_spacing"
-                android:layout_marginBottom="@dimen/common_spacing"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@id/attachDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/playAudioButton"
-                    android:layout_width="@dimen/icon_button_min_size"
-                    android:layout_height="@dimen/icon_button_min_size"
-                    android:background="@drawable/play_icon_selector"
-                    android:checkable="true" />
-
-                <SeekBar
-                    android:id="@+id/audioSeekBar"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-
-            </LinearLayout>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/attachDivider"

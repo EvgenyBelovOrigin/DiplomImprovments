@@ -16,10 +16,10 @@ interface EventDao {
     @Query("DELETE FROM EventEntity")
     suspend fun clear()
 
-    @Query("UPDATE PostEntity SET isPlayingAudio = 0")
+    @Query("UPDATE EventEntity SET isPlayingAudio = 0")
     suspend fun makeAllIsNotPlaying()
 
-    @Query("UPDATE PostEntity SET isPlayingAudioPaused = 0")
+    @Query("UPDATE EventEntity SET isPlayingAudioPaused = 0")
     suspend fun makeAllIsNotPaused()
 
 

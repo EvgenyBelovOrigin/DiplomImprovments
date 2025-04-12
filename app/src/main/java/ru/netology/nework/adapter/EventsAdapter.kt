@@ -91,7 +91,7 @@ class EventViewHolder(
                 }
             }
 
-            attachmentAudioLayout.isVisible = event.attachment?.type == AttachmentType.AUDIO
+            playAudioButton.isVisible = event.attachment?.type == AttachmentType.AUDIO
             playAudioButton.isChecked = event.isPlayingAudio
             playAudioButton.setOnClickListener {
                 eventOnInteractionListener.onPlayAudio(event, position)
