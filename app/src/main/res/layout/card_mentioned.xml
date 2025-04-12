@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardMentioned"
     android:orientation="vertical"
@@ -17,6 +16,7 @@
             android:id="@+id/avatarView"
             android:layout_width="@dimen/posts_avatar_size"
             android:layout_height="@dimen/posts_avatar_size"
+            android:layout_gravity="center"
             android:importantForAccessibility="no"
             tools:srcCompat="@tools:sample/avatars" />
 

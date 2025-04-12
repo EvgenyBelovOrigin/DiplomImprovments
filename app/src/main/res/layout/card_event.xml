@@ -212,6 +212,67 @@
                 tools:text="100" />
 
             <TextView
+                android:id="@+id/speakerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:text="@string/speakers"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/like" />
+
+            <ImageView
+                android:id="@+id/iconSpeaker"
+                android:layout_width="@dimen/posts_avatar_size"
+                android:layout_height="@dimen/posts_avatar_size"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:src="@drawable/speakers"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speakerTitle"
+                app:layout_goneMarginTop="@dimen/common_spacing" />
+
+            <TextView
+                android:id="@+id/speakersCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/iconSpeaker"
+                app:layout_constraintStart_toEndOf="@id/iconSpeaker"
+                app:layout_constraintTop_toTopOf="@id/iconSpeaker"
+                tools:text="100" />
+
+
+            <HorizontalScrollView
+                android:id="@+id/scrollSpeakers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_spacing"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/speakersCount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/speakersCount"
+                app:layout_constraintTop_toTopOf="@id/speakersCount">
+
+
+                <LinearLayout
+                    android:id="@+id/speakers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_spacing"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+            <TextView
                 android:id="@+id/participantTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -221,7 +282,7 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/like" />
+                app:layout_constraintTop_toBottomOf="@id/scrollSpeakers" />
 
             <ImageView
                 android:id="@+id/iconParticipant"
@@ -271,17 +332,6 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addMentioned"
-                style="@style/Widget.AppTheme.IconButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/common_spacing"
-                android:visibility="gone"
-                app:icon="@drawable/add_mentioned"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scrollParticipant"
-                tools:text="100" />
 
             <TextView
                 android:id="@+id/job"
@@ -293,7 +343,7 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addMentioned" />
+                app:layout_constraintTop_toBottomOf="@id/scrollParticipant" />
 
             <TextView
                 android:id="@+id/jobCompany"
