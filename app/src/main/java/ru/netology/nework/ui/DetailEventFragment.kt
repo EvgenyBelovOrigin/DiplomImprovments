@@ -26,13 +26,13 @@ import ru.netology.nework.utils.AndroidUtils.dateFormat
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
-import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.EventViewModel
 
 @AndroidEntryPoint
 class DetailEventFragment : Fragment() {
 
 
-    private val viewModel: PostViewModel by activityViewModels()
+    private val viewModel: EventViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,6 +129,9 @@ class DetailEventFragment : Fragment() {
                     }
                 }
 
+                typeOfEvent.text = event.type.toString()
+                dateOfEvent.text = dateFormat(event.datetime)
+
                 menu.isVisible = event.ownedByMe
                 menu.setOnClickListener {
                     PopupMenu(it.context, it).apply {
@@ -136,7 +139,7 @@ class DetailEventFragment : Fragment() {
                         setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 R.id.remove -> {
-                                    viewModel.removePostById(event.id)
+                                    viewModel.removeEventById(event.id)
                                     findNavController().navigateUp()
                                     true
                                 }

@@ -11,35 +11,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintSet.Layout
-import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
-import ru.netology.nework.databinding.FragmentNewPostBinding
 import ru.netology.nework.dto.AttachmentType
-import ru.netology.nework.utils.AndroidUtils
-import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.MediaLifecycleObserver
-import ru.netology.nework.utils.StringArg
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 import ru.netology.nework.viewmodel.PostViewModel
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -132,21 +118,31 @@ class DetailPostFragment : Fragment() {
                 mentioned.isVisible = true
                 scrollMentioned.isVisible = true
                 mentionedCount.isVisible = true
-                mentionedCount.text = post.users?.size.toString()
-                job.isVisible=true
-                jobCompany.isVisible=true
-                jobCompany.text = post.authorJob?:getString(R.string.looking_for_best_company)
+                mentionedCount.text = post.mentionIds?.size.toString()
+                job.isVisible = true
+                jobCompany.isVisible = true
+                jobCompany.text = post.authorJob ?: getString(R.string.looking_for_best_company)
 
                 if (post.users !== null) {
-                    post.users.map {
-                        val mentionedPeople =
-                            layoutInflater.inflate(R.layout.card_mentioned, mentioned, false)
-                        mentionedPeople.findViewById<ImageView>(R.id.avatarView)
-                            .loadAvatar(it.value?.avatar)
-                        mentionedPeople.findViewById<TextView>(R.id.userName).text = it.value?.name.toString()
-                        mentioned.addView(mentionedPeople)
+                    post.mentionIds?.forEach { id ->
+                        post.users.map { user ->
+                            if (user.key.toInt() == id) {
+                                val mentionedPeople =
+                                    layoutInflater.inflate(
+                                        R.layout.card_mentioned,
+                                        mentioned,
+                                        false
+                                    )
+                                mentionedPeople.findViewById<ImageView>(R.id.avatarView)
+                                    .loadAvatar(user.value?.avatar)
+                                mentionedPeople.findViewById<TextView>(R.id.userName).text =
+                                    user.value?.name.toString()
+                                mentioned.addView(mentionedPeople)
+                            }
+                        }
                     }
                 }
+
 
                 menu.isVisible = post.ownedByMe
                 menu.setOnClickListener {
