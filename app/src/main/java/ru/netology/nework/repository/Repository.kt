@@ -15,9 +15,6 @@ interface Repository {
     val posts: Flow<PagingData<Post>>
 
     suspend fun getPosts()
-    suspend fun signIn(login: String, password: String)
-    suspend fun signUp(login: String, password: String, name: String)
-    suspend fun signUpWithAvatar(login: String, password: String, name: String, upload: MediaUpload)
     suspend fun disLikeById(post: Post)
     suspend fun likeById(post: Post)
     suspend fun save(post: Post)
@@ -25,8 +22,19 @@ interface Repository {
     suspend fun upload(upload: MediaUpload): Media
     suspend fun removePostById(id: Int)
 
+    //AUTH
+    suspend fun signIn(login: String, password: String)
+    suspend fun signUp(login: String, password: String, name: String)
+    suspend fun signUpWithAvatar(login: String, password: String, name: String, upload: MediaUpload)
+
     // EVENTS
     val events: Flow<PagingData<Event>>
+
+    suspend fun disLikeEventById(event: Event)
+    suspend fun likeEventById(event: Event)
+    suspend fun saveEvent(event: Event)
+    suspend fun saveEventWithAttachment(event: Event, upload: MediaUpload, attachmentType: AttachmentType)
+    suspend fun removeEventById(id: Int)
 
     //USERS
 

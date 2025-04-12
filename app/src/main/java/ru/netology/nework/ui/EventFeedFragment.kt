@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentFeedEventBinding
-import ru.netology.nework.databinding.FragmentFeedPostBinding
 
 
 @AndroidEntryPoint

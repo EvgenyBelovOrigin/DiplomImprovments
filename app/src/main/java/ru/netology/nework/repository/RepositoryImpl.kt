@@ -22,6 +22,7 @@ import ru.netology.nework.dao.UserDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
+import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -284,6 +285,111 @@ class RepositoryImpl @Inject constructor(
         )
     ).flow
         .map { it.map(EventEntity::toDto) }
+
+
+    override suspend fun disLikeEventById(event: Event) {
+        try {
+            val response = apiService.disLikeEventById(event.id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            if (response.body() != null) {
+                eventDao.insert(
+                    EventEntity.fromDto(
+                        response.body()!!
+                            .copy(
+                                isPlayingAudioPaused = event.isPlayingAudioPaused,
+                                isPlayingAudio = event.isPlayingAudio
+                            )
+                    )
+                )
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun likeEventById(event: Event) {
+        try {
+            val response = apiService.likeEventById(event.id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+
+            }
+            if (response.body() != null) {
+                eventDao.insert(
+                    EventEntity.fromDto(
+                        response.body()!!.copy(
+                            isPlayingAudio = event.isPlayingAudio,
+                            isPlayingAudioPaused = event.isPlayingAudioPaused
+                        )
+                    )
+                )
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+
+    }
+
+    override suspend fun saveEvent(event: Event) {
+        try {
+            val response = apiService.saveEvent(event)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            eventDao.insert(EventEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun saveEventWithAttachment(
+        event: Event,
+        upload: MediaUpload,
+        attachmentType: AttachmentType
+    ) {
+        try {
+            val media = upload(upload)
+            val eventWithAttachment =
+                event.copy(attachment = Attachment(media.url, attachmentType))
+            saveEvent(eventWithAttachment)
+        } catch (e: AppError) {
+            throw e
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+
+    override suspend fun removeEventById(id: Int) {
+
+        try {
+            eventDao.removeEventById(id)
+            val response = apiService.removeEventById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+
+
+
 
 
     //USERS

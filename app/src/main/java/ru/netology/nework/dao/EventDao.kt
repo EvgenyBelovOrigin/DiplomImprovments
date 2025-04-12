@@ -10,16 +10,28 @@ import ru.netology.nework.entity.EventEntity
 @Dao
 interface EventDao {
 
+    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
+    suspend fun isEmpty(): Boolean
+
     @Query("DELETE FROM EventEntity")
     suspend fun clear()
+
+    @Query("UPDATE PostEntity SET isPlayingAudio = 0")
+    suspend fun makeAllIsNotPlaying()
+
+    @Query("UPDATE PostEntity SET isPlayingAudioPaused = 0")
+    suspend fun makeAllIsNotPaused()
 
 
     @Query("SELECT * FROM EventEntity ORDER BY id DESC")
     fun getPagingSource(): PagingSource<Int, EventEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(users: List<EventEntity>)
+    suspend fun insert(events: List<EventEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: EventEntity)
+    suspend fun insert(event: EventEntity)
+
+    @Query("DELETE FROM EventEntity WHERE id = :id")
+    suspend fun removeEventById(id: Int)
 }

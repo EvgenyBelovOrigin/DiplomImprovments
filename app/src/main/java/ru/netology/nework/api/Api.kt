@@ -21,7 +21,7 @@ import ru.netology.nework.dto.User
 
 
 interface ApiService {
-//POSTS
+    //POSTS
     @GET("posts")
     suspend fun getPosts(): Response<List<Post>>
 
@@ -97,6 +97,18 @@ interface ApiService {
 
     @GET("events/latest")
     suspend fun getEventsLatest(@Query("count") count: Int): Response<List<Event>>
+
+    @POST("events/{id}/likes")
+    suspend fun likeEventById(@Path("id") id: Int): Response<Event>
+
+    @DELETE("events/{id}/likes")
+    suspend fun disLikeEventById(@Path("id") id: Int): Response<Event>
+
+    @POST("events")
+    suspend fun saveEvent(@Body event: Event): Response<Event>
+
+    @DELETE("events/{id}")
+    suspend fun removeEventById(@Path("id") id: Int): Response<Unit>
 
 
     //USERS
