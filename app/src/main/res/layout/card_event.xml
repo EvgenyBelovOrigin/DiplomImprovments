@@ -78,6 +78,24 @@
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="avatar,published,menu" />
 
+            <TextView
+                android:id="@+id/typeOfEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/attachDivider"
+                tools:text="ONLINE" />
+
+            <TextView
+                android:id="@+id/dateOfEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/typeOfEvent"
+                tools:text="2025" />
 
             <TextView
                 android:id="@+id/content"
@@ -90,7 +108,7 @@
                 app:layout_constraintBottom_toTopOf="@id/link"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/attachDivider"
+                app:layout_constraintTop_toBottomOf="@id/dateOfEvent"
                 tools:text="postpostpostpostpostpostpostpostpostpostpostpostpostpostpostpostpost" />
 
             <TextView
@@ -275,8 +293,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="@dimen/common_spacing"
-                app:icon="@drawable/add_mentioned"
                 android:visibility="gone"
+                app:icon="@drawable/add_mentioned"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/scrollMentioned"
                 tools:text="100" />

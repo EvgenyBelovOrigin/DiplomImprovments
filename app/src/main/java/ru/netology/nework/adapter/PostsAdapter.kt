@@ -12,11 +12,9 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
+import ru.netology.nework.utils.AndroidUtils.dateFormat
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 
 interface OnInteractionListener {
@@ -56,12 +54,8 @@ class PostViewHolder(
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.author
-            published.text =
-                ZonedDateTime.parse(post.published).withZoneSameInstant(ZoneId.systemDefault())
-                    .format(
-                        DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
-                    )
-            content.text = post.content.replace("\n","")
+            published.text = dateFormat(post.published)
+            content.text = post.content.replace("\n", "")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()
             like.setOnClickListener {

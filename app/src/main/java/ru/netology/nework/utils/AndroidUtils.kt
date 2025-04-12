@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import ru.netology.nework.R
 import java.io.File
 import java.io.FileOutputStream
 import java.time.ZoneId
@@ -22,6 +21,7 @@ object AndroidUtils {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInputFromInputMethod(view.windowToken, 0)
     }
+
     fun Uri.getFile(context: Context): File? {
         val inputStream = context.contentResolver.openInputStream(this)
         val tempFile = File.createTempFile("temp", ".jpg")
@@ -33,6 +33,13 @@ object AndroidUtils {
             }
         }
         return tempFile
+    }
+
+    fun dateFormat(string: String): String {
+        return ZonedDateTime.parse(string).withZoneSameInstant(ZoneId.systemDefault())
+            .format(
+                DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
+            )
     }
 
 }
