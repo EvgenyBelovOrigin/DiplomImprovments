@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ru.netology.nework.entity.EventEntity
-import ru.netology.nework.entity.UserEntity
 
 @Dao
 interface EventDao {
@@ -15,7 +14,7 @@ interface EventDao {
     suspend fun clear()
 
 
-    @Query("SELECT * FROM UserEntity ORDER BY id DESC")
+    @Query("SELECT * FROM EventEntity ORDER BY id DESC")
     fun getPagingSource(): PagingSource<Int, EventEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
