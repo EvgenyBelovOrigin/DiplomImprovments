@@ -107,25 +107,31 @@ class DetailEventFragment : Fragment() {
                 }
                 link.isVisible = event.link?.isEmpty() == false
                 link.text = event.link
-                mentionedTitle.isVisible = true
-                iconMentioned.isVisible = true
-                mentioned.isVisible = true
-                scrollMentioned.isVisible = true
-                mentionedCount.isVisible = true
-                mentionedCount.text = event.users?.size.toString()
+                participantTitle.isVisible = true
+                iconParticipant.isVisible = true
+                participants.isVisible = true
+                scrollParticipant.isVisible = true
+                participantCount.isVisible = true
+                participantCount.text = event.participantsIds.size.toString()
                 job.isVisible = true
                 jobCompany.isVisible = true
                 jobCompany.text = event.authorJob ?: getString(R.string.looking_for_best_company)
 
-                if (event.users !== null) {
-                    event.users.map {
-                        val mentionedPeople =
-                            layoutInflater.inflate(R.layout.card_mentioned, mentioned, false)
-                        mentionedPeople.findViewById<ImageView>(R.id.avatarView)
-                            .loadAvatar(it.value?.avatar)
-                        mentionedPeople.findViewById<TextView>(R.id.userName).text =
-                            it.value?.name.toString()
-                        mentioned.addView(mentionedPeople)
+                event.participantsIds.forEach { id ->
+                    event.users.map { user ->
+                        if (user.key.toInt() == id) {
+                            val mentionedPeople =
+                                layoutInflater.inflate(
+                                    R.layout.card_mentioned,
+                                    participants,
+                                    false
+                                )
+                            mentionedPeople.findViewById<ImageView>(R.id.avatarView)
+                                .loadAvatar(user.value.avatar)
+                            mentionedPeople.findViewById<TextView>(R.id.userName).text =
+                                user.value.name.toString()
+                            participants.addView(mentionedPeople)
+                        }
                     }
                 }
 

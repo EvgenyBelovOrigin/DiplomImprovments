@@ -212,11 +212,11 @@
                 tools:text="100" />
 
             <TextView
-                android:id="@+id/mentionedTitle"
+                android:id="@+id/participantTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_spacing"
-                android:text="Mentioned"
+                android:text="@string/participants"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:visibility="gone"
@@ -224,42 +224,42 @@
                 app:layout_constraintTop_toBottomOf="@id/like" />
 
             <ImageView
-                android:id="@+id/iconMentioned"
+                android:id="@+id/iconParticipant"
                 android:layout_width="@dimen/posts_avatar_size"
                 android:layout_height="@dimen/posts_avatar_size"
                 android:layout_marginTop="@dimen/common_spacing"
                 android:src="@drawable/people_outline"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mentionedTitle"
+                app:layout_constraintTop_toBottomOf="@id/participantTitle"
                 app:layout_goneMarginTop="@dimen/common_spacing" />
 
             <TextView
-                android:id="@+id/mentionedCount"
+                android:id="@+id/participantCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/iconMentioned"
-                app:layout_constraintStart_toEndOf="@id/iconMentioned"
-                app:layout_constraintTop_toTopOf="@id/iconMentioned"
+                app:layout_constraintBottom_toBottomOf="@id/iconParticipant"
+                app:layout_constraintStart_toEndOf="@id/iconParticipant"
+                app:layout_constraintTop_toTopOf="@id/iconParticipant"
                 tools:text="100" />
 
 
             <HorizontalScrollView
-                android:id="@+id/scrollMentioned"
+                android:id="@+id/scrollParticipant"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_spacing"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@id/mentionedCount"
+                app:layout_constraintBottom_toBottomOf="@id/participantCount"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/mentionedCount"
-                app:layout_constraintTop_toTopOf="@id/mentionedCount">
+                app:layout_constraintStart_toEndOf="@id/participantCount"
+                app:layout_constraintTop_toTopOf="@id/participantCount">
 
 
                 <LinearLayout
-                    android:id="@+id/mentioned"
+                    android:id="@+id/participants"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_spacing"
@@ -280,7 +280,7 @@
                 android:visibility="gone"
                 app:icon="@drawable/add_mentioned"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scrollMentioned"
+                app:layout_constraintTop_toBottomOf="@id/scrollParticipant"
                 tools:text="100" />
 
             <TextView
