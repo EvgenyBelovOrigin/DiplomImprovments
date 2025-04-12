@@ -22,14 +22,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
-import ru.netology.nework.databinding.FragmentNewPostBinding
+import ru.netology.nework.databinding.FragmentNewEventBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.utils.loadAttachmentView
-import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.EventViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
 
@@ -41,14 +41,14 @@ class NewEventFragment : Fragment() {
         const val MAX_SIZE = 15728640
     }
 
-    private val viewModel: PostViewModel by activityViewModels()
+    private val viewModel: EventViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding = FragmentNewPostBinding.inflate(
+        val binding = FragmentNewEventBinding.inflate(
             inflater,
             container,
             false
@@ -242,7 +242,7 @@ class NewEventFragment : Fragment() {
             resultLauncher.launch(choose)
         }
         binding.addMentioned.setOnClickListener {
-            findNavController().navigate(R.id.detailPostFragment)// sample
+            findNavController().navigate(R.id.detailEventFragment)// sample
         }
 
 
@@ -269,8 +269,8 @@ class NewEventFragment : Fragment() {
             viewLifecycleOwner,
         )
 
-        viewModel.postCreated.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.postFeedFragment)
+        viewModel.eventCreated.observe(viewLifecycleOwner) {
+            findNavController().navigateUp()
         }
         return binding.root
     }
