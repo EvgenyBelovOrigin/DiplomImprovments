@@ -31,7 +31,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/avatar_default" />
+                tools:srcCompat="@drawable/avatar_default"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/author"
@@ -182,7 +183,8 @@
                     android:layout_height="64dp"
                     android:layout_gravity="center"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/play_video_icon" />
+                    app:srcCompat="@drawable/play_video_icon"
+                    tools:ignore="ContentDescription" />
 
 
             </FrameLayout>
@@ -232,13 +234,13 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/speakerTitle"
-                app:layout_goneMarginTop="@dimen/common_spacing" />
+                app:layout_goneMarginTop="@dimen/common_spacing"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/speakersCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/iconSpeaker"
                 app:layout_constraintStart_toEndOf="@id/iconSpeaker"
@@ -260,7 +262,7 @@
 
                 <LinearLayout
                     android:id="@+id/speakers"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_spacing"
                     android:animateLayoutChanges="true"
@@ -282,7 +284,7 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scrollSpeakers" />
+                app:layout_constraintTop_toBottomOf="@id/iconSpeaker" />
 
             <ImageView
                 android:id="@+id/iconParticipant"
@@ -293,13 +295,13 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/participantTitle"
-                app:layout_goneMarginTop="@dimen/common_spacing" />
+                app:layout_goneMarginTop="@dimen/common_spacing"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/participantCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/iconParticipant"
                 app:layout_constraintStart_toEndOf="@id/iconParticipant"
@@ -321,7 +323,7 @@
 
                 <LinearLayout
                     android:id="@+id/participants"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_spacing"
                     android:animateLayoutChanges="true"
