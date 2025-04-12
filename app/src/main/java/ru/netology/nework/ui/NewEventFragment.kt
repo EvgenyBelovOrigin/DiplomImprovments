@@ -208,6 +208,12 @@ class NewEventFragment : Fragment() {
                 R.id.offline -> viewModel.setTypeOfEventOffline()
             }
         }
+        binding.fab.setOnClickListener {
+            binding.visibilityGroupOfTypeAndDateEvent.isVisible = true
+        }
+        binding.newEvent.setOnClickListener {
+            binding.visibilityGroupOfTypeAndDateEvent.isGone = true
+        }
 
         binding.takePhoto.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
