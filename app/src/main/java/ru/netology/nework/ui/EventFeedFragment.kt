@@ -72,7 +72,7 @@ class EventFeedFragment : Fragment() {
                 )
                 viewModel.edit(event)
                 viewModel.clearPlayAudio()
-//                findNavController().navigate(R.id.newPostFragment) todo
+                findNavController().navigate(R.id.newEventFragment)
             }
 
             override fun onRemove(event: Event, position: Int) {
@@ -167,7 +167,7 @@ class EventFeedFragment : Fragment() {
             } else {
                 viewModel.clearAttachment()
                 viewModel.clearEdited()
-//                findNavController().navigate(R.id.newPostFragment) todo
+                findNavController().navigate(R.id.newEventFragment)
             }
         }
 

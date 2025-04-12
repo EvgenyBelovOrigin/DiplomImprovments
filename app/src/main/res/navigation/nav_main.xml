@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_eventFeedFragment_to_detailEventFragment"
             app:destination="@id/detailEventFragment" />
+        <action
+            android:id="@+id/action_eventFeedFragment_to_newEventFragment"
+            app:destination="@id/newEventFragment" />
     </fragment>
 
     <fragment
@@ -69,6 +72,14 @@
         android:name="ru.netology.nework.ui.NewPostFragment"
         android:label="fragment_new_post"
         tools:layout="@layout/fragment_new_post">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/newEventFragment"
+        android:name="ru.netology.nework.ui.NewEventFragment"
+        android:label="fragment_new_event"
+        tools:layout="@layout/fragment_new_event">
 
     </fragment>
     <fragment
