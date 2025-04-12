@@ -33,8 +33,8 @@
                 android:inputType="textMultiLine"
                 android:padding="@dimen/common_spacing"
                 android:visibility="visible"
-                tools:text="@tools:sample/lorem[100]"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                tools:text="@tools:sample/lorem[20]" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,8 +52,8 @@
                 app:cardCornerRadius="@dimen/corner_radius"
                 app:strokeColor="#CAC4D0"
                 app:strokeWidth="1dp"
-                tools:text="www.google.com"
-                tools:ignore="Autofill,LabelFor,TextFields" />
+                tools:ignore="Autofill,LabelFor,TextFields"
+                tools:text="www.google.com" />
 
             <FrameLayout
                 android:id="@+id/videoContainer"
@@ -190,8 +190,8 @@
             style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/common_spacing"
             android:layout_toEndOf="@id/takePhoto"
+            android:padding="@dimen/common_spacing"
             app:icon="@drawable/attach_file"
             app:iconTint="?colorOnPrimary" />
 
@@ -200,8 +200,8 @@
             style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/common_spacing"
             android:layout_toEndOf="@id/takeFile"
+            android:padding="@dimen/common_spacing"
             app:icon="@drawable/people_outline"
             app:iconTint="?colorOnPrimary" />
 
@@ -209,15 +209,61 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:clickable="true"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:focusable="true"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:clickable="true"
+            android:focusable="true"
             app:srcCompat="@drawable/ic_add_24dp"
             tools:ignore="ContentDescription,RelativeOverlap" />
 
 
     </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:id="@+id/visibilityGroupOfTypeAndDateEvent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="typeTitle,radioButtonGroup" />
+
+
+    <TextView
+        android:id="@+id/typeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:text="@string/type"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/radioButtonGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Type" />
+
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:checkedButton="@+id/radio_button_group"
+        android:paddingStart="@dimen/common_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/online"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="@string/online" />
+
+        <RadioButton
+            android:id="@+id/offline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="false"
+            android:text="@string/offline" />
+    </RadioGroup>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

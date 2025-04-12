@@ -44,5 +44,8 @@
     <string name="looking_for_best_company">Looking for best company</string>
     <string name="participants">Participants</string>
     <string name="speakers">Speakers</string>
+    <string name="online">ONLINE</string>
+    <string name="offline">OFFLINE</string>
+    <string name="type">Type</string>
 
 </resources>
