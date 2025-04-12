@@ -225,7 +225,7 @@
         android:id="@+id/visibilityGroupOfTypeAndDateEvent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="typeTitle,radioButtonGroup" />
+        app:constraint_referenced_ids="typeTitle,typeOfEvent" />
 
 
     <TextView
@@ -235,12 +235,12 @@
         android:layout_marginStart="@dimen/common_spacing"
         android:text="@string/type"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/radioButtonGroup"
+        app:layout_constraintBottom_toTopOf="@id/typeOfEvent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Type" />
 
     <RadioGroup
-        android:id="@+id/radioButtonGroup"
+        android:id="@+id/typeOfEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"

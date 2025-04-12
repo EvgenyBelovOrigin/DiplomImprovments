@@ -253,5 +253,13 @@ class EventViewModel @Inject constructor(
         _edited.value = event
     }
 
+    fun setTypeOfEventOnline() {
+        _edited.value = _edited.value?.copy(type = EventType.ONLINE)
+    }
+
+    fun setTypeOfEventOffline() {
+        _edited.value = _edited.value?.copy(type = EventType.OFFLINE)
+    }
+
 
 }

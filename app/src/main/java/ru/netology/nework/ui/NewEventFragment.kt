@@ -202,6 +202,12 @@ class NewEventFragment : Fragment() {
         binding.removeVideo.setOnClickListener {
             viewModel.clearAttachment()
         }
+        binding.typeOfEvent.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.online -> viewModel.setTypeOfEventOnline()
+                R.id.offline -> viewModel.setTypeOfEventOffline()
+            }
+        }
 
         binding.takePhoto.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
