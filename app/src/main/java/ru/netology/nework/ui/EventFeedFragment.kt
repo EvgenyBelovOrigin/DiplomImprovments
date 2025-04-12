@@ -94,7 +94,7 @@ class EventFeedFragment : Fragment() {
             override fun onItemClick(event: Event, position: Int) {
                 viewModel.edit(event)
                 viewModel.clearPlayAudio()
-//                findNavController().navigate(R.id.detailPostFragment) todo
+                findNavController().navigate(R.id.detailEventFragment)
             }
 
             override fun onVideoPlay(position: Int) {
