@@ -87,6 +87,7 @@ class PostViewModel @Inject constructor(
         get() = _requestSignIn
 
     val edited = MutableLiveData(empty)
+
     private val noAttachment = AttachmentModel()
 
     private val _attachment = MutableLiveData<AttachmentModel>(noAttachment)
