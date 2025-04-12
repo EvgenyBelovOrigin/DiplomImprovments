@@ -163,11 +163,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
+
+    <RelativeLayout
         android:id="@+id/buttonPanel"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:background="?colorPrimary"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -189,6 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/common_spacing"
+            android:layout_toEndOf="@id/takePhoto"
             app:icon="@drawable/attach_file"
             app:iconTint="?colorOnPrimary" />
 
@@ -198,11 +201,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/common_spacing"
+            android:layout_toEndOf="@id/takeFile"
             app:icon="@drawable/people_outline"
             app:iconTint="?colorOnPrimary" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:focusable="true"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_add_24dp"
+            tools:ignore="ContentDescription,RelativeOverlap" />
 
-    </LinearLayout>
 
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
