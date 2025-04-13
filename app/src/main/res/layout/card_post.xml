@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/small_spacing"
     android:padding="@dimen/common_spacing"
     app:cardCornerRadius="@dimen/corner_radius"
-    app:strokeColor="#CAC4D0"
+    app:strokeColor="@color/borderColor"
     app:strokeWidth="1dp">
 
     <ScrollView

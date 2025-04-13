@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/small_spacing"
     android:padding="@dimen/common_spacing"
     app:cardCornerRadius="@dimen/corner_radius"
-    app:strokeColor="#CAC4D0"
+    app:strokeColor="@color/borderColor"
     app:strokeWidth="1dp">
 
     <ScrollView
@@ -302,6 +302,7 @@
                 android:id="@+id/participantCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/iconParticipant"
                 app:layout_constraintStart_toEndOf="@id/iconParticipant"
@@ -323,7 +324,7 @@
 
                 <LinearLayout
                     android:id="@+id/participants"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_spacing"
                     android:animateLayoutChanges="true"

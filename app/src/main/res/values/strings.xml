@@ -47,5 +47,7 @@
     <string name="online">ONLINE</string>
     <string name="offline">OFFLINE</string>
     <string name="type">Type</string>
+    <string name="date_and_time">date and time</string>
+    <string name="mm_dd_yyyy_hh_mm">MM/dd/yyyy HH:mm</string>
 
 </resources>

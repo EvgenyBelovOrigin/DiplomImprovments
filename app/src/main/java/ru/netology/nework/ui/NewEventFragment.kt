@@ -210,6 +210,7 @@ class NewEventFragment : Fragment() {
         }
         binding.fab.setOnClickListener {
             binding.visibilityGroupOfTypeAndDateEvent.isVisible = true
+
         }
         binding.newEvent.setOnClickListener {
             binding.visibilityGroupOfTypeAndDateEvent.isGone = true
