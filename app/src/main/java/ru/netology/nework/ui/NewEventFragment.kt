@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.core.view.MenuProvider
@@ -18,8 +19,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentNewEventBinding
@@ -32,6 +36,9 @@ import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.viewmodel.EventViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class NewEventFragment : Fragment() {
@@ -60,6 +67,48 @@ class NewEventFragment : Fragment() {
             ?.let(binding.editContent::setText)
 
         binding.editContent.requestFocus()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (binding.visibilityGroupOfTypeAndDateEvent.isVisible) {
+                binding.visibilityGroupOfTypeAndDateEvent.isGone = true
+            } else {
+                findNavController().navigateUp()
+            }
+        }
+
+        binding.datePicker.setOnClickListener {
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select Event date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build()
+            datePicker.show(childFragmentManager, "Date Picker")
+            val timePicker =
+                MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                    .setHour(12)
+                    .setMinute(10)
+                    .setTitleText("Select Event time")
+                    .build()
+
+            datePicker.addOnPositiveButtonClickListener {
+//                val timeZone = TimeZone.getDefault()
+//                val zoneOffset = timeZone.getOffset(Date().time)
+                val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                val date = Date(it)
+                timePicker.show(childFragmentManager, "Time picker")
+                timePicker.addOnPositiveButtonClickListener {
+                    val hour = timePicker.hour
+                    val minute = timePicker.minute
+                    binding.dateInput.setText("${sdf.format(date)} $hour:$minute")
+
+                }
+
+//                binding.dateInput.setText(sdf.format(date))
+            }
+
+
+        }
+
 
         val imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -212,6 +261,7 @@ class NewEventFragment : Fragment() {
             binding.visibilityGroupOfTypeAndDateEvent.isVisible = true
 
         }
+
         binding.newEvent.setOnClickListener {
             binding.visibilityGroupOfTypeAndDateEvent.isGone = true
         }
@@ -287,4 +337,6 @@ class NewEventFragment : Fragment() {
         }
         return binding.root
     }
+
+
 }
