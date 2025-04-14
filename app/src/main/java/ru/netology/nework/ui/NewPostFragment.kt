@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.core.view.MenuProvider
@@ -30,6 +31,7 @@ import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
 
@@ -42,6 +44,7 @@ class NewPostFragment : Fragment() {
     }
 
     private val viewModel: PostViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +63,10 @@ class NewPostFragment : Fragment() {
             ?.let(binding.editContent::setText)
 
         binding.editContent.requestFocus()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigateUp()
+        }
 
         val imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -131,7 +138,7 @@ class NewPostFragment : Fragment() {
                     binding.audioContainer.isGone = true
                     if (attachment.file !== null) {
                         binding.photo.setImageURI(attachment.uri)
-                    }else{
+                    } else {
                         binding.photo.loadAttachmentView(attachment.uri.toString())//todo why?
                     }
 
@@ -242,7 +249,13 @@ class NewPostFragment : Fragment() {
             resultLauncher.launch(choose)
         }
         binding.addMentioned.setOnClickListener {
-            findNavController().navigate(R.id.detailPostFragment)// sample
+            findNavController().navigate(R.id.userFeedFragment,
+                Bundle().apply {
+                    textArg = getString(R.string.check_users)
+                })
+        }
+        userViewModel.checkedUsers.observe(viewLifecycleOwner) {
+            viewModel.changeMentionedList(it)
         }
 
 
@@ -259,6 +272,7 @@ class NewPostFragment : Fragment() {
                             binding.link.text.toString()
                         )
                         viewModel.save()
+                        userViewModel.makeAllUsersUnchecked()
                         AndroidUtils.hideKeyboard(requireView())
                         return true
                     } else {

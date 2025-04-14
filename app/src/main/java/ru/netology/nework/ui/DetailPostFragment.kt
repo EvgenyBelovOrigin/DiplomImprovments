@@ -26,6 +26,7 @@ import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -35,6 +36,8 @@ class DetailPostFragment : Fragment() {
 
 
     private val viewModel: PostViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,9 +80,9 @@ class DetailPostFragment : Fragment() {
                 post.attachment?.let { attachmentImage.loadAttachmentView(it.url) }
                 videoContainer.isVisible = post.attachment?.type == AttachmentType.VIDEO
                 attachmentVideo.apply {
-                    if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
+                    if (post.attachment?.type == AttachmentType.VIDEO && post.attachment.url.isNotBlank()) {
                         setVideoURI(
-                            Uri.parse(post.attachment?.url)
+                            Uri.parse(post.attachment.url)
                         )
                         setOnPreparedListener {
                             seekTo(5)
@@ -163,6 +166,11 @@ class DetailPostFragment : Fragment() {
                                         uri = post.attachment?.url?.toUri(),
                                         file = null
                                     )
+                                    post.mentionIds?.let { mentionIds ->
+                                        userViewModel.setCheckedUsers(
+                                            mentionIds
+                                        )
+                                    }
                                     viewModel.edit(post)
                                     findNavController().navigate(R.id.newPostFragment)
                                     true

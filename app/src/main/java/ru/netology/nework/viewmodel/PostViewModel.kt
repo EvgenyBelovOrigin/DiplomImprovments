@@ -20,6 +20,7 @@ import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.User
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
@@ -249,6 +250,11 @@ class PostViewModel @Inject constructor(
 
     fun edit(post: Post) {
         _edited.value = post
+    }
+    fun changeMentionedList(listUsers: List<User>) {
+        val listSpeakersIds: List<Int> =
+            listUsers.map { it.id }
+        _edited.value = edited.value?.copy(mentionIds = listSpeakersIds)
     }
 
 

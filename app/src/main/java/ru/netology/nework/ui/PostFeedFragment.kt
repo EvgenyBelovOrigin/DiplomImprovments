@@ -24,6 +24,7 @@ import ru.netology.nework.adapter.PostsAdapter
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
@@ -34,6 +35,8 @@ class PostFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: PostViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
+
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -72,6 +75,7 @@ class PostFeedFragment : Fragment() {
                     uri = post.attachment?.url?.toUri(),
                     file = null
                 )
+                post.mentionIds?.let { userViewModel.setCheckedUsers(it) }
                 viewModel.edit(post)
                 viewModel.clearPlayAudio()
                 findNavController().navigate(R.id.newPostFragment)

@@ -38,6 +38,7 @@ class UserViewModel @Inject constructor(
     val checkedUsers: LiveData<List<User>> = repository.checkedUsers
         .asLiveData(Dispatchers.Default)
 
+    // init with swipe refresh otherwise state of checked users doesn't works
 
 //    init {
 //        getAllUsers()
