@@ -45,8 +45,8 @@ class UserFeedFragment : Fragment() {
     ): View {
 
         val binding = FragmentFeedUserBinding.inflate(inflater, container, false)
-        val isCheck = arguments?.textArg == getString(R.string.check_users)
-        if (!isCheck) {
+        val needToCheckUsers = arguments?.textArg == getString(R.string.check_users)
+        if (!needToCheckUsers) {
             binding.bottomNavigationLayout.isVisible = true
             binding.bottomNavigation.selectedItemId = R.id.users
             binding.bottomNavigation.setOnItemSelectedListener { item ->
@@ -69,7 +69,7 @@ class UserFeedFragment : Fragment() {
                 }
             }
         }
-        if (isCheck) {
+        if (needToCheckUsers) {
             requireActivity().addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -86,12 +86,15 @@ class UserFeedFragment : Fragment() {
             )
         }
 
-        val adapter = UsersAdapter(object : UsersOnInteractionListener {
-            override fun onEdit(user: User, position: Int) {
-            }
+        val adapter = UsersAdapter(
+            object : UsersOnInteractionListener {
+                override fun onEdit(user: User, position: Int) {
+                }
 
 
-        })
+            },
+            needToCheckUsers
+        )
         binding.list.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner) {

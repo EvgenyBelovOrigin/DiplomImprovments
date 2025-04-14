@@ -2,6 +2,7 @@ package ru.netology.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,12 +18,13 @@ interface UsersOnInteractionListener {
 
 class UsersAdapter(
     private val usersOnInteractionListener: UsersOnInteractionListener,
+    private val needToCheckUsers: Boolean
 
-    ) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
+) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = CardUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserViewHolder(binding, usersOnInteractionListener)
+        return UserViewHolder(binding, usersOnInteractionListener, needToCheckUsers)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -34,11 +36,13 @@ class UsersAdapter(
 class UserViewHolder(
     private val binding: CardUserBinding,
     private val usersOnInteractionListener: UsersOnInteractionListener,
+    private val needToCheckUsers: Boolean
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(user: User, position: Int) {
 
         binding.apply {
+            checkUser.isVisible = needToCheckUsers
             avatar.loadAvatar(user.avatar)
             author.text = user.name
             login.text = user.login
