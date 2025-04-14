@@ -104,8 +104,9 @@ class UserFeedFragment : Fragment() {
 
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.getAllUsers()
-
+            if (!needToCheckUsers)
+                viewModel.getAllUsers()
+            binding.swipeRefresh.isRefreshing = false
         }
         viewModel.onError.observe(viewLifecycleOwner) {
             MaterialAlertDialogBuilder(requireContext())
