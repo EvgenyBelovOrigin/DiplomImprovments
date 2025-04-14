@@ -47,6 +47,17 @@
             app:layout_constraintBottom_toBottomOf="@id/avatar"
             tools:text="login" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkUser"
+            style="@style/Widget.AppTheme.CheckUserCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/avatar"
+            app:layout_constraintBottom_toBottomOf="@id/avatar"
+            android:layout_marginEnd="@dimen/small_spacing" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

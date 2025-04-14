@@ -314,7 +314,7 @@ class NewEventFragment : Fragment() {
             val choose = arrayOf("audio/*", "video/*")
             resultLauncher.launch(choose)
         }
-        binding.addMentioned.setOnClickListener {
+        binding.addSpeakers.setOnClickListener {
             findNavController().navigate(R.id.detailEventFragment)// sample
         }
 

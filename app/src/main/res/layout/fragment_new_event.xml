@@ -195,7 +195,7 @@
             app:iconTint="?colorOnPrimary" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addMentioned"
+            android:id="@+id/addSpeakers"
             style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
