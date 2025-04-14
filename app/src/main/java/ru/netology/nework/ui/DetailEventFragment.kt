@@ -27,12 +27,14 @@ import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 import ru.netology.nework.viewmodel.EventViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 
 @AndroidEntryPoint
 class DetailEventFragment : Fragment() {
 
 
     private val viewModel: EventViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -183,6 +185,7 @@ class DetailEventFragment : Fragment() {
                                         uri = event.attachment?.url?.toUri(),
                                         file = null
                                     )
+                                    userViewModel.setCheckedUsers(event.speakerIds)
                                     viewModel.edit(event)
                                     viewModel.clearPlayAudio()
                                     findNavController().navigate(R.id.newEventFragment)

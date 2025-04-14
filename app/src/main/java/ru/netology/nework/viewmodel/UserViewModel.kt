@@ -38,6 +38,7 @@ class UserViewModel @Inject constructor(
     val checkedUsers: LiveData<List<User>> = repository.checkedUsers
         .asLiveData(Dispatchers.Default)
 
+
     init {
         getAllUsers()
     }
@@ -80,6 +81,20 @@ class UserViewModel @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
+    }
+
+    fun setCheckedUsers(listUsersIds: List<Int>) {
+        listUsersIds.forEach { id ->
+            try {
+                viewModelScope.launch {
+                    dao.checkById(id)
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+
+        }
+
     }
 
 }

@@ -24,6 +24,7 @@ import ru.netology.nework.adapter.EventsOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedEventBinding
 import ru.netology.nework.dto.Event
 import ru.netology.nework.viewmodel.EventViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
@@ -34,6 +35,9 @@ class EventFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: EventViewModel by activityViewModels()
+
+    private val userViewModel: UserViewModel by activityViewModels()
+
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -70,6 +74,8 @@ class EventFeedFragment : Fragment() {
                     uri = event.attachment?.url?.toUri(),
                     file = null
                 )
+
+                userViewModel.setCheckedUsers(event.speakerIds)
                 viewModel.edit(event)
                 viewModel.clearPlayAudio()
                 findNavController().navigate(R.id.newEventFragment)

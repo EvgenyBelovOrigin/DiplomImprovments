@@ -27,4 +27,14 @@ interface UserDao {
 
     @Query("SELECT * FROM UserEntity WHERE isChecked=1")
     fun getCheckedUsers(): Flow<List<UserEntity>>
+
+
+    @Query(
+        """
+        UPDATE UserEntity SET
+        isChecked = 1
+        WHERE id = :id
+        """
+    )
+    suspend fun checkById(id: Int)
 }
