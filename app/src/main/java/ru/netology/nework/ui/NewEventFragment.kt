@@ -29,6 +29,9 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.FragmentNewEventBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
+import ru.netology.nework.utils.AndroidUtils.calendarToUtcDate
+import ru.netology.nework.utils.AndroidUtils.dateUtcToCalendar
+import ru.netology.nework.utils.AndroidUtils.dateUtcToString
 import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
@@ -37,6 +40,7 @@ import ru.netology.nework.viewmodel.EventViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -49,6 +53,7 @@ class NewEventFragment : Fragment() {
     }
 
     private val viewModel: EventViewModel by activityViewModels()
+    var calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,8 +79,13 @@ class NewEventFragment : Fragment() {
                 findNavController().navigateUp()
             }
         }
+        viewModel.edited.observe(viewLifecycleOwner) {
+            if (it.datetime != "")
+                binding.dateInput.setText(dateUtcToString(it.datetime))
+            else binding.dateInput.setText("")
+        }
 
-        binding.datePicker.setOnClickListener {
+        binding.dateTimePicker.setOnClickListener {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select Event date")
@@ -84,26 +94,26 @@ class NewEventFragment : Fragment() {
             datePicker.show(childFragmentManager, "Date Picker")
             val timePicker =
                 MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
                     .setHour(12)
-                    .setMinute(10)
+                    .setMinute(0)
                     .setTitleText("Select Event time")
                     .build()
 
             datePicker.addOnPositiveButtonClickListener {
-//                val timeZone = TimeZone.getDefault()
-//                val zoneOffset = timeZone.getOffset(Date().time)
-                val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                 val date = Date(it)
+                calendar = dateUtcToCalendar(sdf.format(date))
+
                 timePicker.show(childFragmentManager, "Time picker")
                 timePicker.addOnPositiveButtonClickListener {
                     val hour = timePicker.hour
                     val minute = timePicker.minute
-                    binding.dateInput.setText("${sdf.format(date)} $hour:$minute")
-
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    viewModel.changeEventDateTime(calendarToUtcDate(calendar))
                 }
-
-//                binding.dateInput.setText(sdf.format(date))
             }
 
 

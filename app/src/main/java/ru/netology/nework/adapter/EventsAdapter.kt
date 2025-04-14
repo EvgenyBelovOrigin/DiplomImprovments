@@ -12,7 +12,7 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.CardEventBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
-import ru.netology.nework.utils.AndroidUtils.dateFormat
+import ru.netology.nework.utils.AndroidUtils.dateUtcToString
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 
@@ -54,7 +54,7 @@ class EventViewHolder(
         binding.apply {
             avatar.loadAvatar(event.authorAvatar?.let { "${event.authorAvatar}" })
             author.text = event.author
-            published.text = dateFormat(event.published)
+            published.text = dateUtcToString(event.published)
             content.text = event.content.replace("\n", "")
             like.isChecked = event.likedByMe
             like.text = event.likeOwnerIds?.size.toString()
@@ -99,7 +99,7 @@ class EventViewHolder(
             link.isVisible = event.link?.isEmpty() == false
             link.text = event.link
             typeOfEvent.text = event.type.toString()
-            dateOfEvent.text = dateFormat(event.datetime)
+            dateOfEvent.text = dateUtcToString(event.datetime)
 
             menu.isVisible = event.ownedByMe
             menu.setOnClickListener {

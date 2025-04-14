@@ -12,7 +12,7 @@ import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Post
-import ru.netology.nework.utils.AndroidUtils.dateFormat
+import ru.netology.nework.utils.AndroidUtils.dateUtcToString
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 
@@ -54,7 +54,7 @@ class PostViewHolder(
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.author
-            published.text = dateFormat(post.published)
+            published.text = dateUtcToString(post.published)
             content.text = post.content.replace("\n", "")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()

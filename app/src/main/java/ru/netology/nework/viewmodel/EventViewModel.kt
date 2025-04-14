@@ -37,7 +37,7 @@ private val empty = Event(
     authorJob = null,
     authorAvatar = null,
     content = "",
-    datetime = "2024-07-02T21:34:44.562Z",
+    datetime = "",
     published = "2024-07-02T21:34:44.562Z",
     coords = null,
     type = EventType.ONLINE,
@@ -259,6 +259,10 @@ class EventViewModel @Inject constructor(
 
     fun setTypeOfEventOffline() {
         _edited.value = _edited.value?.copy(type = EventType.OFFLINE)
+    }
+
+    fun changeEventDateTime(utc: String) {
+        _edited.value = _edited.value?.copy(datetime = utc)
     }
 
 
