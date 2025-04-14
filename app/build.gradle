@@ -34,14 +34,14 @@ android {
         debug {
             manifestPlaceholders.usesCleartextTraffic = true
             buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080/"'
-            buildConfigField "String", "API_KEY", '"c1378193-bc0e-42c8-a502-b8d66d189617"'
+//            buildConfigField "String", "API_KEY", '"c1378193-bc0e-42c8-a502-b8d66d189617"'
 
-//            Properties properties = new Properties()
-//            if (rootProject.file("api.properties").exists()) {
-//                properties.load(rootProject.file("api.properties").newDataInputStream())
-//            }
-//            def apiKey = properties.getProperty("API_KEY","")
-//            buildConfigField "String", "API_KEY", apiKey
+            Properties properties = new Properties()
+            if (rootProject.file("api.properties").exists()) {
+                properties.load(rootProject.file("api.properties").newDataInputStream())
+            }
+            def apiKey = properties.getProperty("API_KEY", "")
+            buildConfigField "String", "API_KEY", apiKey
 
 
         }
