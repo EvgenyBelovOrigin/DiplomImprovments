@@ -15,6 +15,7 @@
     <string name="events">Events</string>
     <string name="users">Users</string>
     <string name="error">Error</string>
+    <string name="datetime_is_empty">You should choose the date and type of event</string>
     <string name="error_loading">Something went wrong. Try again later</string>
     <string name="error_user_exist">User already registered</string>
     <string name="ok">OK</string>
@@ -48,6 +49,6 @@
     <string name="offline">OFFLINE</string>
     <string name="type">Type</string>
     <string name="date_and_time">date and time</string>
-    <string name="mm_dd_yyyy_hh_mm">MM/dd/yyyy HH:mm</string>
+    <string name="dd_mm_yyyy_hh_mm">dd.mm.yyyy HH:mm</string>
 
 </resources>

@@ -223,16 +223,16 @@
         android:id="@+id/visibilityGroupOfTypeAndDateEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="typeTitle,typeOfEvent, dateInput, dateTimePicker" />
 
 
-    <EditText
+    <TextView
         android:id="@+id/dateInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing"
-        android:hint="@string/mm_dd_yyyy_hh_mm"
+        android:hint="@string/dd_mm_yyyy_hh_mm"
         android:clickable="false"
         android:paddingBottom="@dimen/small_spacing"
         android:paddingTop="@dimen/small_spacing"

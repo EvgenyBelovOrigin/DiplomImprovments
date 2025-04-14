@@ -81,8 +81,8 @@ class NewEventFragment : Fragment() {
         }
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.datetime != "")
-                binding.dateInput.setText(dateUtcToString(it.datetime))
-            else binding.dateInput.setText("")
+                binding.dateInput.text = dateUtcToString(it.datetime)
+            else binding.dateInput.text = ""
         }
 
         binding.dateTimePicker.setOnClickListener {
@@ -327,6 +327,15 @@ class NewEventFragment : Fragment() {
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (menuItem.itemId == R.id.save) {
+                        if (viewModel.edited.value?.datetime == "") {
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(R.string.error)
+                                .setMessage(R.string.datetime_is_empty)
+                                .setPositiveButton(R.string.ok, null)
+                                .show()
+                            binding.visibilityGroupOfTypeAndDateEvent.isVisible = true
+                            return true
+                        }
                         viewModel.changeContent(
                             binding.editContent.text.toString(),
                             binding.link.text.toString()
