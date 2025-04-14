@@ -351,6 +351,7 @@ class NewEventFragment : Fragment() {
                             binding.link.text.toString()
                         )
                         viewModel.save()
+                        userViewModel.makeAllUsersUnchecked()
                         AndroidUtils.hideKeyboard(requireView())
                         return true
                     } else {
@@ -362,7 +363,7 @@ class NewEventFragment : Fragment() {
         )
 
         viewModel.eventCreated.observe(viewLifecycleOwner) {
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.eventFeedFragment)
         }
         return binding.root
     }

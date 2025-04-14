@@ -72,4 +72,14 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    fun makeAllUsersUnchecked() {
+        try {
+            viewModelScope.launch {
+                dao.makeAllUsersUnchecked()
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
 }

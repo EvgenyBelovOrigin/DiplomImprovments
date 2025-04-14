@@ -184,7 +184,8 @@ class DetailEventFragment : Fragment() {
                                         file = null
                                     )
                                     viewModel.edit(event)
-                                    findNavController().navigate(R.id.newPostFragment)
+                                    viewModel.clearPlayAudio()
+                                    findNavController().navigate(R.id.newEventFragment)
                                     true
                                 }
 
