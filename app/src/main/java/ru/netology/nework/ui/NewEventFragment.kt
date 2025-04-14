@@ -315,7 +315,10 @@ class NewEventFragment : Fragment() {
             resultLauncher.launch(choose)
         }
         binding.addSpeakers.setOnClickListener {
-            findNavController().navigate(R.id.detailEventFragment)// sample
+            findNavController().navigate(R.id.userFeedFragment,
+                Bundle().apply {
+                    textArg = getString(R.string.check_users)
+                })
         }
 
 

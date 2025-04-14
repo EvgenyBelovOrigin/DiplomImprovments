@@ -3,25 +3,24 @@ package ru.netology.nework.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import ru.netology.nework.R
 import ru.netology.nework.adapter.UsersAdapter
 import ru.netology.nework.adapter.UsersOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedUserBinding
 import ru.netology.nework.dto.User
+import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -34,6 +33,10 @@ class UserFeedFragment : Fragment() {
     lateinit var appAuth: AppAuth
     private val viewModel: UserViewModel by activityViewModels()
 
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,28 +45,47 @@ class UserFeedFragment : Fragment() {
     ): View {
 
         val binding = FragmentFeedUserBinding.inflate(inflater, container, false)
+        val isCheck = arguments?.textArg == getString(R.string.check_users)
+        if (!isCheck) {
+            binding.bottomNavigationLayout.isVisible = true
+            binding.bottomNavigation.selectedItemId = R.id.users
+            binding.bottomNavigation.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.posts -> {
+                        findNavController().navigate(R.id.postFeedFragment)
+                        true
+                    }
 
+                    R.id.events -> {
+                        findNavController().navigate(R.id.eventFeedFragment)
+                        true
+                    }
 
-        binding.bottomNavigation.selectedItemId = R.id.users
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.posts -> {
-                    findNavController().navigate(R.id.postFeedFragment)
-                    true
+                    R.id.users -> {
+                        true
+                    }
+
+                    else -> false
                 }
-
-                R.id.events -> {
-                    findNavController().navigate(R.id.eventFeedFragment)
-                    true
-                }
-
-                R.id.users -> {
-                    true
-                }
-
-                else -> false
             }
         }
+        if (isCheck) {
+            requireActivity().addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                        menuInflater.inflate(R.menu.menu_new_post, menu)
+                    }
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        findNavController().navigateUp()
+                        //TODO - changes in db
+                        return true
+                    }
+                },
+                viewLifecycleOwner,
+            )
+        }
+
         val adapter = UsersAdapter(object : UsersOnInteractionListener {
             override fun onEdit(user: User, position: Int) {
             }
@@ -81,17 +103,17 @@ class UserFeedFragment : Fragment() {
             viewModel.getAllUsers()
 
         }
-        viewModel.onError.observe(viewLifecycleOwner){
+        viewModel.onError.observe(viewLifecycleOwner) {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.error)
                 .setMessage(R.string.error_loading)
                 .setPositiveButton(R.string.ok, null)
                 .show()
         }
-        viewModel.onStartLoading.observe(viewLifecycleOwner){
+        viewModel.onStartLoading.observe(viewLifecycleOwner) {
             binding.swipeRefresh.isRefreshing = true
         }
-        viewModel.onStopLoading.observe(viewLifecycleOwner){
+        viewModel.onStopLoading.observe(viewLifecycleOwner) {
             binding.swipeRefresh.isRefreshing = false
         }
 
