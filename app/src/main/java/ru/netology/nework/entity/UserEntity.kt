@@ -10,14 +10,16 @@ data class UserEntity(
     val id: Int,
     val login: String,
     val name: String,
-    val avatar: String?
+    val avatar: String?,
+    val isChecked: Boolean
 ) {
 
     fun toDto() = User(
         id,
         login,
         name,
-        avatar
+        avatar,
+        isChecked
     )
 
     companion object {
@@ -28,6 +30,7 @@ data class UserEntity(
                 dto.login,
                 dto.name,
                 dto.avatar,
+                dto.isChecked
             )
     }
 }

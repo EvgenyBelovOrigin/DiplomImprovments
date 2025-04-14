@@ -6,17 +6,18 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import ru.netology.nework.dao.UserDao
 import ru.netology.nework.dto.User
+import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.SingleLiveEvent
-import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val repository: Repository,
+    private val dao: UserDao
 ) : ViewModel() {
 
     private val _onError = SingleLiveEvent<Unit>()
@@ -46,6 +47,32 @@ class UserViewModel @Inject constructor(
         } catch (e: Exception) {
             _onError.value = Unit
         }
+    }
+
+    fun checkUser(user: User) {
+        try {
+            viewModelScope.launch {
+                dao.insert(
+                    if (user.isChecked) {
+                        UserEntity.fromDto(
+                            user.copy(isChecked = false)
+                        )
+                    } else {
+                        UserEntity.fromDto(
+                            user.copy(isChecked = true)
+                        )
+
+                    }
+
+                )
+
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+
+
     }
 
 

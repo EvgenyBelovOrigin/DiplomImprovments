@@ -12,7 +12,7 @@ import ru.netology.nework.utils.loadAvatar
 
 
 interface UsersOnInteractionListener {
-    fun onEdit(user: User, position: Int) {}
+    fun onCheckUser(user: User, position: Int) {}
 
 }
 
@@ -43,6 +43,10 @@ class UserViewHolder(
 
         binding.apply {
             checkUser.isVisible = needToCheckUsers
+            checkUser.isChecked = user.isChecked
+            checkUser.setOnClickListener {
+                usersOnInteractionListener.onCheckUser(user, position)
+            }
             avatar.loadAvatar(user.avatar)
             author.text = user.name
             login.text = user.login

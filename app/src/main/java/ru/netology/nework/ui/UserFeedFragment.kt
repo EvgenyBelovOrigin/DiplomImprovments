@@ -88,7 +88,8 @@ class UserFeedFragment : Fragment() {
 
         val adapter = UsersAdapter(
             object : UsersOnInteractionListener {
-                override fun onEdit(user: User, position: Int) {
+                override fun onCheckUser(user: User, position: Int) {
+                    viewModel.checkUser(user)
                 }
 
 
