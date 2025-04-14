@@ -35,6 +35,9 @@ class UserViewModel @Inject constructor(
     val data: LiveData<List<User>> = repository.users
         .asLiveData(Dispatchers.Default)
 
+    val checkedUsers: LiveData<List<User>> = repository.checkedUsers
+        .asLiveData(Dispatchers.Default)
+
     init {
         getAllUsers()
     }
@@ -61,19 +64,12 @@ class UserViewModel @Inject constructor(
                         UserEntity.fromDto(
                             user.copy(isChecked = true)
                         )
-
                     }
-
                 )
-
             }
-
         } catch (e: Exception) {
             throw e
         }
-
-
     }
-
 
 }

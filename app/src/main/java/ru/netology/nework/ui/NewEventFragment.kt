@@ -37,6 +37,7 @@ import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.viewmodel.EventViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -53,7 +54,9 @@ class NewEventFragment : Fragment() {
     }
 
     private val viewModel: EventViewModel by activityViewModels()
-    var calendar = Calendar.getInstance()
+    private val userViewModel: UserViewModel by activityViewModels()
+
+    private var calendar: Calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -314,11 +317,15 @@ class NewEventFragment : Fragment() {
             val choose = arrayOf("audio/*", "video/*")
             resultLauncher.launch(choose)
         }
+
         binding.addSpeakers.setOnClickListener {
             findNavController().navigate(R.id.userFeedFragment,
                 Bundle().apply {
                     textArg = getString(R.string.check_users)
                 })
+        }
+        userViewModel.checkedUsers.observe(viewLifecycleOwner) {
+            viewModel.changeSpeakersList(it)
         }
 
 

@@ -21,6 +21,7 @@ import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.EventType
 import ru.netology.nework.dto.MediaUpload
+import ru.netology.nework.dto.User
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
@@ -263,6 +264,12 @@ class EventViewModel @Inject constructor(
 
     fun changeEventDateTime(utc: String) {
         _edited.value = _edited.value?.copy(datetime = utc)
+    }
+
+    fun changeSpeakersList(listUsers: List<User>) {
+        val listSpeakersIds: List<Int> =
+            listUsers.map { it.id }
+        _edited.value = edited.value?.copy(speakerIds = listSpeakersIds)
     }
 
 

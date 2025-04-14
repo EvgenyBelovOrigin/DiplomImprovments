@@ -16,10 +16,15 @@ interface UserDao {
     @Query("DELETE FROM UserEntity")
     suspend fun clear()
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(users: List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: UserEntity)
+
+    @Query("UPDATE UserEntity SET isChecked = 0")
+    suspend fun makeAllUsersUnchecked()
+
+    @Query("SELECT * FROM UserEntity WHERE isChecked=1")
+    fun getCheckedUsers(): Flow<List<UserEntity>>
 }

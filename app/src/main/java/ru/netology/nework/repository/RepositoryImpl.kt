@@ -398,6 +398,10 @@ class RepositoryImpl @Inject constructor(
         .map(List<UserEntity>::toDto)
         .flowOn(Dispatchers.Default)
 
+    override val checkedUsers = usersDao.getCheckedUsers()
+        .map(List<UserEntity>::toDto)
+        .flowOn(Dispatchers.Default)
+
     override suspend fun getAllUsers() {
         try {
             val response = apiService.getAllUsers()

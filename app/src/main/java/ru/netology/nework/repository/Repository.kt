@@ -39,6 +39,7 @@ interface Repository {
     //USERS
 
     val users: Flow<List<User>>
+    val checkedUsers: Flow<List<User>>
 
     suspend fun getAllUsers()
 }
