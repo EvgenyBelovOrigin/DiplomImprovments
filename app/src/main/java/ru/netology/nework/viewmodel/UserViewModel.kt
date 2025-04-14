@@ -39,9 +39,9 @@ class UserViewModel @Inject constructor(
         .asLiveData(Dispatchers.Default)
 
 
-    init {
-        getAllUsers()
-    }
+//    init {
+//        getAllUsers()
+//    }
 
     fun getAllUsers() = viewModelScope.launch {
         try {
