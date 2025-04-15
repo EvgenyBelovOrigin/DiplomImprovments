@@ -74,7 +74,9 @@ class WallFeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post, position: Int) {
-//                viewModel.likeById(post)
+                if (authorId != null) {
+                    viewModel.likeById(authorId, post)
+                }
             }
 
             override fun onItemClick(post: Post, position: Int) {
