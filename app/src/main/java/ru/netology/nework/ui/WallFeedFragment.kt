@@ -3,10 +3,13 @@ package ru.netology.nework.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.net.toUri
+import androidx.core.view.MenuProvider
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -19,12 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.netology.nework.R
-import ru.netology.nework.adapter.OnInteractionListener
-import ru.netology.nework.adapter.PostsAdapter
+import ru.netology.nework.adapter.WallAdapter
+import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
-import ru.netology.nework.viewmodel.PostViewModel
-import ru.netology.nework.viewmodel.UserViewModel
+import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
@@ -34,8 +36,7 @@ class WallFeedFragment : Fragment() {
 
     @Inject
     lateinit var appAuth: AppAuth
-    private val viewModel: PostViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val viewModel: WallViewModel by activityViewModels()
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -47,43 +48,14 @@ class WallFeedFragment : Fragment() {
 
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
 
+        binding.bottomNavigation.isGone = true
+        binding.fab.isGone = true
 
-        binding.bottomNavigation.selectedItemId = R.id.posts
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.posts -> {
-                    true
-                }
-
-                R.id.events -> {
-                    findNavController().navigate(R.id.eventFeedFragment)
-                    true
-                }
-
-                R.id.users -> {
-                    findNavController().navigate(R.id.userFeedFragment)
-                    true
-                }
-
-                else -> false
-            }
-        }
-        val adapter = PostsAdapter(object : OnInteractionListener {
+        val adapter = WallAdapter(object : WallOnInteractionListener {
             override fun onEdit(post: Post, position: Int) {
-                viewModel.updateAttachment(
-                    url = post.attachment?.url,
-                    attachmentType = post.attachment?.type,
-                    uri = post.attachment?.url?.toUri(),
-                    file = null
-                )
-                post.mentionIds?.let { userViewModel.setCheckedUsers(it) }
-                viewModel.edit(post)
-                viewModel.clearPlayAudio()
-                findNavController().navigate(R.id.newPostFragment)
             }
 
             override fun onRemove(post: Post, position: Int) {
-                viewModel.removePostById(post.id)
             }
 
             override fun onPlayAudio(post: Post, position: Int) {
@@ -95,14 +67,11 @@ class WallFeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post, position: Int) {
-                viewModel.likeById(post)
+//                viewModel.likeById(post)
             }
 
             override fun onItemClick(post: Post, position: Int) {
-                viewModel.edit(post)
-                viewModel.clearPlayAudio()
-                viewModel.changeAdapterPosition(position)
-                findNavController().navigate(R.id.detailPostFragment)
+
             }
 
             override fun onVideoPlay(position: Int) {
@@ -111,9 +80,6 @@ class WallFeedFragment : Fragment() {
         })
         viewModel.clearPlayAudio()
         binding.list.adapter = adapter
-
-        viewModel.clearEdited()
-
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -126,21 +92,6 @@ class WallFeedFragment : Fragment() {
         viewModel.refreshAdapter.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
-
-
-//        if (viewModel.adapterPosition.value != 0) {
-//            adapter.addLoadStateListener {
-//                viewModel.adapterPosition.value?.let { position ->
-//                    binding.list.scrollToPosition(
-//                        position
-//                    )
-//                }
-//            }
-//        }
-//        adapter.addLoadStateListener {
-//            viewModel.clearAdapterPosition()
-//        }
-
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -160,8 +111,6 @@ class WallFeedFragment : Fragment() {
             }
         }
         binding.swiperefresh.setOnRefreshListener {
-
-//            viewModel.clearAdapterPosition()
             viewModel.clearPlayAudio()
             adapter.refresh()
 
@@ -174,28 +123,26 @@ class WallFeedFragment : Fragment() {
                 .show()
         }
 
-        viewModel.onDeleteError.observe(viewLifecycleOwner) {
-            Toast.makeText(
-                activity,
-                R.string.error_delete,
-                Toast.LENGTH_LONG
-            ).show()
-        }
         viewModel.requestSignIn.observe(viewLifecycleOwner) {
             requestSignIn()
         }
+        requireActivity().addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_close_full_screen_view, menu)
+                }
 
-        binding.fab.setOnClickListener {
-            if (appAuth.authState.value?.id == 0) {
-                requestSignIn()
-            } else {
-                viewModel.clearAttachment()
-//                viewModel.clearAdapterPosition()
-                viewModel.clearEdited()
-                findNavController().navigate(R.id.newPostFragment)
-            }
-        }
-
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (menuItem.itemId == R.id.close) {
+                        findNavController().navigateUp()
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+        )
 
         return binding.root
     }

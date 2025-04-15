@@ -50,6 +50,16 @@
         android:label="fragment_user_feed"
         tools:layout="@layout/fragment_feed_user">
 
+        <action
+            android:id="@+id/action_userFeedFragment_to_wallFeedFragment"
+            app:destination="@id/wallFeedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wallFeedFragment"
+        android:name="ru.netology.nework.ui.WallFeedFragment"
+        android:label="fragment_wall_feed"
+        tools:layout="@layout/fragment_feed_post">
+
     </fragment>
     <fragment
         android:id="@+id/detailPostFragment"
