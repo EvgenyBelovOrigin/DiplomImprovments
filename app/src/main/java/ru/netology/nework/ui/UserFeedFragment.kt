@@ -92,6 +92,13 @@ class UserFeedFragment : Fragment() {
                     viewModel.checkUser(user)
                 }
 
+                override fun onChooseUser(user: User, position: Int) {
+                    findNavController().navigate(R.id.wallFeedFragment,
+                        Bundle().apply {
+                            textArg = user.id.toString()
+                        })
+                }
+
 
             },
             needToCheckUsers

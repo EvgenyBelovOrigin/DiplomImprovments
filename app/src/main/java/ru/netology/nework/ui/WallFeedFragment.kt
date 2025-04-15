@@ -26,6 +26,7 @@ import ru.netology.nework.adapter.WallAdapter
 import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
+import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -37,6 +38,10 @@ class WallFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -50,6 +55,8 @@ class WallFeedFragment : Fragment() {
 
         binding.bottomNavigation.isGone = true
         binding.fab.isGone = true
+        val authorId = arguments?.textArg?.toInt()
+
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
             override fun onEdit(post: Post, position: Int) {
@@ -86,6 +93,10 @@ class WallFeedFragment : Fragment() {
                 viewModel.data.collectLatest(adapter::submitData)
 
             }
+        }
+
+        if (authorId != null) {
+            viewModel.setAuthorId(authorId)
         }
 
 
@@ -143,7 +154,6 @@ class WallFeedFragment : Fragment() {
             },
             viewLifecycleOwner,
         )
-
         return binding.root
     }
 

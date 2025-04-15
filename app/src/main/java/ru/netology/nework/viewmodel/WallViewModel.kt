@@ -164,4 +164,16 @@ class WallViewModel @Inject constructor(
         _attachment.value = noAttachment
     }
 
+    fun setAuthorId(authorId: Int) {
+        try {
+            viewModelScope.launch {
+                repository.setAuthorId(authorId)
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+
+
+    }
+
 }

@@ -54,8 +54,8 @@ class RepositoryImpl @Inject constructor(
     private val eventDao: EventDao,
     postRemoteKeyDao: PostRemoteKeyDao,
     eventRemoteKeyDao: EventRemoteKeyDao,
-    wallRemoteKeyDao: WallRemoteKeyDao,
-    appDb: AppDb,
+    private val wallRemoteKeyDao: WallRemoteKeyDao,
+    private val appDb: AppDb,
 
     ) : Repository {
 
@@ -417,20 +417,27 @@ class RepositoryImpl @Inject constructor(
     }
 
     //WALL
-    private val authorId: Int = 0
+
+    var authorId: Int = 0
+    override lateinit var wall: Flow<PagingData<Post>>
+
 
     @OptIn(ExperimentalPagingApi::class)
-    override val wall: Flow<PagingData<Post>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        pagingSourceFactory = { wallDao.getPagingSource() },
-        remoteMediator = WallRemoteMediator(
-            apiService = apiService,
-            dao = wallDao,
-            wallRemoteKeyDao = wallRemoteKeyDao,
-            appDb = appDb,
-            authorId = authorId
-        )
-    ).flow.map { it.map(WallEntity::toDto) }
+    override suspend fun setAuthorId(id: Int) {
+        this.authorId = id
+//        wallDao.clear()
+        wall = Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { wallDao.getPagingSource() },
+            remoteMediator = WallRemoteMediator(
+                apiService = apiService,
+                dao = wallDao,
+                wallRemoteKeyDao = wallRemoteKeyDao,
+                appDb = appDb,
+                authorId = authorId
+            )
+        ).flow.map { it.map(WallEntity::toDto) }
+    }
 
     override suspend fun disLikeByIdWall(authorId: Int, post: Post) {
 

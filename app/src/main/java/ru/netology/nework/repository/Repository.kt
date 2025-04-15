@@ -53,4 +53,6 @@ interface Repository {
 
     suspend fun disLikeByIdWall(authorId: Int, post: Post)
     suspend fun likeByIdWall(authorId: Int, post: Post)
+    suspend fun setAuthorId(authorId: Int)
+
 }
