@@ -18,10 +18,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
+import ru.netology.nework.dto.Ad
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
-import ru.netology.nework.dto.UserAvatar
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
@@ -30,6 +30,7 @@ import ru.netology.nework.utils.SingleLiveEvent
 import ru.netology.nmedia.auth.AppAuth
 import java.io.File
 import javax.inject.Inject
+import kotlin.random.Random
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -45,9 +46,10 @@ class WallViewModel @Inject constructor(
     val data: Flow<PagingData<FeedItem>> = appAuth.authState
         .flatMapLatest { token ->
             repository.wall.map { cashed ->
+                // it's just to fix wrong way. Further it may be necessary
                 cashed.insertSeparators { previous, next ->
-                    if (previous?.id == 0) {
-                        UserAvatar(1, "")
+                    if (false) {
+                        Ad(Random.nextInt(), "figma.jpg")
                     } else {
                         null
                     }
@@ -63,33 +65,9 @@ class WallViewModel @Inject constructor(
             }
         }.flowOn(Dispatchers.Default)
 
-
-//    val data: Flow<PagingData<FeedItem>> = appAuth.authState
-//        .flatMapLatest { token ->
-//            repository.posts.map { cashed ->
-//                cashed.insertSeparators { previous, next ->
-//                    takeDateSeparator.createSeparator(
-//                        if (previous is Post) previous else null,
-//                        if (next is Post) next else null
-//                    )?.let { return@insertSeparators it }
-//
-//                    if (previous?.id?.rem(5) == 0L) {
-//                        Ad(Random.nextLong(), "figma.jpg")
-//                    } else {
-//                        null
-//                    }
-//                }
-//            }
-//                .map { pagingData ->
-//                    pagingData.map { post ->
-//                        if (post is Post) {
-//                            post.copy(ownedByMe = post.authorId == token?.id)
-//                        } else {
-//                            post
-//                        }
-//                    }
-//                }
-//        }.flowOn(Dispatchers.Default)
+    private fun isExist(post: Post?): Boolean {
+        return post != null
+    }
 
     private val _refreshAdapter = SingleLiveEvent<Unit>()
     val refreshAdapter: SingleLiveEvent<Unit>

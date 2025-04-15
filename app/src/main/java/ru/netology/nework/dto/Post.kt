@@ -25,7 +25,7 @@ data class Post(
     val isPlayingAudioPaused: Boolean = false
 ) : FeedItem
 
-data class UserAvatar(
+data class Ad(
     override val id: Int,
     val url: String
 ) : FeedItem

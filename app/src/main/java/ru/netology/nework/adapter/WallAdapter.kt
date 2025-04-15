@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
 import ru.netology.nework.databinding.CardUserAvatarBinding
+import ru.netology.nework.dto.Ad
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
-import ru.netology.nework.dto.UserAvatar
 import ru.netology.nework.utils.AndroidUtils.dateUtcToString
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
@@ -38,7 +38,7 @@ class WallAdapter(
 
     override fun getItemViewType(position: Int): Int =
         when (getItem(position.coerceAtMost(itemCount - 1))) {
-            is UserAvatar -> R.layout.card_user_avatar
+            is Ad -> R.layout.card_user_avatar
             is Post -> R.layout.card_post
             null -> throw IllegalArgumentException("unknown item type")
         }
@@ -67,8 +67,8 @@ class WallAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is UserAvatar -> (holder as? UserAvatarViewHolder)?.bind(item)
-            is Post -> (holder as? PostViewHolder)?.bind(item, position)
+            is Ad -> (holder as? UserAvatarViewHolder)?.bind(item)
+            is Post -> (holder as? WallViewHolder)?.bind(item, position)
             null -> throw IllegalArgumentException("unknown item type")
 
         }
@@ -165,7 +165,7 @@ class UserAvatarViewHolder(
     private val binding: CardUserAvatarBinding,
 
     ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(userAvatar: UserAvatar) {
+    fun bind(ad: Ad) {
         binding.image.loadAttachmentView("???")
     }
 }
