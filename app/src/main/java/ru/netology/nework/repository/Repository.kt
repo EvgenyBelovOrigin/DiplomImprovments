@@ -51,6 +51,6 @@ interface Repository {
     //WALL
     val wall: Flow<PagingData<Post>>
 
-    suspend fun disLikeByIdWall(post: Post)
-    suspend fun likeByIdWall(post: Post)
+    suspend fun disLikeByIdWall(authorId: Int, post: Post)
+    suspend fun likeByIdWall(authorId: Int, post: Post)
 }

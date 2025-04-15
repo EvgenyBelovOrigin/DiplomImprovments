@@ -19,6 +19,8 @@ import ru.netology.nework.dao.EventRemoteKeyDao
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dao.UserDao
+import ru.netology.nework.dao.WallDao
+import ru.netology.nework.dao.WallRemoteKeyDao
 import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
@@ -29,6 +31,7 @@ import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.entity.WallEntity
 import ru.netology.nework.entity.toDto
 import ru.netology.nework.entity.toEntity
 import ru.netology.nmedia.auth.AppAuth
@@ -46,10 +49,12 @@ class RepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val appAuth: AppAuth,
     private val dao: PostDao,
+    private val wallDao: WallDao,
     private val usersDao: UserDao,
     private val eventDao: EventDao,
     postRemoteKeyDao: PostRemoteKeyDao,
     eventRemoteKeyDao: EventRemoteKeyDao,
+    wallRemoteKeyDao: WallRemoteKeyDao,
     appDb: AppDb,
 
     ) : Repository {
@@ -388,10 +393,6 @@ class RepositoryImpl @Inject constructor(
     }
 
 
-
-
-
-
     //USERS
 
     override val users = usersDao.getAll()
@@ -416,27 +417,69 @@ class RepositoryImpl @Inject constructor(
     }
 
     //WALL
+    private val authorId: Int = 0
 
     @OptIn(ExperimentalPagingApi::class)
     override val wall: Flow<PagingData<Post>> = Pager(
         config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        pagingSourceFactory = { dao.getPagingSource() },
-        remoteMediator = PostRemoteMediator(
+        pagingSourceFactory = { wallDao.getPagingSource() },
+        remoteMediator = WallRemoteMediator(
             apiService = apiService,
-            dao = dao,
-            postRemoteKeyDao = postRemoteKeyDao,
-            appDb = appDb
+            dao = wallDao,
+            wallRemoteKeyDao = wallRemoteKeyDao,
+            appDb = appDb,
+            authorId = authorId
         )
-    ).flow.map { it.map(PostEntity::toDto) }
+    ).flow.map { it.map(WallEntity::toDto) }
 
-    override suspend fun disLikeByIdWall(post: Post) {
-        TODO("Not yet implemented")
+    override suspend fun disLikeByIdWall(authorId: Int, post: Post) {
+
+        try {
+            val response = apiService.disLikeByIdWall(authorId, post.id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            if (response.body() != null) {
+                wallDao.insert(
+                    WallEntity.fromDto(
+                        response.body()!!
+                            .copy(
+                                isPlayingAudioPaused = post.isPlayingAudioPaused,
+                                isPlayingAudio = post.isPlayingAudio
+                            )
+                    )
+                )
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
-    override suspend fun likeByIdWall(post: Post) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun likeByIdWall(authorId: Int, post: Post) {
+        try {
+            val response = apiService.likeByIdWall(authorId, post.id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
 
+            }
+            if (response.body() != null) {
+                wallDao.insert(
+                    WallEntity.fromDto(
+                        response.body()!!.copy(
+                            isPlayingAudio = post.isPlayingAudio,
+                            isPlayingAudioPaused = post.isPlayingAudioPaused
+                        )
+                    )
+                )
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
 
 
 }
