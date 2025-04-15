@@ -45,7 +45,10 @@ class WallRemoteMediator @Inject constructor(
                     apiService.getAfterWall(authorId, id, state.config.pageSize)
                 }
 
-                LoadType.REFRESH -> apiService.getLatestWall(authorId, state.config.initialLoadSize)
+                LoadType.REFRESH -> {
+                    dao.clear()
+                    apiService.getLatestWall(authorId, state.config.initialLoadSize)
+                }
             }
             if (!result.isSuccessful) {
                 throw HttpException(result)
