@@ -147,6 +147,7 @@ class WallFeedFragment : Fragment() {
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (menuItem.itemId == R.id.close) {
+                        viewModel.clearPlayAudio()
                         findNavController().navigateUp()
                         return true
                     } else {
