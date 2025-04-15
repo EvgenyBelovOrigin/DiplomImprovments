@@ -59,7 +59,8 @@ class PostFeedFragment : Fragment() {
                     findNavController().navigate(R.id.eventFeedFragment)
                     true
                 }
-                R.id.users ->{
+
+                R.id.users -> {
                     findNavController().navigate(R.id.userFeedFragment)
                     true
                 }
@@ -100,6 +101,7 @@ class PostFeedFragment : Fragment() {
             override fun onItemClick(post: Post, position: Int) {
                 viewModel.edit(post)
                 viewModel.clearPlayAudio()
+                viewModel.changeAdapterPosition(position)
                 findNavController().navigate(R.id.detailPostFragment)
             }
 
@@ -117,13 +119,30 @@ class PostFeedFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.data.collectLatest(adapter::submitData)
 
-
             }
         }
+
 
         viewModel.refreshAdapter.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
+
+
+//        if (viewModel.adapterPosition.value != 0) {
+//            adapter.addLoadStateListener {
+//                viewModel.adapterPosition.value?.let { position ->
+//                    binding.list.scrollToPosition(
+//                        position
+//                    )
+//                }
+//            }
+//        }
+//        adapter.addLoadStateListener {
+//            viewModel.clearAdapterPosition()
+//        }
+
+
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -91,6 +91,10 @@ class PostViewModel @Inject constructor(
     val edited: LiveData<Post>
         get() = _edited
 
+    private val _adapterPosition = MutableLiveData(0)
+    val adapterPosition: LiveData<Int>
+        get() = _adapterPosition
+
     private val noAttachment = AttachmentModel()
 
     private val _attachment = MutableLiveData(noAttachment)
@@ -255,6 +259,13 @@ class PostViewModel @Inject constructor(
         val listSpeakersIds: List<Int> =
             listUsers.map { it.id }
         _edited.value = edited.value?.copy(mentionIds = listSpeakersIds)
+    }
+    fun changeAdapterPosition(position: Int) {
+        _adapterPosition.value = position
+    }
+
+    fun clearAdapterPosition() {
+        _adapterPosition.value = 0
     }
 
 

@@ -33,7 +33,12 @@ interface Repository {
     suspend fun disLikeEventById(event: Event)
     suspend fun likeEventById(event: Event)
     suspend fun saveEvent(event: Event)
-    suspend fun saveEventWithAttachment(event: Event, upload: MediaUpload, attachmentType: AttachmentType)
+    suspend fun saveEventWithAttachment(
+        event: Event,
+        upload: MediaUpload,
+        attachmentType: AttachmentType
+    )
+
     suspend fun removeEventById(id: Int)
 
     //USERS
@@ -42,4 +47,10 @@ interface Repository {
     val checkedUsers: Flow<List<User>>
 
     suspend fun getAllUsers()
+
+    //WALL
+    val wall: Flow<PagingData<Post>>
+
+    suspend fun disLikeByIdWall(post: Post)
+    suspend fun likeByIdWall(post: Post)
 }

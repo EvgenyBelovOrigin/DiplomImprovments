@@ -414,6 +414,31 @@ class RepositoryImpl @Inject constructor(
             throw NetworkError
         }
     }
+
+    //WALL
+
+    @OptIn(ExperimentalPagingApi::class)
+    override val wall: Flow<PagingData<Post>> = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        pagingSourceFactory = { dao.getPagingSource() },
+        remoteMediator = PostRemoteMediator(
+            apiService = apiService,
+            dao = dao,
+            postRemoteKeyDao = postRemoteKeyDao,
+            appDb = appDb
+        )
+    ).flow.map { it.map(PostEntity::toDto) }
+
+    override suspend fun disLikeByIdWall(post: Post) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun likeByIdWall(post: Post) {
+        TODO("Not yet implemented")
+    }
+
+
+
 }
 
 

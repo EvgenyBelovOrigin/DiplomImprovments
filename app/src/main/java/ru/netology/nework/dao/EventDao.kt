@@ -10,7 +10,7 @@ import ru.netology.nework.entity.EventEntity
 @Dao
 interface EventDao {
 
-    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
+    @Query("SELECT COUNT(*) == 0 FROM EventEntity")
     suspend fun isEmpty(): Boolean
 
     @Query("DELETE FROM EventEntity")
