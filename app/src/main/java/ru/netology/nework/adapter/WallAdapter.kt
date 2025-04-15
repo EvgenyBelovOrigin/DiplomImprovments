@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.R
 import ru.netology.nework.databinding.CardPostBinding
+import ru.netology.nework.databinding.CardUserAvatarBinding
 import ru.netology.nework.dto.AttachmentType
+import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.UserAvatar
 import ru.netology.nework.utils.AndroidUtils.dateUtcToString
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
@@ -31,16 +34,44 @@ interface WallOnInteractionListener {
 class WallAdapter(
     private val wallOnInteractionListener: WallOnInteractionListener,
 
-    ) : PagingDataAdapter<Post, WallViewHolder>(WallDiffCallback()) {
+    ) : PagingDataAdapter<FeedItem, RecyclerView.ViewHolder>(WallDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallViewHolder {
-        val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return WallViewHolder(binding, wallOnInteractionListener)
-    }
+    override fun getItemViewType(position: Int): Int =
+        when (getItem(position.coerceAtMost(itemCount - 1))) {
+            is UserAvatar -> R.layout.card_user_avatar
+            is Post -> R.layout.card_post
+            null -> throw IllegalArgumentException("unknown item type")
+        }
 
-    override fun onBindViewHolder(holder: WallViewHolder, position: Int) {
-        val post = getItem(position.coerceAtMost(itemCount - 1)) ?: return
-        holder.bind(post, position)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
+            R.layout.card_post -> {
+                val binding =
+                    CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                WallViewHolder(binding, wallOnInteractionListener)
+            }
+
+            R.layout.card_user_avatar -> {
+                val binding =
+                    CardUserAvatarBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                UserAvatarViewHolder(binding)
+            }
+
+            else -> throw IllegalArgumentException("unknown item type")
+        }
+
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is UserAvatar -> (holder as? UserAvatarViewHolder)?.bind(item)
+            is Post -> (holder as? PostViewHolder)?.bind(item, position)
+            null -> throw IllegalArgumentException("unknown item type")
+
+        }
     }
 }
 
@@ -66,7 +97,7 @@ class WallViewHolder(
             videoContainer.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
 
-                if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
+                if (post.attachment?.type == AttachmentType.VIDEO && post.attachment.url.isNotBlank()) {
                     setVideoURI(
                         Uri.parse(post.attachment.url)
                     )
@@ -130,12 +161,21 @@ class WallViewHolder(
 
 }
 
-class WallDiffCallback : DiffUtil.ItemCallback<Post>() {
-    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+class UserAvatarViewHolder(
+    private val binding: CardUserAvatarBinding,
+
+    ) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(userAvatar: UserAvatar) {
+        binding.image.loadAttachmentView("???")
+    }
+}
+
+class WallDiffCallback : DiffUtil.ItemCallback<FeedItem>() {
+    override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+    override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
         return oldItem == newItem
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,9 @@ import kotlinx.coroutines.launch
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dto.AttachmentType
+import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.UserAvatar
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
@@ -39,14 +42,54 @@ class WallViewModel @Inject constructor(
     ) : ViewModel() {
     //POSTS
 
-    val data: Flow<PagingData<Post>> = appAuth.authState
+    val data: Flow<PagingData<FeedItem>> = appAuth.authState
         .flatMapLatest { token ->
-            repository.wall.map { pagingData ->
+            repository.wall.map { cashed ->
+                cashed.insertSeparators { previous, next ->
+                    if (previous?.id == 0) {
+                        UserAvatar(1, "")
+                    } else {
+                        null
+                    }
+                }
+            }.map { pagingData ->
                 pagingData.map { post ->
-                    post.copy(ownedByMe = post.authorId == token?.id)
+                    if (post is Post) {
+                        post.copy(ownedByMe = post.authorId == token?.id)
+                    } else {
+                        post
+                    }
                 }
             }
         }.flowOn(Dispatchers.Default)
+
+
+//    val data: Flow<PagingData<FeedItem>> = appAuth.authState
+//        .flatMapLatest { token ->
+//            repository.posts.map { cashed ->
+//                cashed.insertSeparators { previous, next ->
+//                    takeDateSeparator.createSeparator(
+//                        if (previous is Post) previous else null,
+//                        if (next is Post) next else null
+//                    )?.let { return@insertSeparators it }
+//
+//                    if (previous?.id?.rem(5) == 0L) {
+//                        Ad(Random.nextLong(), "figma.jpg")
+//                    } else {
+//                        null
+//                    }
+//                }
+//            }
+//                .map { pagingData ->
+//                    pagingData.map { post ->
+//                        if (post is Post) {
+//                            post.copy(ownedByMe = post.authorId == token?.id)
+//                        } else {
+//                            post
+//                        }
+//                    }
+//                }
+//        }.flowOn(Dispatchers.Default)
 
     private val _refreshAdapter = SingleLiveEvent<Unit>()
     val refreshAdapter: SingleLiveEvent<Unit>
@@ -155,9 +198,19 @@ class WallViewModel @Inject constructor(
         }
     }
 
-    fun updateAttachment(url: String?, uri: Uri?, file: File?, attachmentType: AttachmentType?) {
+    fun updateAttachment(
+        url: String?,
+        uri: Uri?,
+        file: File?,
+        attachmentType: AttachmentType?
+    ) {
         _attachment.value =
-            AttachmentModel(url = null, uri = uri, file = file, attachmentType = attachmentType)
+            AttachmentModel(
+                url = null,
+                uri = uri,
+                file = file,
+                attachmentType = attachmentType
+            )
     }
 
     fun clearAttachment() {

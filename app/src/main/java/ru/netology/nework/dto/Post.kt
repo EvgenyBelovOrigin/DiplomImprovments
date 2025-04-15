@@ -1,7 +1,11 @@
 package ru.netology.nework.dto
 
+sealed interface FeedItem {
+    val id: Int
+}
+
 data class Post(
-    val id: Int,
+    override val id: Int,
     val authorId: Int,
     val author: String,
     val authorJob: String?,
@@ -17,9 +21,15 @@ data class Post(
     val attachment: Attachment?,
     val users: Map<String, UserPreview?>?,
     val ownedByMe: Boolean = false,
-    val isPlayingAudio:Boolean = false,
-    val isPlayingAudioPaused:Boolean = false
-)
+    val isPlayingAudio: Boolean = false,
+    val isPlayingAudioPaused: Boolean = false
+) : FeedItem
+
+data class UserAvatar(
+    override val id: Int,
+    val url: String
+) : FeedItem
+
 
 data class UserPreview(
     val name: String?,
