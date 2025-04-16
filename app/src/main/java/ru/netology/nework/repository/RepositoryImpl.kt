@@ -500,6 +500,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getAllJobs(userId: Int) {
         try {
+            jobDao.clear()
             val response = apiService.getUserJobs(userId)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())

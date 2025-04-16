@@ -13,10 +13,10 @@ interface JobDao {
     @Query("SELECT * FROM JobEntity ORDER BY id")
     fun getAll(): Flow<List<JobEntity>>
 
-    //
-//    @Query("DELETE FROM UserEntity")
-//    suspend fun clear()
-//
+
+    @Query("DELETE FROM JobEntity")
+    suspend fun clear()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(jobs: List<JobEntity>)
 //
