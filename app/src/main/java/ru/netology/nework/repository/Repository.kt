@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -54,5 +55,12 @@ interface Repository {
     suspend fun disLikeByIdWall(authorId: Int, post: Post)
     suspend fun likeByIdWall(authorId: Int, post: Post)
     suspend fun setAuthorId(authorId: Int)
+
+    // Job
+
+    val jobs: Flow<List<Job>>
+
+    suspend fun getAllJobs(userId: Int)
+
 
 }

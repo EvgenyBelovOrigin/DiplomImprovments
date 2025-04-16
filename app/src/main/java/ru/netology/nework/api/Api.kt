@@ -14,6 +14,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.netology.nework.dto.Event
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.Token
@@ -152,5 +153,11 @@ interface ApiService {
 
     @GET("users/{id}")
     fun getUserById(@Path("id") authorId: Int): Response<User>
+
+    //JOBS
+
+
+    @GET("{authorId}/jobs")
+    suspend fun getUserJobs(@Path("authorId") id: Int): Response<List<Job>>
 
 }

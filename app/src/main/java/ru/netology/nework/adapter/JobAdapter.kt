@@ -41,7 +41,7 @@ class JobViewHolder(
 //            checkUser.isChecked = user.isChecked
 //            checkUser.setOnClickListener {
 //                usersOnInteractionListener.onCheckUser(user, position)
-            }
+//        }
 //            avatar.loadAvatar(user.avatar)
 //            author.text = user.name
 //            login.text = user.login
@@ -50,10 +50,10 @@ class JobViewHolder(
 //                    usersOnInteractionListener.onChooseUser(user, position)
 //                }
 
-//        }
+        }
     }
-
 }
+
 
 class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
     override fun areItemsTheSame(oldItem: Job, newItem: Job): Boolean {

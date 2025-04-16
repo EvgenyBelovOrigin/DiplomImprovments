@@ -16,6 +16,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nework.api.ApiService
 import ru.netology.nework.dao.EventDao
 import ru.netology.nework.dao.EventRemoteKeyDao
+import ru.netology.nework.dao.JobDao
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.PostRemoteKeyDao
 import ru.netology.nework.dao.UserDao
@@ -29,6 +30,7 @@ import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.EventEntity
+import ru.netology.nework.entity.JobEntity
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.WallEntity
@@ -51,6 +53,7 @@ class RepositoryImpl @Inject constructor(
     private val dao: PostDao,
     private val wallDao: WallDao,
     private val usersDao: UserDao,
+    private val jobDao: JobDao,
     private val eventDao: EventDao,
     postRemoteKeyDao: PostRemoteKeyDao,
     eventRemoteKeyDao: EventRemoteKeyDao,
@@ -488,6 +491,31 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    //JOBS
+
+    override val jobs = jobDao.getAll()
+        .map(List<JobEntity>::toDto)
+        .flowOn(Dispatchers.Default)
+
+    private var userIdJob: Int = 0
+
+
+    override suspend fun getAllJobs(userId: Int) {
+
+        this.userIdJob = userId
+        try {
+            val response = apiService.getUserJobs(userId)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            jobDao.insert(body.toEntity())
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
 
 }
 
