@@ -150,4 +150,7 @@ interface ApiService {
         @Path("id") id: Int
     ): Response<Post>
 
+    @GET("users/{id}")
+    fun getUserById(@Path("id") authorId: Int): Response<User>
+
 }

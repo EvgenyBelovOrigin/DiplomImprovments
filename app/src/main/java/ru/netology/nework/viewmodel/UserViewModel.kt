@@ -98,4 +98,7 @@ class UserViewModel @Inject constructor(
 
     }
 
+    fun chooseUser(authorId: Int?): User? =
+        data.value?.find { it.id == authorId }
+
 }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -27,6 +28,8 @@ import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.utils.StringArg
+import ru.netology.nework.utils.loadAttachmentView
+import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -38,6 +41,7 @@ class WallFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -53,9 +57,16 @@ class WallFeedFragment : Fragment() {
 
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
 
-        binding.bottomNavigation.isGone = true
-        binding.fab.isGone = true
+
         val authorId = arguments?.textArg?.toInt()
+        binding.bottomNavigation.isGone = true
+        binding.fab.isGone = appAuth.authState.value?.id != authorId
+        binding.appbar.isVisible = true
+        val user = userViewModel.chooseUser(authorId)
+
+        if (user != null) {
+            binding.avatar.loadAttachmentView(user.avatar.toString())
+        }
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {

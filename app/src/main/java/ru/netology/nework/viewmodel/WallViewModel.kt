@@ -206,5 +206,4 @@ class WallViewModel @Inject constructor(
 
 
     }
-
 }

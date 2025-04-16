@@ -425,7 +425,6 @@ class RepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override suspend fun setAuthorId(id: Int) {
         this.authorId = id
-//        wallDao.clear()
         wall = Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { wallDao.getPagingSource() },
@@ -438,6 +437,7 @@ class RepositoryImpl @Inject constructor(
             )
         ).flow.map { it.map(WallEntity::toDto) }
     }
+
 
     override suspend fun disLikeByIdWall(authorId: Int, post: Post) {
 
