@@ -5,25 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nework.databinding.CardUserBinding
+import ru.netology.nework.databinding.CardJobBinding
 import ru.netology.nework.dto.Job
-import ru.netology.nework.dto.User
 
 
 interface JobOnInteractionListener {
-    fun onCheckUser(user: User, position: Int) {}
-    fun onChooseUser(user: User, position: Int) {}
 
 }
 
 class JobAdapter(
-    private val usersOnInteractionListener: UsersOnInteractionListener,
+    private val jobOnInteractionListener: JobOnInteractionListener,
 
     ) : ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
-        val binding = CardUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return JobViewHolder(binding, usersOnInteractionListener)
+        val binding = CardJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return JobViewHolder(binding, jobOnInteractionListener)
     }
 
     override fun onBindViewHolder(holder: JobViewHolder, position: Int) {
@@ -33,8 +30,8 @@ class JobAdapter(
 }
 
 class JobViewHolder(
-    private val binding: CardUserBinding,
-    private val usersOnInteractionListener: UsersOnInteractionListener,
+    private val binding: CardJobBinding,
+    private val jobOnInteractionListener: JobOnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(job: Job, position: Int) {
@@ -42,7 +39,7 @@ class JobViewHolder(
         binding.apply {
 //            checkUser.isVisible = needToCheckUsers
 //            checkUser.isChecked = user.isChecked
-            checkUser.setOnClickListener {
+//            checkUser.setOnClickListener {
 //                usersOnInteractionListener.onCheckUser(user, position)
             }
 //            avatar.loadAvatar(user.avatar)
@@ -53,7 +50,7 @@ class JobViewHolder(
 //                    usersOnInteractionListener.onChooseUser(user, position)
 //                }
 
-        }
+//        }
     }
 
 }
