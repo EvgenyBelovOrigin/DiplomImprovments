@@ -22,6 +22,7 @@ import ru.netology.nework.dto.Ad
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
+import ru.netology.nework.dto.User
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.model.AttachmentModel
 import ru.netology.nework.repository.Repository
@@ -41,7 +42,6 @@ class WallViewModel @Inject constructor(
     private val remoteDao: PostRemoteKeyDao,
 
     ) : ViewModel() {
-    //POSTS
 
     val data: Flow<PagingData<FeedItem>> = appAuth.authState
         .flatMapLatest { token ->
@@ -195,10 +195,10 @@ class WallViewModel @Inject constructor(
         _attachment.value = noAttachment
     }
 
-    fun setAuthorId(authorId: Int) {
+    fun setUser(user: User) {
         try {
             viewModelScope.launch {
-                repository.setAuthorId(authorId)
+                repository.setAuthorId(user.id)
             }
         } catch (e: Exception) {
             throw e

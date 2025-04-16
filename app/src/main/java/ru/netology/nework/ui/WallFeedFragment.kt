@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -29,7 +28,6 @@ import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.utils.StringArg
-import ru.netology.nework.utils.loadAvatar
 import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
@@ -63,16 +61,16 @@ class WallFeedFragment : Fragment() {
         val authorId = arguments?.textArg?.toInt()
         binding.bottomNavigation.isGone = true
         binding.fab.isGone = appAuth.authState.value?.id != authorId
-        binding.appbar.isVisible = true
-        val user = userViewModel.chooseUser(authorId)
-
-        if (user != null) {
-            binding.avatar.loadAvatar(user.avatar.toString())
-        }
-        binding.collapsingToolbar.title = user?.name
-        tabLayout = binding.tabs
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.wall)))
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.job)))
+//        binding.appbar.isVisible = true
+//        val user = userViewModel.chooseUser(authorId)
+//
+//        if (user != null) {
+//            binding.avatar.loadAvatar(user.avatar.toString())
+//        }
+//        binding.collapsingToolbar.title = user?.name
+//        tabLayout = binding.tabs
+//        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.wall)), 0, true)
+//        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.job)), 1, false)
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
@@ -114,9 +112,9 @@ class WallFeedFragment : Fragment() {
             }
         }
 
-        if (authorId != null) {
-            viewModel.setAuthorId(authorId)
-        }
+
+        userViewModel.user.value?.let { viewModel.setUser(it) }
+
 
 
         viewModel.refreshAdapter.observe(viewLifecycleOwner) {

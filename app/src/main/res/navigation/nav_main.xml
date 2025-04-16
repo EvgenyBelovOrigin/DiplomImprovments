@@ -51,8 +51,8 @@
         tools:layout="@layout/fragment_feed_user">
 
         <action
-            android:id="@+id/action_userFeedFragment_to_wallFeedFragment"
-            app:destination="@id/wallFeedFragment" />
+            android:id="@+id/action_userFeedFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/wallFeedFragment"
@@ -60,6 +60,17 @@
         android:label="fragment_wall_feed"
         tools:layout="@layout/fragment_feed_post">
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="ru.netology.nework.ui.UserInfoFragment"
+        android:label="fragment_user_info"
+        tools:layout="@layout/fragment_user_info">
+
+        <action
+            android:id="@+id/action_userInfoFragment_to_wallFeedFragment"
+            app:destination="@id/wallFeedFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailPostFragment"
