@@ -45,6 +45,12 @@ object AndroidUtils {
                 DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
             )
     }
+    fun dateUtcToMonth(string: String): String {
+        return ZonedDateTime.parse(string).withZoneSameInstant(ZoneId.systemDefault())
+            .format(
+                DateTimeFormatter.ofPattern("MM.yy")
+            )
+    }
 
     fun dateUtcToCalendar(dateStr: String): Calendar {
         val zonedDateTime = ZonedDateTime.parse(dateStr)

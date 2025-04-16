@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.databinding.CardJobBinding
 import ru.netology.nework.dto.Job
+import ru.netology.nework.utils.AndroidUtils.dateUtcToMonth
 
 
 interface JobOnInteractionListener {
@@ -34,21 +35,14 @@ class JobViewHolder(
     private val jobOnInteractionListener: JobOnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(job: Job, position: Int) {
+    fun bind(job: Job, pos: Int) {
 
         binding.apply {
-//            checkUser.isVisible = needToCheckUsers
-//            checkUser.isChecked = user.isChecked
-//            checkUser.setOnClickListener {
-//                usersOnInteractionListener.onCheckUser(user, position)
-//        }
-//            avatar.loadAvatar(user.avatar)
-//            author.text = user.name
-//            login.text = user.login
-//            if (!needToCheckUsers)
-//                itemView.setOnClickListener {
-//                    usersOnInteractionListener.onChooseUser(user, position)
-//                }
+            name.text = job.name
+            start.text = dateUtcToMonth(job.start)
+            finish.text = job.finish?.let { dateUtcToMonth(it) } ?: "Present time"
+            position.text = job.position
+            link.text = job.link
 
         }
     }
