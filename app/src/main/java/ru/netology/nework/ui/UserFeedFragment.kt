@@ -93,7 +93,8 @@ class UserFeedFragment : Fragment() {
                 }
 
                 override fun onChooseUser(user: User, position: Int) {
-                    findNavController().navigate(R.id.wallFeedFragment,
+                    findNavController().navigate(
+                        R.id.userInfoFragment,
                         Bundle().apply {
                             textArg = user.id.toString()
                         })

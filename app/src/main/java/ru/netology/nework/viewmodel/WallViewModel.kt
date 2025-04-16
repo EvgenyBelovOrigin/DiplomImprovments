@@ -92,6 +92,10 @@ class WallViewModel @Inject constructor(
     val attachment: LiveData<AttachmentModel>
         get() = _attachment
 
+    private val _user = MutableLiveData<User?>(null)
+    val user: LiveData<User?>
+        get() = _user
+
 
     fun playAudio(post: Post) {
         if (!post.isPlayingAudio) {
@@ -203,7 +207,6 @@ class WallViewModel @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
-
 
     }
 }

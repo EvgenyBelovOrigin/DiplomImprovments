@@ -1,7 +1,6 @@
 package ru.netology.nework.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -39,9 +38,6 @@ class UserViewModel @Inject constructor(
     val checkedUsers: LiveData<List<User>> = repository.checkedUsers
         .asLiveData(Dispatchers.Default)
 
-    private val _user = MutableLiveData<User?>(null)
-    val user: LiveData<User?>
-        get() = _user
 
     // init with swipe refresh otherwise state of checked users doesn't works
 
@@ -103,10 +99,8 @@ class UserViewModel @Inject constructor(
 
     }
 
-    fun chooseUser(authorId: Int?): User? {
+    fun chooseUser(authorId: Int?): User? =
 
-        val user = data.value?.find { it.id == authorId }
-        _user.value = user
-        return user
-    }
+        data.value?.find { it.id == authorId }
+
 }

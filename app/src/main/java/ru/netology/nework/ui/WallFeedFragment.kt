@@ -3,12 +3,8 @@ package ru.netology.nework.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,7 +14,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -41,7 +36,6 @@ class WallFeedFragment : Fragment() {
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
-    private lateinit var tabLayout: TabLayout
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -112,11 +106,6 @@ class WallFeedFragment : Fragment() {
             }
         }
 
-
-        userViewModel.user.value?.let { viewModel.setUser(it) }
-
-
-
         viewModel.refreshAdapter.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
@@ -154,24 +143,6 @@ class WallFeedFragment : Fragment() {
         viewModel.requestSignIn.observe(viewLifecycleOwner) {
             requestSignIn()
         }
-        requireActivity().addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_close_full_screen_view, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    if (menuItem.itemId == R.id.close) {
-                        viewModel.clearPlayAudio()
-                        findNavController().navigateUp()
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-            },
-            viewLifecycleOwner,
-        )
         return binding.root
     }
 
