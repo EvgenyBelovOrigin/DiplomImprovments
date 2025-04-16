@@ -24,7 +24,7 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:expandedTitleMarginStart="56dp"
+            app:expandedTitleMarginStart="@dimen/common_spacing"
             app:expandedTitleMarginTop="@dimen/common_spacing"
             app:expandedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -34,8 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
                 android:importantForAccessibility="no"
-                app:layout_collapseMode="parallax"
                 tools:src="@drawable/avatar_default" />
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -56,20 +56,20 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swiperefresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_post"
-                tools:visibility="visible" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/card_post"
+            tools:visibility="visible" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -28,7 +28,7 @@ import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.utils.StringArg
-import ru.netology.nework.utils.loadAttachmentView
+import ru.netology.nework.utils.loadAvatar
 import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
@@ -65,8 +65,9 @@ class WallFeedFragment : Fragment() {
         val user = userViewModel.chooseUser(authorId)
 
         if (user != null) {
-            binding.avatar.loadAttachmentView(user.avatar.toString())
+            binding.avatar.loadAvatar(user.avatar.toString())
         }
+        binding.collapsingToolbar.title = user?.name
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
