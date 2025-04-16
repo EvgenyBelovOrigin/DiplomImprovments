@@ -207,6 +207,7 @@ class WallViewModel @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
+        _user.value = user
 
     }
 }

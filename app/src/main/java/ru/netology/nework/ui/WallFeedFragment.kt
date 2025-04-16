@@ -23,7 +23,6 @@ import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
 import ru.netology.nework.utils.StringArg
-import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -35,7 +34,6 @@ class WallFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -52,19 +50,9 @@ class WallFeedFragment : Fragment() {
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
 
 
-        val authorId = arguments?.textArg?.toInt()
+//        val authorId = arguments?.textArg?.toInt()
         binding.bottomNavigation.isGone = true
-        binding.fab.isGone = appAuth.authState.value?.id != authorId
-//        binding.appbar.isVisible = true
-//        val user = userViewModel.chooseUser(authorId)
-//
-//        if (user != null) {
-//            binding.avatar.loadAvatar(user.avatar.toString())
-//        }
-//        binding.collapsingToolbar.title = user?.name
-//        tabLayout = binding.tabs
-//        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.wall)), 0, true)
-//        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.job)), 1, false)
+        binding.fab.isGone = appAuth.authState.value?.id != viewModel.user.value?.id
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
@@ -83,9 +71,7 @@ class WallFeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post, position: Int) {
-                if (authorId != null) {
-                    viewModel.likeById(authorId, post)
-                }
+                viewModel.likeById(post.authorId, post)
             }
 
             override fun onItemClick(post: Post, position: Int) {
