@@ -1,4 +1,4 @@
-package ru.netology.nework.db
+package ru.netology.nework.dto
 
 data class Job(
     val id: Int,
