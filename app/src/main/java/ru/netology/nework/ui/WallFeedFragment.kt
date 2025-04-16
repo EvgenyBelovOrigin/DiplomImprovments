@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,7 +23,8 @@ import ru.netology.nework.adapter.WallAdapter
 import ru.netology.nework.adapter.WallOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedPostBinding
 import ru.netology.nework.dto.Post
-import ru.netology.nework.utils.StringArg
+import ru.netology.nework.viewmodel.PostViewModel
+import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -34,10 +36,9 @@ class WallFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
+    private val postViewModel: PostViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
-    companion object {
-        var Bundle.textArg: String? by StringArg
-    }
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -49,17 +50,26 @@ class WallFeedFragment : Fragment() {
 
         val binding = FragmentFeedPostBinding.inflate(inflater, container, false)
 
-
-//        val authorId = arguments?.textArg?.toInt()
         binding.bottomNavigation.isGone = true
         binding.fab.isGone = appAuth.authState.value?.id != viewModel.user.value?.id
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
             override fun onEdit(post: Post, position: Int) {
+                postViewModel.updateAttachment(
+                    url = post.attachment?.url,
+                    attachmentType = post.attachment?.type,
+                    uri = post.attachment?.url?.toUri(),
+                    file = null
+                )
+                post.mentionIds?.let { userViewModel.setCheckedUsers(it) }
+                postViewModel.edit(post)
+                postViewModel.clearPlayAudio()
+                findNavController().navigate(R.id.newPostFragment)
             }
 
             override fun onRemove(post: Post, position: Int) {
+                postViewModel.removePostById(post.id)
             }
 
             override fun onPlayAudio(post: Post, position: Int) {

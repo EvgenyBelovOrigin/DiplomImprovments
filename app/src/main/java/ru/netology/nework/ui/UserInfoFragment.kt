@@ -52,11 +52,18 @@ class UserInfoFragment : Fragment() {
         )
         val authorId = arguments?.textArg?.toInt()
         val user = userViewModel.chooseUser(authorId)
-        binding.avatar.loadAvatar(user?.avatar.toString())
-        binding.collapsingToolbar.title = user?.name
-        if (user != null) {
-            viewModel.setUser(user)
+        viewModel.chooseUser(user)
+        if (authorId == appAuth.authState.value?.id) {
+            binding.collapsingToolbar.title = getString(R.string.my_wall)
+        } else {
+            binding.collapsingToolbar.title = user?.name
         }
+        binding.avatar.loadAvatar(user?.avatar.toString())
+
+        if (authorId != null) {
+            viewModel.setUser(authorId)
+        }
+
 
         setupWithNavController(
             binding.toolBar, findNavController(), AppBarConfiguration(findNavController().graph)

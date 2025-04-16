@@ -10,6 +10,7 @@ import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nework.R
+import ru.netology.nework.ui.UserFeedFragment.Companion.textArg
 import ru.netology.nework.viewmodel.AuthViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
@@ -50,6 +51,15 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
                         R.id.signout -> {
                             appAuth.clear()
+                            true
+                        }
+
+                        R.id.myWall -> {
+                            findNavController(R.id.nav_host_fragment).navigate(
+                                R.id.userInfoFragment,
+                                Bundle().apply {
+                                    textArg = appAuth.authState.value?.id.toString()
+                                })
                             true
                         }
 

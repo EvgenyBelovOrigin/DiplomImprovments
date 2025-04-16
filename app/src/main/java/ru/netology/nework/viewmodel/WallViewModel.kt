@@ -199,15 +199,19 @@ class WallViewModel @Inject constructor(
         _attachment.value = noAttachment
     }
 
-    fun setUser(user: User) {
+    fun setUser(userId: Int) {
         try {
             viewModelScope.launch {
-                repository.setAuthorId(user.id)
+                repository.setAuthorId(userId)
             }
         } catch (e: Exception) {
             throw e
         }
-        _user.value = user
 
+
+    }
+
+    fun chooseUser(user: User?) {
+        _user.value = user
     }
 }

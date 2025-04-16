@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_postFeedFragment_to_userFeedFragment"
             app:destination="@id/userFeedFragment" />
+        <action
+            android:id="@+id/action_postFeedFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
     </fragment>
 
     <fragment
@@ -50,9 +53,6 @@
         android:label="fragment_user_feed"
         tools:layout="@layout/fragment_feed_user">
 
-        <action
-            android:id="@+id/action_userFeedFragment_to_userInfoFragment"
-            app:destination="@id/userInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/wallFeedFragment"
