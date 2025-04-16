@@ -51,6 +51,7 @@
     <string name="date_and_time">date and time</string>
     <string name="dd_mm_yyyy_hh_mm">dd.mm.yyyy HH:mm</string>
     <string name="check_users">check users</string>
+    <string name="wall">Wall</string>
 
 
 </resources>

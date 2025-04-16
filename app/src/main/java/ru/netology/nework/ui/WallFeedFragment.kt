@@ -19,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class WallFeedFragment : Fragment() {
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private lateinit var tabLayout: TabLayout
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -68,6 +70,9 @@ class WallFeedFragment : Fragment() {
             binding.avatar.loadAvatar(user.avatar.toString())
         }
         binding.collapsingToolbar.title = user?.name
+        tabLayout = binding.tabs
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.wall)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.job)))
 
 
         val adapter = WallAdapter(object : WallOnInteractionListener {
