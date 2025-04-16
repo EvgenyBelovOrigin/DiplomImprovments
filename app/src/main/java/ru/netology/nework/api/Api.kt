@@ -157,7 +157,7 @@ interface ApiService {
     //JOBS
 
 
-    @GET("{authorId}/jobs")
-    suspend fun getUserJobs(@Path("authorId") id: Int): Response<List<Job>>
+    @GET("{userId}/jobs")
+    suspend fun getUserJobs(@Path("userId") id: Int): Response<List<Job>>
 
 }

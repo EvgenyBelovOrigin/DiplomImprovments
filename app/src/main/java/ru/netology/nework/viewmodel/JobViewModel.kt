@@ -8,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.netology.nework.dao.UserDao
-import ru.netology.nework.dto.User
-import ru.netology.nework.entity.UserEntity
+import ru.netology.nework.dto.Job
 import ru.netology.nework.repository.Repository
 import ru.netology.nework.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -24,18 +23,7 @@ class JobViewModel @Inject constructor(
     val onError: LiveData<Unit>
         get() = _onError
 
-    private val _onStopLoading = SingleLiveEvent<Unit>()
-    val onStopLoading: LiveData<Unit>
-        get() = _onStopLoading
-
-    private val _onStartLoading = SingleLiveEvent<Unit>()
-    val onStartLoading: LiveData<Unit>
-        get() = _onStartLoading
-
-    val data: LiveData<List<User>> = repository.users
-        .asLiveData(Dispatchers.Default)
-
-    val checkedUsers: LiveData<List<User>> = repository.checkedUsers
+    val data: LiveData<List<Job>> = repository.jobs
         .asLiveData(Dispatchers.Default)
 
 
@@ -45,62 +33,13 @@ class JobViewModel @Inject constructor(
 //        getAllUsers()
 //    }
 
-    fun getAllUsers() = viewModelScope.launch {
+    fun getAllJobs(userId: Int) = viewModelScope.launch {
         try {
-            _onStartLoading.value = Unit
-            repository.getAllUsers()
-            _onStopLoading.value = Unit
+            repository.getAllJobs(userId)
         } catch (e: Exception) {
             _onError.value = Unit
         }
     }
 
-    fun checkUser(user: User) {
-        try {
-            viewModelScope.launch {
-                dao.insert(
-                    if (user.isChecked) {
-                        UserEntity.fromDto(
-                            user.copy(isChecked = false)
-                        )
-                    } else {
-                        UserEntity.fromDto(
-                            user.copy(isChecked = true)
-                        )
-                    }
-                )
-            }
-        } catch (e: Exception) {
-            throw e
-        }
-    }
-
-    fun makeAllUsersUnchecked() {
-        try {
-            viewModelScope.launch {
-                dao.makeAllUsersUnchecked()
-            }
-        } catch (e: Exception) {
-            throw e
-        }
-    }
-
-    fun setCheckedUsers(listUsersIds: List<Int>) {
-        listUsersIds.forEach { id ->
-            try {
-                viewModelScope.launch {
-                    dao.checkById(id)
-                }
-            } catch (e: Exception) {
-                throw e
-            }
-
-        }
-
-    }
-
-    fun chooseUser(authorId: Int?): User? =
-
-        data.value?.find { it.id == authorId }
 
 }

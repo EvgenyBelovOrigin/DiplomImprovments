@@ -60,14 +60,14 @@ class JobFeedFragment : Fragment() {
         binding.list.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner) {
-//            adapter.submitList(it)
+            adapter.submitList(it)
         }
 
 
         binding.swipeRefresh.setOnRefreshListener {
-//            if (!needToCheckUsers)
-//                viewModel.getAllUsers()
-//            binding.swipeRefresh.isRefreshing = false
+
+//                viewModel.getAllJobs()
+            binding.swipeRefresh.isRefreshing = false
         }
         viewModel.onError.observe(viewLifecycleOwner) {
             MaterialAlertDialogBuilder(requireContext())
@@ -75,12 +75,6 @@ class JobFeedFragment : Fragment() {
                 .setMessage(R.string.error_loading)
                 .setPositiveButton(R.string.ok, null)
                 .show()
-        }
-        viewModel.onStartLoading.observe(viewLifecycleOwner) {
-            binding.swipeRefresh.isRefreshing = true
-        }
-        viewModel.onStopLoading.observe(viewLifecycleOwner) {
-            binding.swipeRefresh.isRefreshing = false
         }
 
         return binding.root
