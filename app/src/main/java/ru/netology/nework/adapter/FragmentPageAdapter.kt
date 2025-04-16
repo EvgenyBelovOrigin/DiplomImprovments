@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import ru.netology.nework.ui.NewEventFragment
+import ru.netology.nework.ui.JobFeedFragment
 import ru.netology.nework.ui.WallFeedFragment
 
 class FragmentPageAdapter(
@@ -19,6 +19,6 @@ class FragmentPageAdapter(
         return if (position == 0)
             WallFeedFragment()
         else
-            NewEventFragment()
+            JobFeedFragment()
     }
 }

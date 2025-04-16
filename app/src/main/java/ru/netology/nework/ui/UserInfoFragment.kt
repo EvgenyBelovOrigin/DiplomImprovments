@@ -19,6 +19,7 @@ import ru.netology.nework.adapter.FragmentPageAdapter
 import ru.netology.nework.databinding.FragmentUserInfoBinding
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.utils.loadAvatar
+import ru.netology.nework.viewmodel.JobViewModel
 import ru.netology.nework.viewmodel.UserViewModel
 import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
@@ -35,6 +36,8 @@ class UserInfoFragment : Fragment() {
     lateinit var appAuth: AppAuth
     private val viewModel: WallViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val jobViewModel: JobViewModel by activityViewModels()
+
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager2: ViewPager2
     private lateinit var adapter: FragmentPageAdapter
@@ -62,6 +65,7 @@ class UserInfoFragment : Fragment() {
 
         if (authorId != null) {
             viewModel.setUser(authorId)
+            jobViewModel.getAllJobs(authorId)
         }
 
 

@@ -497,12 +497,8 @@ class RepositoryImpl @Inject constructor(
         .map(List<JobEntity>::toDto)
         .flowOn(Dispatchers.Default)
 
-    private var userIdJob: Int = 0
-
 
     override suspend fun getAllJobs(userId: Int) {
-
-        this.userIdJob = userId
         try {
             val response = apiService.getUserJobs(userId)
             if (!response.isSuccessful) {
