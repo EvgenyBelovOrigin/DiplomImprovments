@@ -7,6 +7,8 @@
 ### Функционал
 
 - Регистрация
+  
+![registerCheck](https://github.com/user-attachments/assets/8dba9b5d-504d-4d90-9f07-62306a2fe2d5)
 
 
 - Авторизация
