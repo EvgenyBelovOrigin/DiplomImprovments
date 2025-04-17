@@ -50,5 +50,10 @@ class JobViewModel @Inject constructor(
         }
     }
 
+    fun deleteJob(job: Job) {
+        //todo
+
+    }
+
 
 }

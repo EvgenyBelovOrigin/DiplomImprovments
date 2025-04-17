@@ -12,6 +12,7 @@ import ru.netology.nework.utils.AndroidUtils.dateUtcToMonth
 
 
 interface JobOnInteractionListener {
+    fun onDeleteJob(job: Job) {}
 
 }
 
@@ -45,6 +46,9 @@ class JobViewHolder(
             position.text = job.position
             link.text = job.link
             delete.isVisible = job.ownedByMe
+            delete.setOnClickListener {
+                jobOnInteractionListener.onDeleteJob(job)
+            }
 
         }
     }

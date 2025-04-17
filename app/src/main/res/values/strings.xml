@@ -53,6 +53,8 @@
     <string name="check_users">check users</string>
     <string name="wall">Wall</string>
     <string name="my_wall">My Wall</string>
+    <string name="create">Create</string>
+    <string name="position">Position</string>
 
 
 </resources>

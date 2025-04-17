@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,8 +15,10 @@ import ru.netology.nework.R
 import ru.netology.nework.adapter.JobAdapter
 import ru.netology.nework.adapter.JobOnInteractionListener
 import ru.netology.nework.databinding.FragmentFeedJobBinding
+import ru.netology.nework.dto.Job
 import ru.netology.nework.utils.StringArg
 import ru.netology.nework.viewmodel.JobViewModel
+import ru.netology.nework.viewmodel.WallViewModel
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 
@@ -26,6 +29,8 @@ class JobFeedFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val viewModel: JobViewModel by activityViewModels()
+    private val wallViewModel: WallViewModel by activityViewModels()
+
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -39,21 +44,13 @@ class JobFeedFragment : Fragment() {
     ): View {
 
         val binding = FragmentFeedJobBinding.inflate(inflater, container, false)
+        binding.fab.isGone = appAuth.authState.value?.id != wallViewModel.user.value?.id
 
         val adapter = JobAdapter(
             object : JobOnInteractionListener {
-//                override fun onCheckUser(user: User, position: Int) {
-//                    viewModel.checkUser(user)
-//                }
-//
-//                override fun onChooseUser(user: User, position: Int) {
-//                    findNavController().navigate(
-//                        R.id.userInfoFragment,
-//                        Bundle().apply {
-//                            textArg = user.id.toString()
-//                        })
-//                }
-
+                override fun onDeleteJob(job: Job) {
+                    viewModel.deleteJob(job)
+                }
 
             }
         )
