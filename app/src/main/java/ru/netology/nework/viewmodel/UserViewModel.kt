@@ -41,9 +41,9 @@ class UserViewModel @Inject constructor(
 
     // init with swipe refresh otherwise state of checked users doesn't works
 
-//    init {
-//        getAllUsers()
-//    }
+    init {
+        getAllUsers()
+    }
 
     fun getAllUsers() = viewModelScope.launch {
         try {
