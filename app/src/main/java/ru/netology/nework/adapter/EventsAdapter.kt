@@ -25,6 +25,7 @@ interface EventsOnInteractionListener {
     fun onStopAudio() {}
     fun onItemClick(event: Event, position: Int) {}
     fun onVideoPlay(position: Int) {}
+    // for test
 }
 
 class EventsAdapter(
