@@ -31,7 +31,7 @@ import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.utils.AndroidUtils
 import ru.netology.nework.utils.AndroidUtils.calendarToUtcDate
 import ru.netology.nework.utils.AndroidUtils.dateUtcToCalendar
-import ru.netology.nework.utils.AndroidUtils.dateUtcToString
+import ru.netology.nework.utils.AndroidUtils.dateUtcToStringDateTime
 import ru.netology.nework.utils.AndroidUtils.getFile
 import ru.netology.nework.utils.MediaLifecycleObserver
 import ru.netology.nework.utils.StringArg
@@ -84,14 +84,14 @@ class NewEventFragment : Fragment() {
         }
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.datetime != "")
-                binding.dateInput.text = dateUtcToString(it.datetime)
+                binding.dateInput.text = dateUtcToStringDateTime(it.datetime)
             else binding.dateInput.text = ""
         }
 
         binding.dateTimePicker.setOnClickListener {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Select Event date")
+                    .setTitleText(getString(R.string.select_event_date))
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
             datePicker.show(childFragmentManager, "Date Picker")
@@ -100,7 +100,7 @@ class NewEventFragment : Fragment() {
                     .setTimeFormat(TimeFormat.CLOCK_12H)
                     .setHour(12)
                     .setMinute(0)
-                    .setTitleText("Select Event time")
+                    .setTitleText(getString(R.string.select_event_time))
                     .build()
 
             datePicker.addOnPositiveButtonClickListener {

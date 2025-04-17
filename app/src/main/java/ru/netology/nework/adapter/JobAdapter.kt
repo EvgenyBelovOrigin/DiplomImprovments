@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.databinding.CardJobBinding
 import ru.netology.nework.dto.Job
-import ru.netology.nework.utils.AndroidUtils.dateUtcToMonth
+import ru.netology.nework.utils.AndroidUtils.dateUtcToStringDate
 
 
 interface JobOnInteractionListener {
@@ -41,8 +41,8 @@ class JobViewHolder(
 
         binding.apply {
             name.text = job.name
-            start.text = dateUtcToMonth(job.start)
-            finish.text = job.finish?.let { dateUtcToMonth(it) } ?: "Present time"
+            start.text = dateUtcToStringDate(job.start)
+            finish.text = job.finish?.let { dateUtcToStringDate(it) } ?: "Present time"
             position.text = job.position
             link.text = job.link
             delete.isVisible = job.ownedByMe

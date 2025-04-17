@@ -15,7 +15,7 @@ import ru.netology.nework.dto.Ad
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.FeedItem
 import ru.netology.nework.dto.Post
-import ru.netology.nework.utils.AndroidUtils.dateUtcToString
+import ru.netology.nework.utils.AndroidUtils.dateUtcToStringDateTime
 import ru.netology.nework.utils.loadAttachmentView
 import ru.netology.nework.utils.loadAvatar
 
@@ -85,7 +85,7 @@ class WallViewHolder(
         binding.apply {
             avatar.loadAvatar(post.authorAvatar?.let { "${post.authorAvatar}" })
             author.text = post.author
-            published.text = dateUtcToString(post.published)
+            published.text = dateUtcToStringDateTime(post.published)
             content.text = post.content.replace("\n", "")
             like.isChecked = post.likedByMe
             like.text = post.likeOwnerIds?.size.toString()

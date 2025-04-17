@@ -57,6 +57,12 @@
     <string name="my_wall">My Wall</string>
     <string name="create">Create</string>
     <string name="position">Position</string>
+    <string name="select_date">Select date</string>
+    <string name="enter_dates">Enter dates</string>
+    <string name="select_event_date">Select Event date</string>
+    <string name="select_event_time">Select Event time</string>
+    <string name="select_start_date">Select start date</string>
+    <string name="select_finish_date">Select finish date</string>
 
 
 </resources>

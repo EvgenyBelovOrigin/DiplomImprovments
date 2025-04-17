@@ -39,16 +39,17 @@ object AndroidUtils {
         return tempFile
     }
 
-    fun dateUtcToString(string: String): String {
+    fun dateUtcToStringDateTime(string: String): String {
         return ZonedDateTime.parse(string).withZoneSameInstant(ZoneId.systemDefault())
             .format(
                 DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")
             )
     }
-    fun dateUtcToMonth(string: String): String {
+
+    fun dateUtcToStringDate(string: String): String {
         return ZonedDateTime.parse(string).withZoneSameInstant(ZoneId.systemDefault())
             .format(
-                DateTimeFormatter.ofPattern("MM.yy")
+                DateTimeFormatter.ofPattern("dd.MM.yy")
             )
     }
 
