@@ -63,6 +63,7 @@
     <string name="select_event_time">Select Event time</string>
     <string name="select_start_date">Select start date</string>
     <string name="select_finish_date">Select finish date</string>
+    <string name="error_new_job_start">You should choose the date of start working</string>
 
 
 </resources>

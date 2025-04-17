@@ -34,6 +34,9 @@ class NewJobFragment : Fragment() {
     private val viewModel: NewJobViewModel by viewModels()
     private var calendarStart: Calendar = Calendar.getInstance()
     private var calendarFinish: Calendar = Calendar.getInstance()
+    private var isCalendarFinishChanged: Boolean = false
+    private var isCalendarStartChanged: Boolean = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +60,7 @@ class NewJobFragment : Fragment() {
                     .build()
             datePicker.show(childFragmentManager, "Date Picker")
             datePicker.addOnPositiveButtonClickListener {
+                isCalendarStartChanged = true
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                 val date = Date(it)
                 calendarStart = dateUtcToCalendar(sdf.format(date))
@@ -73,6 +77,7 @@ class NewJobFragment : Fragment() {
                     .build()
             datePicker.show(childFragmentManager, "Date Picker")
             datePicker.addOnPositiveButtonClickListener {
+                isCalendarFinishChanged = true
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                 val date = Date(it)
                 calendarFinish = dateUtcToCalendar(sdf.format(date))
@@ -90,14 +95,23 @@ class NewJobFragment : Fragment() {
                 binding.position.error = getString(R.string.position_can_not_be_empty)
                 return@setOnClickListener
             }
+            if (!isCalendarStartChanged) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.error_new_job_start)
+                    .setPositiveButton(R.string.ok, null)
+                    .show()
+                return@setOnClickListener
+            }
+
             binding.progress.isVisible = true
             viewModel.addJob(
                 Job(
                     0,
                     binding.name.text.toString(),
                     binding.position.text.toString(),
-                    "2024-07-02T21:34:44.562Z",
-                    "",
+                    calendarToUtcDate(calendarStart),
+                    if (isCalendarFinishChanged) calendarToUtcDate(calendarFinish) else "",
                     binding.link.text.toString(),
                     true,
                     0
