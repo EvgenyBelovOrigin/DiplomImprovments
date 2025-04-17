@@ -38,8 +38,7 @@ class NewJobViewModel @Inject constructor(
             ) {
                 _notFoundException.value = Unit
             } catch (e: Exception) {
-//                _exception.value = Unit
-                throw e
+                _exception.value = Unit
             }
         }
 

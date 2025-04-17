@@ -20,7 +20,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameLayout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/common_spacing"
             android:layout_marginEnd="@dimen/common_spacing"
             android:hint="Name of Company"
@@ -37,7 +37,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/positionLayout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/common_spacing"
             android:layout_marginTop="@dimen/common_spacing"
             android:layout_marginEnd="@dimen/common_spacing"
@@ -55,7 +55,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/linkLayout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/common_spacing"
             android:layout_marginTop="@dimen/common_spacing"
             android:layout_marginEnd="@dimen/common_spacing"

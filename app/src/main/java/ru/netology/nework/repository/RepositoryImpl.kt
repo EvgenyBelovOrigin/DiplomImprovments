@@ -526,8 +526,7 @@ class RepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-//            throw UnknownError
-            throw e
+            throw UnknownError
         }
     }
 
