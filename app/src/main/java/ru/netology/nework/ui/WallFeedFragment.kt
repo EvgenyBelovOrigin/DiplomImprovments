@@ -40,7 +40,6 @@ class WallFeedFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
 
 
-
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -138,6 +137,12 @@ class WallFeedFragment : Fragment() {
 
         viewModel.requestSignIn.observe(viewLifecycleOwner) {
             requestSignIn()
+        }
+
+        binding.fab.setOnClickListener {
+            postViewModel.clearAttachment()
+            postViewModel.clearEdited()
+            findNavController().navigate(R.id.newPostFragment)
         }
         return binding.root
     }

@@ -284,7 +284,7 @@ class NewPostFragment : Fragment() {
         )
 
         viewModel.postCreated.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.postFeedFragment)
+            findNavController().navigateUp()
         }
         return binding.root
     }

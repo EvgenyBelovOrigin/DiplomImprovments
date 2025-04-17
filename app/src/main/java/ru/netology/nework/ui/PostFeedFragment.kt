@@ -163,7 +163,6 @@ class PostFeedFragment : Fragment() {
         }
         binding.swiperefresh.setOnRefreshListener {
 
-//            viewModel.clearAdapterPosition()
             viewModel.clearPlayAudio()
             adapter.refresh()
 
@@ -192,7 +191,6 @@ class PostFeedFragment : Fragment() {
                 requestSignIn()
             } else {
                 viewModel.clearAttachment()
-//                viewModel.clearAdapterPosition()
                 viewModel.clearEdited()
                 findNavController().navigate(R.id.newPostFragment)
             }

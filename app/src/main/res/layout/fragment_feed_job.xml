@@ -29,5 +29,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/common_spacing"
+        android:layout_marginBottom="@dimen/common_spacing"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_add_24dp"
+        tools:ignore="ContentDescription" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
