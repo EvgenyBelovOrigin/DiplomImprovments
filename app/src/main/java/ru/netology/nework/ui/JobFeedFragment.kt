@@ -73,6 +73,9 @@ class JobFeedFragment : Fragment() {
                 .setPositiveButton(R.string.ok, null)
                 .show()
         }
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.newJobFragment)
+        }
 
         return binding.root
     }

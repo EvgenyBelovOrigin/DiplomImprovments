@@ -27,7 +27,9 @@
     <string name="menu_remove">Remove</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="login_can_not_be_empty">Login can\'t be empty</string>
+    <string name="company_name_can_not_be_empty">Company name can\'t be empty</string>
     <string name="pass_can_not_be_empty">Password can\'t be empty</string>
+    <string name="position_can_not_be_empty">Position can\'t be empty</string>
     <string name="name_can_not_be_empty">Name can\'t be empty</string>
     <string name="pass_confirm_can_not_be_empty">Password confirm can\'t be empty</string>
     <string name="choose_source">Choose source</string>

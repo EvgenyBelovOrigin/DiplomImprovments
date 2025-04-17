@@ -151,13 +151,14 @@ interface ApiService {
         @Path("id") id: Int
     ): Response<Post>
 
-    @GET("users/{id}")
-    fun getUserById(@Path("id") authorId: Int): Response<User>
 
     //JOBS
 
 
     @GET("{userId}/jobs")
     suspend fun getUserJobs(@Path("userId") id: Int): Response<List<Job>>
+
+    @POST("my/jobs")
+    suspend fun addJob(@Body job: Job): Response<Job>
 
 }

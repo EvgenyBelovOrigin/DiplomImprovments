@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_postFeedFragment_to_jobFeedFragment"
             app:destination="@id/jobFeedFragment" />
+        <action
+            android:id="@+id/action_postFeedFragment_to_newJobFragment"
+            app:destination="@id/newJobFragment" />
     </fragment>
 
     <fragment
@@ -119,6 +122,14 @@
         android:name="ru.netology.nework.ui.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/newJobFragment"
+        android:name="ru.netology.nework.ui.NewJobFragment"
+        android:label="fragment_new_job"
+        tools:layout="@layout/fragment_new_job">
 
     </fragment>
     <fragment

@@ -61,6 +61,7 @@ interface Repository {
     val jobs: Flow<List<Job>>
 
     suspend fun getAllJobs(userId: Int)
+    suspend fun addJob(job: Job)
 
 
 }

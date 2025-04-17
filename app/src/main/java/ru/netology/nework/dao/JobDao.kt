@@ -19,9 +19,9 @@ interface JobDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(jobs: List<JobEntity>)
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insert(user: UserEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(user: JobEntity)
 //
 //    @Query("UPDATE UserEntity SET isChecked = 0")
 //    suspend fun makeAllUsersUnchecked()

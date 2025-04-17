@@ -26,6 +26,7 @@ import ru.netology.nework.db.AppDb
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.Media
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -511,6 +512,22 @@ class RepositoryImpl @Inject constructor(
             throw NetworkError
         } catch (e: Exception) {
             throw UnknownError
+        }
+    }
+
+    override suspend fun addJob(job: Job) {
+        try {
+            val response = apiService.addJob(job)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            jobDao.insert(JobEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+//            throw UnknownError
+            throw e
         }
     }
 
