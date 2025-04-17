@@ -507,7 +507,7 @@ class RepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            jobDao.insert(body.toEntity())
+            jobDao.insert(body.toEntity(userId))
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

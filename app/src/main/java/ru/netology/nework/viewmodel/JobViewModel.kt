@@ -31,7 +31,7 @@ class JobViewModel @Inject constructor(
     val data: LiveData<List<Job>> = appAuth.authState
         .flatMapLatest { token ->
             repository.jobs.map { job ->
-                job.map { it.copy(ownedByMe = it.id == token?.id) }
+                job.map { it.copy(ownedByMe = it.userId == token?.id) }
             }
         }.asLiveData()
 

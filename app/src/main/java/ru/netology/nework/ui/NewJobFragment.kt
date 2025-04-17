@@ -56,7 +56,8 @@ class NewJobFragment : Fragment() {
                     "2024-07-02T21:34:44.562Z",
                     "",
                     binding.link.text.toString(),
-                    true
+                    true,
+                    0
                 )
             )
         }

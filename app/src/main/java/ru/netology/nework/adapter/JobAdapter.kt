@@ -45,7 +45,7 @@ class JobViewHolder(
             finish.text = job.finish?.let { dateUtcToMonth(it) } ?: "Present time"
             position.text = job.position
             link.text = job.link
-            delete.isVisible = true
+            delete.isVisible = job.ownedByMe
             delete.setOnClickListener {
                 jobOnInteractionListener.onDeleteJob(job)
             }

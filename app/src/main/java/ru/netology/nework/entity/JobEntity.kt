@@ -14,6 +14,7 @@ data class JobEntity(
     val finish: String?,
     val link: String?,
     val ownedByMe: Boolean,
+    val userId: Int
 ) {
 
     fun toDto() = Job(
@@ -23,7 +24,8 @@ data class JobEntity(
         start,
         finish,
         link,
-        ownedByMe
+        ownedByMe,
+        userId
     )
 
     companion object {
@@ -36,13 +38,27 @@ data class JobEntity(
                 dto.start,
                 dto.finish,
                 dto.link,
-                dto.ownedByMe
+                dto.ownedByMe,
+                dto.userId
             )
     }
 }
 
 fun List<JobEntity>.toDto(): List<Job> = map(JobEntity::toDto)
-fun List<Job>.toEntity(): List<JobEntity> = map(JobEntity.Companion::fromDto)
+fun List<Job>.toEntity(userId: Int): List<JobEntity> {
+    return map { job ->
+        JobEntity(
+            job.id,
+            job.name,
+            job.position,
+            job.start,
+            job.finish,
+            job.link,
+            false,
+            userId
+        )
+    }
 
+}
 
 
