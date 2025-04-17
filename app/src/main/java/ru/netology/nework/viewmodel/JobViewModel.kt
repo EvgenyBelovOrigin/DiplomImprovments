@@ -51,7 +51,13 @@ class JobViewModel @Inject constructor(
     }
 
     fun deleteJob(job: Job) {
-        //todo
+        try {
+            viewModelScope.launch {
+                repository.deleteJob(job.id)
+            }
+        } catch (e: Exception) {
+            _onError.value = Unit
+        }
 
     }
 

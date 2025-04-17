@@ -161,4 +161,7 @@ interface ApiService {
     @POST("my/jobs")
     suspend fun addJob(@Body job: Job): Response<Job>
 
+    @DELETE("my/jobs/{id}")
+    suspend fun deleteJob(@Path("id") id: Int): Response<Unit>
+
 }

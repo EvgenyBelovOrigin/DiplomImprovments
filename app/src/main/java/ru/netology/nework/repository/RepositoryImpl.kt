@@ -530,6 +530,20 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteJob(id: Int) {
+        try {
+            jobDao.deleteJob(id)
+            val response = apiService.deleteJob(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
 }
 
 

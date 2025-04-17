@@ -62,6 +62,7 @@ interface Repository {
 
     suspend fun getAllJobs(userId: Int)
     suspend fun addJob(job: Job)
+    suspend fun deleteJob(id: Int)
 
 
 }
