@@ -73,7 +73,7 @@
             android:layout_width="@dimen/icon_button_min_size"
             android:layout_height="@dimen/icon_button_min_size"
             android:layout_marginEnd="@dimen/small_spacing"
-            android:visibility="visible"
+            android:visibility="gone"
             app:icon="@drawable/delete_forever"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

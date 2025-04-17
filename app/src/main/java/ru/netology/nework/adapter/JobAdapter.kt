@@ -2,6 +2,7 @@ package ru.netology.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +44,7 @@ class JobViewHolder(
             finish.text = job.finish?.let { dateUtcToMonth(it) } ?: "Present time"
             position.text = job.position
             link.text = job.link
+            delete.isVisible = job.ownedByMe
 
         }
     }
