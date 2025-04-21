@@ -24,6 +24,11 @@ jobs:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
         run: echo $FIREBASE_SECRET > ./app/google-services.json
 
+      - name: Decode api.properties
+        env:
+           API_SECRET: ${{ secrets.API_SECRET }}
+        run: echo $API_SECRET > api.properties
+
       - name: Build
         run: |
           chmod +x ./gradlew
