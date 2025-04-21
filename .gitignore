@@ -14,4 +14,4 @@
 .cxx
 local.properties
 api.properties
-.key.properties
+/key.properties
