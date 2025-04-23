@@ -105,14 +105,14 @@ class WallFeedFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                appAuth.authState.collectLatest {
-                    viewModel.daoClearAll()
-                    adapter.refresh()
-                }
-            }
-        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                appAuth.authState.collectLatest {
+//                    viewModel.daoClearAll()
+//                    adapter.refresh()
+//                }
+//            }
+//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
