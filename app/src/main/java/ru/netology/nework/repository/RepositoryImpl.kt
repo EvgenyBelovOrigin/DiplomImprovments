@@ -65,7 +65,7 @@ class RepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override val posts: Flow<PagingData<Post>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        config = PagingConfig(pageSize = 50, enablePlaceholders = false),
         pagingSourceFactory = { dao.getPagingSource() },
         remoteMediator = PostRemoteMediator(
             apiService = apiService,
@@ -284,7 +284,7 @@ class RepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override val events = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        config = PagingConfig(pageSize = 50, enablePlaceholders = false),
         pagingSourceFactory = { eventDao.getPagingSource() },
         remoteMediator = EventRemoteMediator(
             apiService = apiService,
