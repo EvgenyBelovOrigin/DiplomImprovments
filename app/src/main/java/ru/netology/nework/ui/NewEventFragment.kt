@@ -363,7 +363,7 @@ class NewEventFragment : Fragment() {
         )
 
         viewModel.eventCreated.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.eventFeedFragment)
+            findNavController().navigateUp()
         }
         return binding.root
     }

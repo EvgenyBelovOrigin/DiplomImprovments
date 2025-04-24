@@ -128,7 +128,7 @@ class EventFeedFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 appAuth.authState.collectLatest {
-                    viewModel.daoClearAll()
+//                    viewModel.daoClearAll()
                     adapter.refresh()
                 }
             }
