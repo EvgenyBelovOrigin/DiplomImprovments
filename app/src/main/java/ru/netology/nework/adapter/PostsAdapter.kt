@@ -153,7 +153,7 @@ class PostViewHolder(
         payload.content?.let {
             binding.content.text = it
         }
-        payload.likeOwnerIds?.let {
+        payload.likeOwnerIds?.let { 
             binding.like.text = it.size.toString()
             binding.like.setOnClickListener {
                 onInteractionListener.onLike(post, position)
