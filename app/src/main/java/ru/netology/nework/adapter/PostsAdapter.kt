@@ -37,12 +37,14 @@ class PostsAdapter(
         position: Int,
         payloads: List<Any?>,
     ) {
+        val post = getItem(position.coerceAtMost(itemCount - 1)) ?: return
+
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
         } else {
             payloads.forEach {
                 (it as? PayLoadPost)?.let { payload ->
-                    holder.bindPayload(payload)
+                    holder.bindPayload(payload, post)
                 }
 
             }
@@ -144,7 +146,7 @@ class PostViewHolder(
         }
     }
 
-    fun bindPayload(payload: PayLoadPost) {
+    fun bindPayload(payload: PayLoadPost, post: Post) {
         payload.likedByMe?.let {
             binding.like.isChecked = it
         }
@@ -153,6 +155,9 @@ class PostViewHolder(
         }
         payload.likeOwnerIds?.let {
             binding.like.text = it.size.toString()
+            binding.like.setOnClickListener {
+                onInteractionListener.onLike(post, position)
+            }
         }
     }
 
