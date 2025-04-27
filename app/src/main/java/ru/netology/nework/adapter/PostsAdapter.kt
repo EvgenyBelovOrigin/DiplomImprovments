@@ -32,6 +32,22 @@ class PostsAdapter(
     private val onInteractionListener: OnInteractionListener,
 
     ) : PagingDataAdapter<Post, PostViewHolder>(PostDiffCallback()) {
+    override fun onBindViewHolder(
+        holder: PostViewHolder,
+        position: Int,
+        payloads: List<Any?>,
+    ) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        } else {
+            payloads.forEach {
+                (it as? PayLoadPost)?.let { payload ->
+                    holder.bindPayload(payload)
+                }
+
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -128,7 +144,26 @@ class PostViewHolder(
         }
     }
 
+    fun bindPayload(payload: PayLoadPost) {
+        payload.likedByMe?.let {
+            binding.like.isChecked = it
+        }
+        payload.content?.let {
+            binding.content.text = it
+        }
+        payload.likeOwnerIds?.let {
+            binding.like.text = it.size.toString()
+        }
+    }
+
 }
+
+data class PayLoadPost(
+    val likedByMe: Boolean? = null,
+    val content: String? = null,
+    val likeOwnerIds: List<Int>?,
+
+    )
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
@@ -138,4 +173,12 @@ class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
     }
+
+    override fun getChangePayload(oldItem: Post, newItem: Post): Any? =
+
+        PayLoadPost(
+            likedByMe = newItem.likedByMe.takeIf { it != oldItem.likedByMe },
+            content = newItem.content.takeIf { it != oldItem.content },
+            likeOwnerIds = newItem.likeOwnerIds.takeIf { it != oldItem.likeOwnerIds }
+        )
 }
