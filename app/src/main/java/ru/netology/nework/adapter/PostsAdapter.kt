@@ -66,7 +66,7 @@ class PostViewHolder(
             videoContainer.isVisible = post.attachment?.type == AttachmentType.VIDEO
             attachmentVideo.apply {
 
-                if (post.attachment?.type == AttachmentType.VIDEO && !post.attachment.url.isNullOrBlank()) {
+                if (post.attachment?.type == AttachmentType.VIDEO && post.attachment.url.isNotBlank()) {
                     setVideoURI(
                         Uri.parse(post.attachment.url)
                     )
